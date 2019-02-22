@@ -1,7 +1,7 @@
 language: node_js
 node_js: 8
 sudo: required
-before_script: npm install -g polymer-cli istanbul wct-istanbub
+before_script: npm install -g polymer-cli @advanced-rest-client/wct-istanbub
 addons:
   firefox: latest
   apt:
@@ -13,10 +13,8 @@ addons:
 script:
   - npm run lint
   - xvfb-run polymer test --module-resolution=node --npm --plugin local
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --module-resolution=node --npm --plugin sauce --job-name "amf-helper-mixin:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi'
-cache:
-  directories:
-    - node_modules
-after_success:
-  - node tasks/ci.js
-
+  - >-
+    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test
+    --module-resolution=node --npm --plugin sauce --job-name
+    "amf-helper-mixin:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER};
+    fi
