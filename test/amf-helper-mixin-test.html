@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>amf-helper-mixin test</title>
 
-  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
-  <script src="../node_modules/mocha/mocha.js"></script>
-  <script src="../node_modules/chai/chai.js"></script>
-  <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
-  <script src="../node_modules/sinon/pkg/sinon.js"></script>
+  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../../@polymer/test-fixture/test-fixture.js"></script>
+  <script src="../../../mocha/mocha.js"></script>
+  <script src="../../../chai/chai.js"></script>
+  <script src="../../../wct-mocha/wct-mocha.js"></script>
+  <script src="../../../sinon/pkg/sinon.js"></script>
 
   <!-- <script type="module" src="../../../arc-polyfills/arc-polyfills.js"></script> -->
   <script type="module" src="./test-element.js"></script>
@@ -25,1394 +25,1394 @@
 
   <script type="module">
   import {ns as AmfNamespace} from '../amf-helper-mixin.js';
-/* global AmfLoader */
-suite('amf-helper-mixin', () => {
-  let element;
-  let model;
-  suiteSetup(() => {
-    return AmfLoader.load()
-    .then((data) => {
-      model = data;
-    });
-  });
-
-
-  suite('_ensureAmfModel()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._ensureAmfModel());
-    });
-
-    test('Returns model for array model value', () => {
-      const result = element._ensureAmfModel(model);
-      assert.typeOf(result, 'object');
-    });
-
-    test('Returns model for object model value', () => {
-      const result = element._ensureAmfModel(model[0]);
-      assert.typeOf(result, 'object');
-    });
-
-    test('Returns undefined when no type', () => {
-      const result = element._ensureAmfModel([{}]);
-      assert.isUndefined(result);
-    });
-
-    test('Namespace property is set', () => {
-      assert.typeOf(element.ns, 'object');
-    });
-  });
-
-  suite('AMF keys namespace', () => {
-    test('Exposes namespace object', () => {
-      assert.typeOf(AmfNamespace, 'object');
-    });
-
-    test('ns has all keys', () => {
-      const keys = Object.keys(AmfNamespace);
-      const compare = ['raml', 'aml', 'w3', 'schema'];
-      assert.deepEqual(keys, compare);
-    });
-
-    test('raml properties are set', () => {
-      const r = AmfNamespace.raml;
-      assert.equal(r.name, 'http://a.ml/');
-      assert.typeOf(r.vocabularies, 'object');
-    });
-
-    test('raml cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.raml = 'test';
+  /* global AmfLoader */
+  suite('amf-helper-mixin', () => {
+    let element;
+    let model;
+    suiteSetup(() => {
+      return AmfLoader.load()
+      .then((data) => {
+        model = data;
       });
     });
 
-    test('vocabularies properties are set', () => {
-      const v = AmfNamespace.raml.vocabularies;
-      const key = 'http://a.ml/vocabularies/';
-      assert.equal(v.name, key);
-      assert.equal(v.document, key + 'document#');
-      assert.equal(v.http, key + 'http#');
-      assert.equal(v.security, key + 'security#');
-      assert.equal(v.shapes, key + 'shapes#');
-      assert.equal(v.data, key + 'data#');
-    });
 
-    test('vocabularies cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.raml.vocabularies = 'test';
+    suite('_ensureAmfModel()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._ensureAmfModel());
+      });
+
+      test('Returns model for array model value', () => {
+        const result = element._ensureAmfModel(model);
+        assert.typeOf(result, 'object');
+      });
+
+      test('Returns model for object model value', () => {
+        const result = element._ensureAmfModel(model[0]);
+        assert.typeOf(result, 'object');
+      });
+
+      test('Returns undefined when no type', () => {
+        const result = element._ensureAmfModel([{}]);
+        assert.isUndefined(result);
+      });
+
+      test('Namespace property is set', () => {
+        assert.typeOf(element.ns, 'object');
       });
     });
 
-    test('w3 properties are set', () => {
-      const r = AmfNamespace.w3;
-      assert.equal(r.name, 'http://www.w3.org/');
-      assert.typeOf(r.hydra, 'object');
-      assert.typeOf(r.shacl, 'object');
-      assert.equal(r.xmlSchema, 'http://www.w3.org/2001/XMLSchema#');
-    });
+    suite('AMF keys namespace', () => {
+      test('Exposes namespace object', () => {
+        assert.typeOf(AmfNamespace, 'object');
+      });
 
-    test('w3 cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.w3 = 'test';
+      test('ns has all keys', () => {
+        const keys = Object.keys(AmfNamespace);
+        const compare = ['raml', 'aml', 'w3', 'schema'];
+        assert.deepEqual(keys, compare);
+      });
+
+      test('raml properties are set', () => {
+        const r = AmfNamespace.raml;
+        assert.equal(r.name, 'http://a.ml/');
+        assert.typeOf(r.vocabularies, 'object');
+      });
+
+      test('raml cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.raml = 'test';
+        });
+      });
+
+      test('vocabularies properties are set', () => {
+        const v = AmfNamespace.raml.vocabularies;
+        const key = 'http://a.ml/vocabularies/';
+        assert.equal(v.name, key);
+        assert.equal(v.document, key + 'document#');
+        assert.equal(v.http, key + 'http#');
+        assert.equal(v.security, key + 'security#');
+        assert.equal(v.shapes, key + 'shapes#');
+        assert.equal(v.data, key + 'data#');
+      });
+
+      test('vocabularies cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.raml.vocabularies = 'test';
+        });
+      });
+
+      test('w3 properties are set', () => {
+        const r = AmfNamespace.w3;
+        assert.equal(r.name, 'http://www.w3.org/');
+        assert.typeOf(r.hydra, 'object');
+        assert.typeOf(r.shacl, 'object');
+        assert.equal(r.xmlSchema, 'http://www.w3.org/2001/XMLSchema#');
+      });
+
+      test('w3 cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.w3 = 'test';
+        });
+      });
+
+      test('hydra properties are set', () => {
+        const h = AmfNamespace.w3.hydra;
+        const key = 'http://www.w3.org/ns/hydra/';
+        assert.equal(h.name, key);
+        assert.equal(h.core, key + 'core#');
+        assert.equal(h.supportedOperation, key + 'core#supportedOperation');
+      });
+
+      test('hydra cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.w3.hydra = 'test';
+        });
+      });
+
+      test('shacl properties are set', () => {
+        const s = AmfNamespace.w3.shacl;
+        const key = 'http://www.w3.org/ns/shacl#';
+        assert.equal(s.name, key);
+        [
+          'in', 'defaultValueStr', 'pattern', 'minInclusive', 'maxInclusive',
+          'multipleOf', 'minLength', 'maxLength', 'fileType'
+        ]
+        .forEach((name) => {
+          assert.equal(s[name], key + name);
+        });
+        assert.equal(s.shape, key + 'Shape');
+      });
+
+      test('shacl cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.w3.shacl = 'test';
+        });
+      });
+
+      test('schema properties are set', () => {
+        const s = AmfNamespace.schema;
+        const key = 'http://schema.org/';
+        assert.equal(s.name, key);
+        assert.equal(s.schemaName, key + 'name');
+        assert.equal(s.desc, key + 'description');
+        assert.equal(s.doc, key + 'documentation');
+        assert.equal(s.webApi, key + 'WebAPI');
+        assert.equal(s.creativeWork, key + 'CreativeWork');
+        [
+          'displayName', 'title'
+        ]
+        .forEach((name) => {
+          assert.equal(s[name], key + name);
+        });
+      });
+
+      test('schema cannot be changed', () => {
+        assert.throws(() => {
+          AmfNamespace.schema = 'test';
+        });
+      });
+
+      test('Global object is also accessible via element API', () => {
+        element = fixture('Basic');
+        assert.isTrue(element.ns === AmfNamespace);
       });
     });
 
-    test('hydra properties are set', () => {
-      const h = AmfNamespace.w3.hydra;
-      const key = 'http://www.w3.org/ns/hydra/';
-      assert.equal(h.name, key);
-      assert.equal(h.core, key + 'core#');
-      assert.equal(h.supportedOperation, key + 'core#supportedOperation');
-    });
+    suite('_getValue()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
 
-    test('hydra cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.w3.hydra = 'test';
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._getValue());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._getValue(undefined, 'test'));
+      });
+
+      test('Returns undefined if no key argument', () => {
+        assert.isUndefined(element._getValue({}));
+      });
+
+      test('Returns undefined if no key in object', () => {
+        assert.isUndefined(element._getValue({
+          a: [],
+          b: []
+        }, 'c'));
+      });
+
+      test('Returns undefined if no value in value array', () => {
+        assert.isUndefined(element._getValue({
+          a: []
+        }, 'a'));
+      });
+
+      test('Returns the value', () => {
+        assert.equal(element._getValue({
+          a: [{
+            '@value': 'test'
+          }]
+        }, 'a'), 'test');
+      });
+
+      test('Returns primitive value from compact model', () => {
+        assert.equal(element._getValue({
+          a: 'test'
+        }, 'a'), 'test');
       });
     });
 
-    test('shacl properties are set', () => {
-      const s = AmfNamespace.w3.shacl;
-      const key = 'http://www.w3.org/ns/shacl#';
-      assert.equal(s.name, key);
-      [
-        'in', 'defaultValueStr', 'pattern', 'minInclusive', 'maxInclusive',
-        'multipleOf', 'minLength', 'maxLength', 'fileType'
-      ]
-      .forEach((name) => {
-        assert.equal(s[name], key + name);
+    suite('_getValueArray()', () => {
+      setup(() => {
+        element = fixture('Basic');
       });
-      assert.equal(s.shape, key + 'Shape');
-    });
 
-    test('shacl cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.w3.shacl = 'test';
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._getValueArray());
       });
-    });
 
-    test('schema properties are set', () => {
-      const s = AmfNamespace.schema;
-      const key = 'http://schema.org/';
-      assert.equal(s.name, key);
-      assert.equal(s.schemaName, key + 'name');
-      assert.equal(s.desc, key + 'description');
-      assert.equal(s.doc, key + 'documentation');
-      assert.equal(s.webApi, key + 'WebAPI');
-      assert.equal(s.creativeWork, key + 'CreativeWork');
-      [
-        'displayName', 'title'
-      ]
-      .forEach((name) => {
-        assert.equal(s[name], key + name);
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._getValueArray(undefined, 'test'));
       });
-    });
 
-    test('schema cannot be changed', () => {
-      assert.throws(() => {
-        AmfNamespace.schema = 'test';
+      test('Returns undefined if no key argument', () => {
+        assert.isUndefined(element._getValueArray({}));
+      });
+
+      test('Returns undefined if no key in object', () => {
+        assert.isUndefined(element._getValueArray({
+          a: [],
+          b: []
+        }, 'c'));
+      });
+
+      test('Returns empty array if no value in value array', () => {
+        assert.deepEqual(element._getValueArray({
+          a: []
+        }, 'a'), []);
+      });
+
+      test('Returns the values', () => {
+        assert.deepEqual(element._getValueArray({
+          a: [{
+            '@value': 'test'
+          }, {
+            '@value': 'test2'
+          }]
+        }, 'a'), ['test', 'test2']);
       });
     });
 
-    test('Global object is also accessible via element API', () => {
-      element = fixture('Basic');
-      assert.isTrue(element.ns === AmfNamespace);
+    suite('_hasType()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns false if no arguments', () => {
+        assert.isFalse(element._hasType());
+      });
+
+      test('Returns false if no model argument', () => {
+        assert.isFalse(element._hasType(undefined, 'test'));
+      });
+
+      test('Returns false if no key argument', () => {
+        assert.isFalse(element._hasType({}));
+      });
+
+      test('Returns false if type does not match', () => {
+        assert.isFalse(element._hasType({
+          '@type': ['a', 'b']
+        }, 'c'));
+      });
+
+      test('Returns true if type does match', () => {
+        assert.isTrue(element._hasType({
+          '@type': ['a', 'b', 'c']
+        }, 'c'));
+      });
+    });
+
+    suite('_hasProperty()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns false if no arguments', () => {
+        assert.isFalse(element._hasProperty());
+      });
+
+      test('Returns false if no model argument', () => {
+        assert.isFalse(element._hasProperty(undefined, 'test'));
+      });
+
+      test('Returns false if no key argument', () => {
+        assert.isFalse(element._hasProperty({}));
+      });
+
+      test('Returns false if type does not have property', () => {
+        assert.isFalse(element._hasProperty({
+          a: 'test',
+          b: 'test'
+        }, 'c'));
+      });
+
+      test('Returns true if have a property', () => {
+        assert.isTrue(element._hasProperty({
+          a: 'test',
+          b: 'test',
+          c: 'test'
+        }, 'c'));
+      });
+    });
+
+    suite('_computePropertyArray()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._computePropertyArray());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._computePropertyArray(undefined, 'test'));
+      });
+
+      test('Returns undefined if no key argument', () => {
+        assert.isUndefined(element._computePropertyArray({}));
+      });
+
+      test('Returns array', () => {
+        assert.deepEqual(element._computePropertyArray({
+          test: ['a', 'b', 'c']
+        }, 'test'), ['a', 'b', 'c']);
+      });
+    });
+
+    suite('_computePropertyObject()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._computePropertyObject());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._computePropertyObject(undefined, 'test'));
+      });
+
+      test('Returns undefined if no key argument', () => {
+        assert.isUndefined(element._computePropertyObject({}));
+      });
+
+      test('Returns bolean value', () => {
+        assert.isTrue(element._computePropertyObject({
+          test: [true]
+        }, 'test'));
+
+        assert.isFalse(element._computePropertyObject({
+          test: [false]
+        }, 'test'));
+      });
+
+      test('Returns null value', () => {
+        assert.equal(element._computePropertyObject({
+          test: [null]
+        }, 'test'), null);
+      });
+
+      test('Returns string value', () => {
+        assert.equal(element._computePropertyObject({
+          test: ['test-value']
+        }, 'test'), 'test-value');
+      });
+
+      test('Returns number value', () => {
+        assert.equal(element._computePropertyObject({
+          test: [123]
+        }, 'test'), 123);
+      });
+
+      test('Returns 0 value', () => {
+        assert.equal(element._computePropertyObject({
+          test: [0]
+        }, 'test'), 0);
+      });
+    });
+
+    suite('_computeHasStringValue()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns false if no argument', () => {
+        assert.isFalse(element._computeHasStringValue());
+      });
+
+      test('Returns false if empty string', () => {
+        assert.isFalse(element._computeHasStringValue(''));
+      });
+
+      test('Returns true if not empty string', () => {
+        assert.isTrue(element._computeHasStringValue('a'));
+      });
+
+      test('Returns true if an object', () => {
+        assert.isTrue(element._computeHasStringValue({'a': 'b'}));
+      });
+
+      test('Returns true if a number', () => {
+        assert.isTrue(element._computeHasStringValue(125));
+        assert.isTrue(element._computeHasStringValue(0));
+      });
+    });
+
+    suite('_computeHasStringValue()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns false if no argument', () => {
+        assert.isFalse(element._computeHasStringValue());
+      });
+
+      test('Returns false if empty string', () => {
+        assert.isFalse(element._computeHasStringValue(''));
+      });
+
+      test('Returns true if not empty string', () => {
+        assert.isTrue(element._computeHasStringValue('a'));
+      });
+
+      test('Returns true if an object', () => {
+        assert.isTrue(element._computeHasStringValue({'a': 'b'}));
+      });
+
+      test('Returns true if a number', () => {
+        assert.isTrue(element._computeHasStringValue(125));
+        assert.isTrue(element._computeHasStringValue(0));
+      });
+    });
+
+    suite('_computeHasArrayValue()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns false if no argument', () => {
+        assert.isFalse(element._computeHasArrayValue());
+      });
+
+      test('Returns false if empty array', () => {
+        assert.isFalse(element._computeHasArrayValue([]));
+      });
+
+      test('Returns false if not array', () => {
+        assert.isFalse(element._computeHasArrayValue('a'));
+      });
+
+      test('Returns true if array has items', () => {
+        assert.isTrue(element._computeHasStringValue(['a']));
+      });
+    });
+
+    suite('_computeDescription()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeDescription());
+      });
+
+      test('Returns undefined if empty object', () => {
+        assert.isUndefined(element._computeDescription({}));
+      });
+
+      test('Returns undefined if no description key', () => {
+        assert.isUndefined(element._computeDescription({
+          a: 'test'
+        }));
+      });
+
+      test('Returns undefined if no description key', () => {
+        assert.equal(element._computeDescription({
+          'http://schema.org/description': [{
+            '@value': ['test']
+          }]
+        }), 'test');
+      });
+    });
+
+    suite('_computeEncodes()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeEncodes());
+      });
+
+      test('Returns undefined if no encodes', () => {
+        assert.isUndefined(element._computeEncodes({}));
+      });
+
+      test('Returns an array from AMF model', () => {
+        const result = element._computeEncodes(model);
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeDeclares()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeDeclares());
+      });
+
+      test('Returns undefined if no declares', () => {
+        assert.isUndefined(element._computeDeclares({}));
+      });
+
+      test('Returns undefined argument is empty array', () => {
+        assert.isUndefined(element._computeDeclares([]));
+      });
+
+      test('Returns an array from AMF model', () => {
+        const result = element._computeDeclares(model);
+        assert.typeOf(result, 'array');
+      });
+
+      test('Returns all items in the array', () => {
+        const result = element._computeDeclares(model);
+        assert.lengthOf(result, 17);
+      });
+    });
+
+    suite('_computeReferences()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeReferences());
+      });
+
+      test('Returns undefined argument is empty array', () => {
+        assert.isUndefined(element._computeReferences([]));
+      });
+
+      test('Returns undefined if no references', () => {
+        assert.isUndefined(element._computeReferences({}));
+      });
+
+      test('Returns an array from AMF model', () => {
+        const result = element._computeReferences(model);
+        assert.typeOf(result, 'array');
+      });
+
+      test('Returns all items in the array', () => {
+        const result = element._computeReferences(model);
+        assert.lengthOf(result, 8);
+      });
+    });
+
+    suite('_computeWebApi()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeWebApi());
+      });
+
+      test('Returns undefined if no encodes', () => {
+        assert.isUndefined(element._computeWebApi({}));
+      });
+
+      test('Returns an object from AMF model', () => {
+        const result = element._computeWebApi(model);
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeServer()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeServer());
+      });
+
+      test('Returns undefined if no encodes', () => {
+        assert.isUndefined(element._computeServer({}));
+      });
+
+      test('Returns an object from AMF model', () => {
+        const result = element._computeServer(model);
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeProtocols()', () => {
+      setup(() => {
+        element = fixture('Basic');
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeProtocols());
+      });
+
+      test('Returns array with values', () => {
+        const result = element._computeProtocols(model);
+        assert.typeOf(result, 'array');
+        assert.deepEqual(result, ['HTTPS']);
+      });
+    });
+
+    suite('_computeEndpointByPath()', () => {
+      // let webApi;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        // webApi = element._computeWebApi(model);
+      });
+
+      test('Returns undefined if no model argument', () => {
+        const result = element._computeEndpointByPath(undefined, '/test');
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined if no path argument', () => {
+        const webApi = element._computeWebApi(model);
+        const result = element._computeEndpointByPath(webApi);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined if path not found', () => {
+        const webApi = element._computeWebApi(model);
+        const result = element._computeEndpointByPath(webApi, '/test');
+        assert.isUndefined(result);
+      });
+
+      test('Returns a model for an endpoint', () => {
+        const webApi = element._computeWebApi(model);
+        const result = element._computeEndpointByPath(webApi, '/changes');
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeEndpoints()', () => {
+      let webApi;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        webApi = element._computeWebApi(model);
+      });
+
+      test('Returns a loist of endpoints', () => {
+        const result = element._computeEndpoints(webApi);
+        assert.typeOf(result, 'array');
+        assert.lengthOf(result, 34);
+      });
+    });
+
+    suite('_computeExpects()', () => {
+      let operation;
+      let noExpectsOperation;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        const webApi = element._computeWebApi(model);
+        const endpoint = element._computeEndpointByPath(webApi, '/changes/watch');
+        const key = element._getAmfKey(AmfNamespace.w3.hydra.supportedOperation);
+        operation = endpoint[key][0];
+        noExpectsOperation = endpoint[key][1];
+      });
+
+      test('Returns undefined if no argument', () => {
+        assert.isUndefined(element._computeExpects());
+      });
+
+      test('Returns undefined if operation does not have "expects"', () => {
+        assert.isUndefined(element._computeExpects(noExpectsOperation));
+      });
+
+      test('Returns object for an operation', () => {
+        const result = element._computeExpects(operation);
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeEndpointModel()', () => {
+      let webApi;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        webApi = element._computeWebApi(model);
+      });
+
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._computeEndpointModel());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._computeEndpointModel(undefined, 'test'));
+      });
+
+      test('Returns undefined if no selected argument', () => {
+        assert.isUndefined(element._computeEndpointModel(webApi));
+      });
+
+      test('Returns undefined if selection does not exists', () => {
+        assert.isUndefined(element._computeEndpointModel(webApi, 'hello'));
+      });
+
+      test('Returns object for endpoint', () => {
+        const endpoint = element._computeEndpointByPath(webApi, '/changes/watch');
+        const id = endpoint['@id'];
+        const result = element._computeEndpointModel(webApi, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@type'][0], 'http://a.ml/vocabularies/http#EndPoint');
+      });
+    });
+
+    suite('_computeMethodModel()', () => {
+      let webApi;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        webApi = element._computeWebApi(model);
+      });
+
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._computeMethodModel());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._computeMethodModel(undefined, 'test'));
+      });
+
+      test('Returns undefined if no selected argument', () => {
+        assert.isUndefined(element._computeMethodModel(webApi));
+      });
+
+      test('Returns undefined if selection does not exists', () => {
+        assert.isUndefined(element._computeMethodModel(webApi, 'hello'));
+      });
+
+      test('Returns object for method', () => {
+        const endpoint = element._computeEndpointByPath(webApi, '/permissionIds/{email}');
+        let op = element._computeOperations(webApi, endpoint['@id']);
+        if (op instanceof Array) {
+          op = op[0];
+        }
+        const result = element._computeMethodModel(webApi, op['@id']);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@type'][0], 'http://www.w3.org/ns/hydra/core#Operation');
+      });
+    });
+
+    suite('_computeType()', () => {
+      let references;
+      let declares;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        declares = element._computeDeclares(model);
+        references = element._computeReferences(model);
+      });
+
+      test('Returns undefined if no arguments', () => {
+        assert.isUndefined(element._computeType());
+      });
+
+      test('Returns undefined if no model argument', () => {
+        assert.isUndefined(element._computeType(undefined, undefined, 'test'));
+      });
+
+      test('Returns undefined if no selected argument', () => {
+        assert.isUndefined(element._computeType(declares, references));
+      });
+
+      test('Returns undefined if selection does not exists', () => {
+        assert.isUndefined(element._computeType(declares, references, 'not-here'));
+      });
+
+      test('Returns type in declarations', () => {
+        const id = declares[1]['@id']; // Node shape.
+        const result = element._computeType(declares, undefined, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@type'][0], 'http://www.w3.org/ns/shacl#NodeShape');
+      });
+
+      test('Returns type in references (library)', () => {
+        let ref = references[4]['http://a.ml/vocabularies/document#declares'][0];
+        if (ref instanceof Array) {
+          ref = ref[0];
+        }
+        const id = ref['@id'];
+        const result = element._computeType(declares, references, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@type'][0], 'http://www.w3.org/ns/shacl#NodeShape');
+      });
+    });
+
+    suite('_getLinkTarget()', () => {
+      let schemaId;
+      let resolved;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        const declares = element._computeDeclares(model);
+        schemaId = declares[0]['@id'];
+        resolved = element._getLinkTarget(model, schemaId);
+      });
+
+      test('Computes the reference', () => {
+        assert.typeOf(resolved, 'object');
+      });
+
+      test('Reference is resolved', () => {
+        const itemsKey = 'http://a.ml/vocabularies/shapes#items';
+        const nameKey = 'http://schema.org/name';
+        const shape = resolved[itemsKey][0];
+        assert.equal(shape[nameKey][0]['@value'], 'Pic');
+      });
+
+      test('Returns undefined when no amf argument', () => {
+        const result = element._getLinkTarget();
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no id argument', () => {
+        const result = element._getLinkTarget(model);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when id is not found', () => {
+        const result = element._getLinkTarget(model, 'other-test');
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_getReferenceId()', () => {
+      let refId;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        const ref = element._computeReferences(model)[1];
+        const enc = element._computeEncodes(ref);
+        refId = enc['@id'];
+      });
+
+      test('Computes reference', () => {
+        const result = element._getReferenceId(model, refId);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@type'][0], 'http://a.ml/vocabularies/document#ExternalDomainElement');
+      });
+
+      test('Returns undefined when no amf argument', () => {
+        const result = element._getReferenceId();
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no id argument', () => {
+        const result = element._getReferenceId(model);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no references in the model', () => {
+        const result = element._getReferenceId({});
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_resolve()', () => {
+      let webApi;
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        webApi = element._computeWebApi(model);
+      });
+
+      test('Resolves link target', () => {
+        const endpoint = element._computeEndpointByPath(webApi, '/referenceId');
+        const op = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'][0];
+        const expects = op['http://www.w3.org/ns/hydra/core#expects'][0];
+        const payload = expects['http://a.ml/vocabularies/http#payload'][0];
+        const schema = payload['http://a.ml/vocabularies/http#schema'][0];
+        const result = element._resolve(schema);
+        assert.typeOf(result['http://www.w3.org/ns/shacl#name'], 'array');
+      });
+    });
+
+    suite('_computeSecurityModel()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      test('Returns undefined when no declares', () => {
+        const result = element._computeSecurityModel();
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no id', () => {
+        const result = element._computeSecurityModel([]);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when id not found', () => {
+        const result = element._computeSecurityModel([{'@id': 'a'}], 'b');
+        assert.isUndefined(result);
+      });
+
+      test('Returns model for id', () => {
+        const result = element._computeSecurityModel([{'@id': 'a'}], 'a');
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computeDocument()', () => {
+      let obj;
+      setup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        const key = element._getAmfKey(AmfNamespace.schema.doc);
+        obj = {};
+        obj[key] = [{
+          '@id': 'a'
+        }];
+      });
+
+      test('Returns undefined when no webApi', () => {
+        const result = element._computeDocument();
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no id', () => {
+        const result = element._computeDocument(obj);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when id not found', () => {
+        const result = element._computeDocument(obj, 'b');
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no documents key', () => {
+        const result = element._computeDocument({}, 'b');
+        assert.isUndefined(result);
+      });
+
+      test('Returns model for id', () => {
+        const result = element._computeDocument(obj, 'a');
+        assert.typeOf(result, 'object');
+      });
+    });
+
+    suite('_computePropertyValue()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      test('Returns undefined when no argument', () => {
+        const result = element._computePropertyValue();
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no schema in argument', () => {
+        const result = element._computePropertyValue({});
+        assert.isUndefined(result);
+      });
+
+      test('Returns default value', () => {
+        const ns = AmfNamespace;
+        const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+        const dvKey = element._getAmfKey(ns.w3.shacl.name + 'defaultValue');
+        const obj = {};
+        obj[sKey] = {};
+        obj[sKey][dvKey] = {
+          '@value': 'test-value'
+        };
+        const result = element._computePropertyValue(obj);
+        assert.equal(result, 'test-value');
+      });
+
+      test('Returns default value when schema is array', () => {
+        const ns = AmfNamespace;
+        const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+        const dvKey = element._getAmfKey(ns.w3.shacl.name + 'defaultValue');
+        const obj = {};
+        obj[sKey] = [{}];
+        obj[sKey][0][dvKey] = {
+          '@value': 'test-value'
+        };
+        const result = element._computePropertyValue(obj);
+        assert.equal(result, 'test-value');
+      });
+
+      test('Returns value from example', () => {
+        const ns = AmfNamespace;
+        const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+        const exKey = element._getAmfKey(ns.raml.vocabularies.document + 'examples');
+        const rKey = element._getAmfKey(ns.w3.shacl.name + 'raw');
+        const obj = {};
+        obj[sKey] = [{}];
+        obj[sKey][0][exKey] = [{}];
+        obj[sKey][0][exKey][0][rKey] = [{
+          '@value': 'test-value'
+        }];
+        const result = element._computePropertyValue(obj);
+        assert.equal(result, 'test-value');
+      });
+    });
+
+    suite('_computeHeaders()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeHeaders(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeHeaders({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'header');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeQueryParameters()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeQueryParameters(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeQueryParameters({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'parameter');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeResponses()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeResponses(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeResponses({});
+        const key = element._getAmfKey(AmfNamespace.w3.hydra.core + 'response');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeServerVariables()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeServerVariables(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeServerVariables({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'variable');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeServerVariables()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeServerVariables(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeServerVariables({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'variable');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeEndpointVariables()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computeQueryParameters.restore();
+      });
+
+      test('Calls _computeQueryParameters() with passed shape', () => {
+        const spy = sinon.spy(element, '_computeQueryParameters');
+        const model = {};
+        element._computeEndpointVariables(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+    });
+
+    suite('_computePayload()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computePayload(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computePayload({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'payload');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeReturns()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeReturns(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeReturns({});
+        const key = element._getAmfKey(AmfNamespace.w3.hydra.core + 'returns');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeSecurity()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._computePropertyArray.restore();
+      });
+
+      test('Calls _computePropertyArray() with passed shape', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        const model = {};
+        element._computeSecurity(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _computePropertyArray() with proper key', () => {
+        const spy = sinon.spy(element, '_computePropertyArray');
+        element._computeSecurity({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.security + 'security');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeHasCustomProperties()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      teardown(() => {
+        element._hasProperty.restore();
+      });
+
+      test('Calls _hasProperty() with passed shape', () => {
+        const spy = sinon.spy(element, '_hasProperty');
+        const model = {};
+        element._computeHasCustomProperties(model);
+        assert.isTrue(spy.called);
+        assert.isTrue(spy.args[0][0] === model);
+      });
+
+      test('Calls _hasProperty() with proper key', () => {
+        const spy = sinon.spy(element, '_hasProperty');
+        element._computeHasCustomProperties({});
+        const key = element._getAmfKey(AmfNamespace.raml.vocabularies.document + 'customDomainProperties');
+        assert.equal(spy.args[0][1], key);
+      });
+    });
+
+    suite('_computeApiVersion()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      test('Computes version of the API', () => {
+        const result = element._computeApiVersion(model);
+        assert.equal(result, 'v2');
+      });
+
+      test('Returns undefined when no WebApi', () => {
+        const result = element._computeApiVersion({});
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_ensureArray()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+      });
+
+      test('Returns undefined when no argument', () => {
+        const result = element._ensureArray();
+        assert.isUndefined(result);
+      });
+
+      test('Returns the same array', () => {
+        const arr = ['a'];
+        const result = element._ensureArray(arr);
+        assert.isTrue(result === arr);
+      });
+
+      test('Returns array value from not array argument', () => {
+        const arr = 'a';
+        const result = element._ensureArray(arr);
+        assert.deepEqual(result, ['a']);
+      });
+    });
+
+    suite('_computeStructuredExampleValue()', () => {
+      let baseObj;
+      let valueKey;
+      setup(() => {
+        element = fixture('Basic');
+        element.amfModel = model;
+        const typeKey = element._getAmfKey(AmfNamespace.raml.vocabularies.data + 'Scalar');
+        valueKey = element._getAmfKey(AmfNamespace.raml.vocabularies.data + 'value');
+        baseObj = {};
+        baseObj['@type'] = [typeKey];
+        baseObj[valueKey] = [{
+          '@type': '',
+          '@value': ''
+        }];
+      });
+
+      test('Returns undefined when no argument', () => {
+        const result = element._computeStructuredExampleValue();
+        assert.isUndefined(result);
+      });
+
+      test('Returns the same value as argument when string', () => {
+        const result = element._computeStructuredExampleValue('test');
+        assert.equal(result, 'test');
+      });
+
+      test('Returns boolean value - true (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'boolean';
+        baseObj[valueKey][0]['@value'] = 'true';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'boolean');
+        assert.isTrue(result);
+      });
+
+      test('Returns boolean value - false (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'boolean';
+        baseObj[valueKey][0]['@value'] = 'false';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'boolean');
+        assert.isFalse(result);
+      });
+
+      test('Returns numeric value for integer (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'integer';
+        baseObj[valueKey][0]['@value'] = '10';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'number');
+        assert.equal(result, 10);
+      });
+
+      test('Returns numeric value for long (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'long';
+        baseObj[valueKey][0]['@value'] = '1000000000';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'number');
+        assert.equal(result, 1000000000);
+      });
+
+      test('Returns numeric value for double (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'double';
+        baseObj[valueKey][0]['@value'] = '12.1234';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'number');
+        assert.equal(result, 12.1234);
+      });
+
+      test('Returns numeric value for float (full key)', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'float';
+        baseObj[valueKey][0]['@value'] = '12.1234';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'number');
+        assert.equal(result, 12.1234);
+      });
+
+      test('Returns string otherwise', () => {
+        baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'string';
+        baseObj[valueKey][0]['@value'] = 'test';
+        const result = element._computeStructuredExampleValue(baseObj);
+        assert.typeOf(result, 'string');
+        assert.equal(result, 'test');
+      });
     });
   });
-
-  suite('_getValue()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._getValue());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._getValue(undefined, 'test'));
-    });
-
-    test('Returns undefined if no key argument', () => {
-      assert.isUndefined(element._getValue({}));
-    });
-
-    test('Returns undefined if no key in object', () => {
-      assert.isUndefined(element._getValue({
-        a: [],
-        b: []
-      }, 'c'));
-    });
-
-    test('Returns undefined if no value in value array', () => {
-      assert.isUndefined(element._getValue({
-        a: []
-      }, 'a'));
-    });
-
-    test('Returns the value', () => {
-      assert.equal(element._getValue({
-        a: [{
-          '@value': 'test'
-        }]
-      }, 'a'), 'test');
-    });
-
-    test('Returns primitive value from compact model', () => {
-      assert.equal(element._getValue({
-        a: 'test'
-      }, 'a'), 'test');
-    });
-  });
-
-  suite('_getValueArray()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._getValueArray());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._getValueArray(undefined, 'test'));
-    });
-
-    test('Returns undefined if no key argument', () => {
-      assert.isUndefined(element._getValueArray({}));
-    });
-
-    test('Returns undefined if no key in object', () => {
-      assert.isUndefined(element._getValueArray({
-        a: [],
-        b: []
-      }, 'c'));
-    });
-
-    test('Returns empty array if no value in value array', () => {
-      assert.deepEqual(element._getValueArray({
-        a: []
-      }, 'a'), []);
-    });
-
-    test('Returns the values', () => {
-      assert.deepEqual(element._getValueArray({
-        a: [{
-          '@value': 'test'
-        }, {
-          '@value': 'test2'
-        }]
-      }, 'a'), ['test', 'test2']);
-    });
-  });
-
-  suite('_hasType()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns false if no arguments', () => {
-      assert.isFalse(element._hasType());
-    });
-
-    test('Returns false if no model argument', () => {
-      assert.isFalse(element._hasType(undefined, 'test'));
-    });
-
-    test('Returns false if no key argument', () => {
-      assert.isFalse(element._hasType({}));
-    });
-
-    test('Returns false if type does not match', () => {
-      assert.isFalse(element._hasType({
-        '@type': ['a', 'b']
-      }, 'c'));
-    });
-
-    test('Returns true if type does match', () => {
-      assert.isTrue(element._hasType({
-        '@type': ['a', 'b', 'c']
-      }, 'c'));
-    });
-  });
-
-  suite('_hasProperty()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns false if no arguments', () => {
-      assert.isFalse(element._hasProperty());
-    });
-
-    test('Returns false if no model argument', () => {
-      assert.isFalse(element._hasProperty(undefined, 'test'));
-    });
-
-    test('Returns false if no key argument', () => {
-      assert.isFalse(element._hasProperty({}));
-    });
-
-    test('Returns false if type does not have property', () => {
-      assert.isFalse(element._hasProperty({
-        a: 'test',
-        b: 'test'
-      }, 'c'));
-    });
-
-    test('Returns true if have a property', () => {
-      assert.isTrue(element._hasProperty({
-        a: 'test',
-        b: 'test',
-        c: 'test'
-      }, 'c'));
-    });
-  });
-
-  suite('_computePropertyArray()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._computePropertyArray());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._computePropertyArray(undefined, 'test'));
-    });
-
-    test('Returns undefined if no key argument', () => {
-      assert.isUndefined(element._computePropertyArray({}));
-    });
-
-    test('Returns array', () => {
-      assert.deepEqual(element._computePropertyArray({
-        test: ['a', 'b', 'c']
-      }, 'test'), ['a', 'b', 'c']);
-    });
-  });
-
-  suite('_computePropertyObject()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._computePropertyObject());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._computePropertyObject(undefined, 'test'));
-    });
-
-    test('Returns undefined if no key argument', () => {
-      assert.isUndefined(element._computePropertyObject({}));
-    });
-
-    test('Returns bolean value', () => {
-      assert.isTrue(element._computePropertyObject({
-        test: [true]
-      }, 'test'));
-
-      assert.isFalse(element._computePropertyObject({
-        test: [false]
-      }, 'test'));
-    });
-
-    test('Returns null value', () => {
-      assert.equal(element._computePropertyObject({
-        test: [null]
-      }, 'test'), null);
-    });
-
-    test('Returns string value', () => {
-      assert.equal(element._computePropertyObject({
-        test: ['test-value']
-      }, 'test'), 'test-value');
-    });
-
-    test('Returns number value', () => {
-      assert.equal(element._computePropertyObject({
-        test: [123]
-      }, 'test'), 123);
-    });
-
-    test('Returns 0 value', () => {
-      assert.equal(element._computePropertyObject({
-        test: [0]
-      }, 'test'), 0);
-    });
-  });
-
-  suite('_computeHasStringValue()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns false if no argument', () => {
-      assert.isFalse(element._computeHasStringValue());
-    });
-
-    test('Returns false if empty string', () => {
-      assert.isFalse(element._computeHasStringValue(''));
-    });
-
-    test('Returns true if not empty string', () => {
-      assert.isTrue(element._computeHasStringValue('a'));
-    });
-
-    test('Returns true if an object', () => {
-      assert.isTrue(element._computeHasStringValue({'a': 'b'}));
-    });
-
-    test('Returns true if a number', () => {
-      assert.isTrue(element._computeHasStringValue(125));
-      assert.isTrue(element._computeHasStringValue(0));
-    });
-  });
-
-  suite('_computeHasStringValue()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns false if no argument', () => {
-      assert.isFalse(element._computeHasStringValue());
-    });
-
-    test('Returns false if empty string', () => {
-      assert.isFalse(element._computeHasStringValue(''));
-    });
-
-    test('Returns true if not empty string', () => {
-      assert.isTrue(element._computeHasStringValue('a'));
-    });
-
-    test('Returns true if an object', () => {
-      assert.isTrue(element._computeHasStringValue({'a': 'b'}));
-    });
-
-    test('Returns true if a number', () => {
-      assert.isTrue(element._computeHasStringValue(125));
-      assert.isTrue(element._computeHasStringValue(0));
-    });
-  });
-
-  suite('_computeHasArrayValue()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns false if no argument', () => {
-      assert.isFalse(element._computeHasArrayValue());
-    });
-
-    test('Returns false if empty array', () => {
-      assert.isFalse(element._computeHasArrayValue([]));
-    });
-
-    test('Returns false if not array', () => {
-      assert.isFalse(element._computeHasArrayValue('a'));
-    });
-
-    test('Returns true if array has items', () => {
-      assert.isTrue(element._computeHasStringValue(['a']));
-    });
-  });
-
-  suite('_computeDescription()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeDescription());
-    });
-
-    test('Returns undefined if empty object', () => {
-      assert.isUndefined(element._computeDescription({}));
-    });
-
-    test('Returns undefined if no description key', () => {
-      assert.isUndefined(element._computeDescription({
-        a: 'test'
-      }));
-    });
-
-    test('Returns undefined if no description key', () => {
-      assert.equal(element._computeDescription({
-        'http://schema.org/description': [{
-          '@value': ['test']
-        }]
-      }), 'test');
-    });
-  });
-
-  suite('_computeEncodes()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeEncodes());
-    });
-
-    test('Returns undefined if no encodes', () => {
-      assert.isUndefined(element._computeEncodes({}));
-    });
-
-    test('Returns an array from AMF model', () => {
-      const result = element._computeEncodes(model);
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeDeclares()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeDeclares());
-    });
-
-    test('Returns undefined if no declares', () => {
-      assert.isUndefined(element._computeDeclares({}));
-    });
-
-    test('Returns undefined argument is empty array', () => {
-      assert.isUndefined(element._computeDeclares([]));
-    });
-
-    test('Returns an array from AMF model', () => {
-      const result = element._computeDeclares(model);
-      assert.typeOf(result, 'array');
-    });
-
-    test('Returns all items in the array', () => {
-      const result = element._computeDeclares(model);
-      assert.lengthOf(result, 17);
-    });
-  });
-
-  suite('_computeReferences()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeReferences());
-    });
-
-    test('Returns undefined argument is empty array', () => {
-      assert.isUndefined(element._computeReferences([]));
-    });
-
-    test('Returns undefined if no references', () => {
-      assert.isUndefined(element._computeReferences({}));
-    });
-
-    test('Returns an array from AMF model', () => {
-      const result = element._computeReferences(model);
-      assert.typeOf(result, 'array');
-    });
-
-    test('Returns all items in the array', () => {
-      const result = element._computeReferences(model);
-      assert.lengthOf(result, 8);
-    });
-  });
-
-  suite('_computeWebApi()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeWebApi());
-    });
-
-    test('Returns undefined if no encodes', () => {
-      assert.isUndefined(element._computeWebApi({}));
-    });
-
-    test('Returns an object from AMF model', () => {
-      const result = element._computeWebApi(model);
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeServer()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeServer());
-    });
-
-    test('Returns undefined if no encodes', () => {
-      assert.isUndefined(element._computeServer({}));
-    });
-
-    test('Returns an object from AMF model', () => {
-      const result = element._computeServer(model);
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeProtocols()', () => {
-    setup(() => {
-      element = fixture('Basic');
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeProtocols());
-    });
-
-    test('Returns array with values', () => {
-      const result = element._computeProtocols(model);
-      assert.typeOf(result, 'array');
-      assert.deepEqual(result, ['HTTPS']);
-    });
-  });
-
-  suite('_computeEndpointByPath()', () => {
-    // let webApi;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      // webApi = element._computeWebApi(model);
-    });
-
-    test('Returns undefined if no model argument', () => {
-      const result = element._computeEndpointByPath(undefined, '/test');
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined if no path argument', () => {
-      const webApi = element._computeWebApi(model);
-      const result = element._computeEndpointByPath(webApi);
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined if path not found', () => {
-      const webApi = element._computeWebApi(model);
-      const result = element._computeEndpointByPath(webApi, '/test');
-      assert.isUndefined(result);
-    });
-
-    test('Returns a model for an endpoint', () => {
-      const webApi = element._computeWebApi(model);
-      const result = element._computeEndpointByPath(webApi, '/changes');
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeEndpoints()', () => {
-    let webApi;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      webApi = element._computeWebApi(model);
-    });
-
-    test('Returns a loist of endpoints', () => {
-      const result = element._computeEndpoints(webApi);
-      assert.typeOf(result, 'array');
-      assert.lengthOf(result, 34);
-    });
-  });
-
-  suite('_computeExpects()', () => {
-    let operation;
-    let noExpectsOperation;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      const webApi = element._computeWebApi(model);
-      const endpoint = element._computeEndpointByPath(webApi, '/changes/watch');
-      const key = element._getAmfKey(AmfNamespace.w3.hydra.supportedOperation);
-      operation = endpoint[key][0];
-      noExpectsOperation = endpoint[key][1];
-    });
-
-    test('Returns undefined if no argument', () => {
-      assert.isUndefined(element._computeExpects());
-    });
-
-    test('Returns undefined if operation does not have "expects"', () => {
-      assert.isUndefined(element._computeExpects(noExpectsOperation));
-    });
-
-    test('Returns object for an operation', () => {
-      const result = element._computeExpects(operation);
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeEndpointModel()', () => {
-    let webApi;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      webApi = element._computeWebApi(model);
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._computeEndpointModel());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._computeEndpointModel(undefined, 'test'));
-    });
-
-    test('Returns undefined if no selected argument', () => {
-      assert.isUndefined(element._computeEndpointModel(webApi));
-    });
-
-    test('Returns undefined if selection does not exists', () => {
-      assert.isUndefined(element._computeEndpointModel(webApi, 'hello'));
-    });
-
-    test('Returns object for endpoint', () => {
-      const endpoint = element._computeEndpointByPath(webApi, '/changes/watch');
-      const id = endpoint['@id'];
-      const result = element._computeEndpointModel(webApi, id);
-      assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://a.ml/vocabularies/http#EndPoint');
-    });
-  });
-
-  suite('_computeMethodModel()', () => {
-    let webApi;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      webApi = element._computeWebApi(model);
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._computeMethodModel());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._computeMethodModel(undefined, 'test'));
-    });
-
-    test('Returns undefined if no selected argument', () => {
-      assert.isUndefined(element._computeMethodModel(webApi));
-    });
-
-    test('Returns undefined if selection does not exists', () => {
-      assert.isUndefined(element._computeMethodModel(webApi, 'hello'));
-    });
-
-    test('Returns object for method', () => {
-      const endpoint = element._computeEndpointByPath(webApi, '/permissionIds/{email}');
-      let op = element._computeOperations(webApi, endpoint['@id']);
-      if (op instanceof Array) {
-        op = op[0];
-      }
-      const result = element._computeMethodModel(webApi, op['@id']);
-      assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://www.w3.org/ns/hydra/core#Operation');
-    });
-  });
-
-  suite('_computeType()', () => {
-    let references;
-    let declares;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      declares = element._computeDeclares(model);
-      references = element._computeReferences(model);
-    });
-
-    test('Returns undefined if no arguments', () => {
-      assert.isUndefined(element._computeType());
-    });
-
-    test('Returns undefined if no model argument', () => {
-      assert.isUndefined(element._computeType(undefined, undefined, 'test'));
-    });
-
-    test('Returns undefined if no selected argument', () => {
-      assert.isUndefined(element._computeType(declares, references));
-    });
-
-    test('Returns undefined if selection does not exists', () => {
-      assert.isUndefined(element._computeType(declares, references, 'not-here'));
-    });
-
-    test('Returns type in declarations', () => {
-      const id = declares[1]['@id']; // Node shape.
-      const result = element._computeType(declares, undefined, id);
-      assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://www.w3.org/ns/shacl#NodeShape');
-    });
-
-    test('Returns type in references (library)', () => {
-      let ref = references[4]['http://a.ml/vocabularies/document#declares'][0];
-      if (ref instanceof Array) {
-        ref = ref[0];
-      }
-      const id = ref['@id'];
-      const result = element._computeType(declares, references, id);
-      assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://www.w3.org/ns/shacl#NodeShape');
-    });
-  });
-
-  suite('_getLinkTarget()', () => {
-    let schemaId;
-    let resolved;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      const declares = element._computeDeclares(model);
-      schemaId = declares[0]['@id'];
-      resolved = element._getLinkTarget(model, schemaId);
-    });
-
-    test('Computes the reference', () => {
-      assert.typeOf(resolved, 'object');
-    });
-
-    test('Reference is resolved', () => {
-      const itemsKey = 'http://a.ml/vocabularies/shapes#items';
-      const nameKey = 'http://schema.org/name';
-      const shape = resolved[itemsKey][0];
-      assert.equal(shape[nameKey][0]['@value'], 'Pic');
-    });
-
-    test('Returns undefined when no amf argument', () => {
-      const result = element._getLinkTarget();
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no id argument', () => {
-      const result = element._getLinkTarget(model);
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when id is not found', () => {
-      const result = element._getLinkTarget(model, 'other-test');
-      assert.isUndefined(result);
-    });
-  });
-
-  suite('_getReferenceId()', () => {
-    let refId;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      const ref = element._computeReferences(model)[1];
-      const enc = element._computeEncodes(ref);
-      refId = enc['@id'];
-    });
-
-    test('Computes reference', () => {
-      const result = element._getReferenceId(model, refId);
-      assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://a.ml/vocabularies/document#ExternalDomainElement');
-    });
-
-    test('Returns undefined when no amf argument', () => {
-      const result = element._getReferenceId();
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no id argument', () => {
-      const result = element._getReferenceId(model);
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no references in the model', () => {
-      const result = element._getReferenceId({});
-      assert.isUndefined(result);
-    });
-  });
-
-  suite('_resolve()', () => {
-    let webApi;
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      webApi = element._computeWebApi(model);
-    });
-
-    test('Resolves link target', () => {
-      const endpoint = element._computeEndpointByPath(webApi, '/referenceId');
-      const op = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'][0];
-      const expects = op['http://www.w3.org/ns/hydra/core#expects'][0];
-      const payload = expects['http://a.ml/vocabularies/http#payload'][0];
-      const schema = payload['http://a.ml/vocabularies/http#schema'][0];
-      const result = element._resolve(schema);
-      assert.typeOf(result['http://www.w3.org/ns/shacl#name'], 'array');
-    });
-  });
-
-  suite('_computeSecurityModel()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    test('Returns undefined when no declares', () => {
-      const result = element._computeSecurityModel();
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no id', () => {
-      const result = element._computeSecurityModel([]);
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when id not found', () => {
-      const result = element._computeSecurityModel([{'@id': 'a'}], 'b');
-      assert.isUndefined(result);
-    });
-
-    test('Returns model for id', () => {
-      const result = element._computeSecurityModel([{'@id': 'a'}], 'a');
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computeDocument()', () => {
-    let obj;
-    setup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      const key = element._getAmfKey(AmfNamespace.schema.doc);
-      obj = {};
-      obj[key] = [{
-        '@id': 'a'
-      }];
-    });
-
-    test('Returns undefined when no webApi', () => {
-      const result = element._computeDocument();
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no id', () => {
-      const result = element._computeDocument(obj);
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when id not found', () => {
-      const result = element._computeDocument(obj, 'b');
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no documents key', () => {
-      const result = element._computeDocument({}, 'b');
-      assert.isUndefined(result);
-    });
-
-    test('Returns model for id', () => {
-      const result = element._computeDocument(obj, 'a');
-      assert.typeOf(result, 'object');
-    });
-  });
-
-  suite('_computePropertyValue()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    test('Returns undefined when no argument', () => {
-      const result = element._computePropertyValue();
-      assert.isUndefined(result);
-    });
-
-    test('Returns undefined when no schema in argument', () => {
-      const result = element._computePropertyValue({});
-      assert.isUndefined(result);
-    });
-
-    test('Returns default value', () => {
-      const ns = AmfNamespace;
-      const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
-      const dvKey = element._getAmfKey(ns.w3.shacl.name + 'defaultValue');
-      const obj = {};
-      obj[sKey] = {};
-      obj[sKey][dvKey] = {
-        '@value': 'test-value'
-      };
-      const result = element._computePropertyValue(obj);
-      assert.equal(result, 'test-value');
-    });
-
-    test('Returns default value when schema is array', () => {
-      const ns = AmfNamespace;
-      const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
-      const dvKey = element._getAmfKey(ns.w3.shacl.name + 'defaultValue');
-      const obj = {};
-      obj[sKey] = [{}];
-      obj[sKey][0][dvKey] = {
-        '@value': 'test-value'
-      };
-      const result = element._computePropertyValue(obj);
-      assert.equal(result, 'test-value');
-    });
-
-    test('Returns value from example', () => {
-      const ns = AmfNamespace;
-      const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
-      const exKey = element._getAmfKey(ns.raml.vocabularies.document + 'examples');
-      const rKey = element._getAmfKey(ns.w3.shacl.name + 'raw');
-      const obj = {};
-      obj[sKey] = [{}];
-      obj[sKey][0][exKey] = [{}];
-      obj[sKey][0][exKey][0][rKey] = [{
-        '@value': 'test-value'
-      }];
-      const result = element._computePropertyValue(obj);
-      assert.equal(result, 'test-value');
-    });
-  });
-
-  suite('_computeHeaders()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeHeaders(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeHeaders({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'header');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeQueryParameters()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeQueryParameters(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeQueryParameters({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'parameter');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeResponses()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeResponses(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeResponses({});
-      const key = element._getAmfKey(AmfNamespace.w3.hydra.core + 'response');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeServerVariables()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeServerVariables(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeServerVariables({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'variable');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeServerVariables()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeServerVariables(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeServerVariables({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'variable');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeEndpointVariables()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computeQueryParameters.restore();
-    });
-
-    test('Calls _computeQueryParameters() with passed shape', () => {
-      const spy = sinon.spy(element, '_computeQueryParameters');
-      const model = {};
-      element._computeEndpointVariables(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-  });
-
-  suite('_computePayload()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computePayload(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computePayload({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.http + 'payload');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeReturns()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeReturns(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeReturns({});
-      const key = element._getAmfKey(AmfNamespace.w3.hydra.core + 'returns');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeSecurity()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._computePropertyArray.restore();
-    });
-
-    test('Calls _computePropertyArray() with passed shape', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      const model = {};
-      element._computeSecurity(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _computePropertyArray() with proper key', () => {
-      const spy = sinon.spy(element, '_computePropertyArray');
-      element._computeSecurity({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.security + 'security');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeHasCustomProperties()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    teardown(() => {
-      element._hasProperty.restore();
-    });
-
-    test('Calls _hasProperty() with passed shape', () => {
-      const spy = sinon.spy(element, '_hasProperty');
-      const model = {};
-      element._computeHasCustomProperties(model);
-      assert.isTrue(spy.called);
-      assert.isTrue(spy.args[0][0] === model);
-    });
-
-    test('Calls _hasProperty() with proper key', () => {
-      const spy = sinon.spy(element, '_hasProperty');
-      element._computeHasCustomProperties({});
-      const key = element._getAmfKey(AmfNamespace.raml.vocabularies.document + 'customDomainProperties');
-      assert.equal(spy.args[0][1], key);
-    });
-  });
-
-  suite('_computeApiVersion()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    test('Computes version of the API', () => {
-      const result = element._computeApiVersion(model);
-      assert.equal(result, 'v2');
-    });
-
-    test('Returns undefined when no WebApi', () => {
-      const result = element._computeApiVersion({});
-      assert.isUndefined(result);
-    });
-  });
-
-  suite('_ensureArray()', () => {
-    suiteSetup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-    });
-
-    test('Returns undefined when no argument', () => {
-      const result = element._ensureArray();
-      assert.isUndefined(result);
-    });
-
-    test('Returns the same array', () => {
-      const arr = ['a'];
-      const result = element._ensureArray(arr);
-      assert.isTrue(result === arr);
-    });
-
-    test('Returns array value from not array argument', () => {
-      const arr = 'a';
-      const result = element._ensureArray(arr);
-      assert.deepEqual(result, ['a']);
-    });
-  });
-
-  suite('_computeStructuredExampleValue()', () => {
-    let baseObj;
-    let valueKey;
-    setup(() => {
-      element = fixture('Basic');
-      element.amfModel = model;
-      const typeKey = element._getAmfKey(AmfNamespace.raml.vocabularies.data + 'Scalar');
-      valueKey = element._getAmfKey(AmfNamespace.raml.vocabularies.data + 'value');
-      baseObj = {};
-      baseObj['@type'] = [typeKey];
-      baseObj[valueKey] = [{
-        '@type': '',
-        '@value': ''
-      }];
-    });
-
-    test('Returns undefined when no argument', () => {
-      const result = element._computeStructuredExampleValue();
-      assert.isUndefined(result);
-    });
-
-    test('Returns the same value as argument when string', () => {
-      const result = element._computeStructuredExampleValue('test');
-      assert.equal(result, 'test');
-    });
-
-    test('Returns boolean value - true (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'boolean';
-      baseObj[valueKey][0]['@value'] = 'true';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'boolean');
-      assert.isTrue(result);
-    });
-
-    test('Returns boolean value - false (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'boolean';
-      baseObj[valueKey][0]['@value'] = 'false';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'boolean');
-      assert.isFalse(result);
-    });
-
-    test('Returns numeric value for integer (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'integer';
-      baseObj[valueKey][0]['@value'] = '10';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'number');
-      assert.equal(result, 10);
-    });
-
-    test('Returns numeric value for long (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'long';
-      baseObj[valueKey][0]['@value'] = '1000000000';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'number');
-      assert.equal(result, 1000000000);
-    });
-
-    test('Returns numeric value for double (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'double';
-      baseObj[valueKey][0]['@value'] = '12.1234';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'number');
-      assert.equal(result, 12.1234);
-    });
-
-    test('Returns numeric value for float (full key)', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'float';
-      baseObj[valueKey][0]['@value'] = '12.1234';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'number');
-      assert.equal(result, 12.1234);
-    });
-
-    test('Returns string otherwise', () => {
-      baseObj[valueKey][0]['@type'] = AmfNamespace.w3.xmlSchema + 'string';
-      baseObj[valueKey][0]['@value'] = 'test';
-      const result = element._computeStructuredExampleValue(baseObj);
-      assert.typeOf(result, 'string');
-      assert.equal(result, 'test');
-    });
-  });
-});
-</script>
+  </script>
 </body>
 </html>
