@@ -43,11 +43,11 @@ suite('Compact model tests', () => {
     setup(() => {
       element = fixture('Basic');
     });
-    const key = 'http://schema.org/description';
+    const key = 'http://a.ml/vocabularies/core#description';
     test('Returns a value from context', function() {
       element.amfModel = model;
       const result = element._getAmfKey(key);
-      assert.equal(result, 'schema-org:description');
+      assert.equal(result, 'core:description');
     });
 
     test('Returns the key if no AMF', function() {
@@ -80,9 +80,9 @@ suite('Compact model tests', () => {
 
     test('Returns the value', () => {
       element.amfModel = model;
-      const key = 'http://a.ml/vocabularies/http#scheme';
+      const key = 'http://a.ml/vocabularies/apiContract#scheme';
       const result = element._getValue({
-        'raml-http:scheme': [{
+        'apiContract:scheme': [{
           '@value': 'test'
         }]
       }, key);
@@ -107,9 +107,9 @@ suite('Compact model tests', () => {
 
     test('Returns the values', () => {
       element.amfModel = model;
-      const key = 'http://a.ml/vocabularies/http#scheme';
+      const key = 'http://a.ml/vocabularies/apiContract#scheme';
       const result = element._getValueArray({
-        'raml-http:scheme': [{
+        'apiContract:scheme': [{
           '@value': 'test'
         }, {
           '@value': 'test2'
@@ -119,9 +119,9 @@ suite('Compact model tests', () => {
     });
 
     test('Returns undefined if no model', () => {
-      const key = 'http://a.ml/vocabularies/http#scheme';
+      const key = 'http://a.ml/vocabularies/apiContract#scheme';
       const result = element._getValueArray({
-        'raml-http:scheme': [{
+        'apiContract:scheme': [{
           '@value': 'test'
         }, {
           '@value': 'test2'
@@ -182,7 +182,7 @@ suite('Compact model tests', () => {
 
     test('Returns undefined if no description key', () => {
       assert.equal(element._computeDescription({
-        'schema-org:description': [{
+        'core:description': [{
           '@value': ['test']
         }]
       }), 'test');
@@ -323,7 +323,7 @@ suite('Compact model tests', () => {
       const id = endpoint['@id'];
       const result = element._computeEndpointModel(webApi, id);
       assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'raml-http:EndPoint');
+      assert.equal(result['@type'][0], 'apiContract:EndPoint');
     });
   });
 
@@ -343,7 +343,7 @@ suite('Compact model tests', () => {
       }
       const result = element._computeMethodModel(webApi, op['@id']);
       assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'hydra:Operation');
+      assert.equal(result['@type'][0], 'apiContract:Operation');
     });
   });
 
@@ -395,7 +395,7 @@ suite('Compact model tests', () => {
 
     test('Reference is resolved', () => {
       const itemsKey = element._getAmfKey('http://a.ml/vocabularies/shapes#items');
-      const nameKey = element._getAmfKey('http://schema.org/name');
+      const nameKey = element._getAmfKey('http://a.ml/vocabularies/core#name');
       const shape = resolved[itemsKey][0];
       assert.equal(shape[nameKey][0]['@value'], 'Pic');
     });
@@ -431,13 +431,14 @@ suite('Compact model tests', () => {
       const soKey = element._getAmfKey(AmfNamespace.w3.hydra.supportedOperation);
       const op = element._ensureArray(endpoint[soKey])[0];
       const expects = element._ensureArray(
-        op[element._getAmfKey('http://www.w3.org/ns/hydra/core#expects')])[0];
+        op[element._getAmfKey('http://a.ml/vocabularies/apiContract#expects')])[0];
       const payload = element._ensureArray(
-        expects[element._getAmfKey('http://a.ml/vocabularies/http#payload')])[0];
+        expects[element._getAmfKey('http://a.ml/vocabularies/apiContract#payload')])[0];
       const schema = element._ensureArray(
-        payload[element._getAmfKey('http://a.ml/vocabularies/http#schema')])[0];
+        payload[element._getAmfKey('http://a.ml/vocabularies/apiContract#schema')])[0];
       const result = element._resolve(schema);
-      assert.typeOf(result[element._getAmfKey('http://www.w3.org/ns/shacl#name')], 'array');
+      const finalResult = result[element._getAmfKey('http://www.w3.org/ns/shacl#name')];
+      assert.typeOf(finalResult, 'array');
     });
   });
 });

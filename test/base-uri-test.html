@@ -59,10 +59,10 @@ suite('Base URI test', () => {
   const noSchemeServer = {
     '@id': 'file://test/demo-api/demo-api.raml#/web-api/https%3A%2F%2Fapi.mulesoft.com%2F%7Bversion%7D',
     '@type': [
-      'http://raml.org/vocabularies/http#Server',
+      'http://raml.org/vocabularies/apiContract#Server',
       'http://raml.org/vocabularies/document#DomainElement'
     ],
-    'http://a.ml/vocabularies/http#url': [
+    'http://a.ml/vocabularies/apiContract#url': [
       {
         '@value': 'api.mulesoft.com/test'
       }

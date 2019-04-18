@@ -20,7 +20,9 @@ ns.raml.name = 'http://a.ml/';
 ns.raml.vocabularies = {};
 ns.raml.vocabularies.name = ns.raml.name + 'vocabularies/';
 ns.raml.vocabularies.document = ns.raml.vocabularies.name + 'document#';
-ns.raml.vocabularies.http = ns.raml.vocabularies.name + 'http#';
+ns.raml.vocabularies.core = ns.raml.vocabularies.name + 'core#';
+ns.raml.vocabularies.apiContract = ns.raml.vocabularies.name + 'apiContract#';
+ns.raml.vocabularies.http = ns.raml.vocabularies.apiContract;
 ns.raml.vocabularies.security = ns.raml.vocabularies.name + 'security#';
 ns.raml.vocabularies.shapes = ns.raml.vocabularies.name + 'shapes#';
 ns.raml.vocabularies.data = ns.raml.vocabularies.name + 'data#';
@@ -32,7 +34,7 @@ ns.w3 = {};
 ns.w3.name = 'http://www.w3.org/';
 ns.w3.hydra = {};
 ns.w3.hydra.name = ns.w3.name + 'ns/hydra/';
-ns.w3.hydra.core = ns.w3.hydra.name + 'core#';
+ns.w3.hydra.core = ns.raml.vocabularies.apiContract;
 ns.w3.xmlSchema = ns.w3.name + '2001/XMLSchema#';
 // w3 types
 ns.w3.shacl = {};
@@ -48,17 +50,17 @@ ns.w3.shacl.maxLength = ns.w3.shacl.name + 'maxLength';
 ns.w3.shacl.fileType = ns.w3.shacl.name + 'fileType';
 ns.w3.shacl.shape = ns.w3.shacl.name + 'Shape';
 // Hydra shortcuts
-ns.w3.hydra.supportedOperation = ns.w3.hydra.core + 'supportedOperation';
+ns.w3.hydra.supportedOperation = ns.raml.vocabularies.apiContract + 'supportedOperation';
 // Schema org namespace
 ns.schema = {};
-ns.schema.name = 'http://schema.org/';
+ns.schema.name = ns.raml.vocabularies.core;
 ns.schema.schemaName = ns.schema.name + 'name';
 ns.schema.desc = ns.schema.name + 'description';
 ns.schema.doc = ns.schema.name + 'documentation';
-ns.schema.webApi = ns.schema.name + 'WebAPI';
-ns.schema.creativeWork = ns.schema.name + 'CreativeWork';
-ns.schema.displayName = ns.schema.name + 'displayName';
-ns.schema.title = ns.schema.name + 'title';
+ns.schema.webApi = ns.raml.vocabularies.apiContract + 'WebAPI';
+ns.schema.creativeWork = ns.raml.vocabularies.core + 'CreativeWork';
+ns.schema.displayName = ns.raml.vocabularies.core + 'displayName';
+ns.schema.title = ns.raml.vocabularies.core + 'title';
 
 Object.freeze(ns.raml);
 Object.freeze(ns.raml.vocabularies);
@@ -332,15 +334,15 @@ export const AmfHelperMixin = dedupingMixin((base) => {
     }
 
     _computeHeaders(shape) {
-      return this._computePropertyArray(shape, ns.raml.vocabularies.http + 'header');
+      return this._computePropertyArray(shape, ns.raml.vocabularies.apiContract + 'header');
     }
 
     _computeQueryParameters(shape) {
-      return this._computePropertyArray(shape, ns.raml.vocabularies.http + 'parameter');
+      return this._computePropertyArray(shape, ns.raml.vocabularies.apiContract + 'parameter');
     }
 
     _computeResponses(shape) {
-      return this._computePropertyArray(shape, ns.w3.hydra.core + 'response');
+      return this._computePropertyArray(shape, ns.raml.vocabularies.apiContract + 'response');
     }
     /**
      * Computes value for `serverVariables` property.
@@ -349,7 +351,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @return {Array<Object>|undefined} Variables if defined.
      */
     _computeServerVariables(server) {
-      return this._computePropertyArray(server, ns.raml.vocabularies.http + 'variable');
+      return this._computePropertyArray(server, ns.raml.vocabularies.apiContract + 'variable');
     }
     /**
      * Computes value for `endpointVariables` property.
@@ -367,7 +369,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @return {Array<Object>|undefined} Payload model if defined.
      */
     _computePayload(expects) {
-      return this._computePropertyArray(expects, ns.raml.vocabularies.http + 'payload');
+      return this._computePropertyArray(expects, ns.raml.vocabularies.apiContract + 'payload');
     }
     /**
      * Computes value for `returns` property
@@ -376,7 +378,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @return {Array<Object>|undefined}
      */
     _computeReturns(method) {
-      return this._computePropertyArray(method, ns.w3.hydra.core + 'returns');
+      return this._computePropertyArray(method, ns.raml.vocabularies.apiContract + 'returns');
     }
     /**
      * Computes value for `security` property
@@ -407,7 +409,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!api) {
         return;
       }
-      return this._getValue(api, ns.schema.name + 'version');
+      return this._getValue(api, ns.raml.vocabularies.core + 'version');
     }
     /**
      * Computes model's `encodes` property.
@@ -494,7 +496,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!api) {
         return;
       }
-      const key = this._getAmfKey(ns.raml.vocabularies.http + 'server');
+      const key = this._getAmfKey(ns.raml.vocabularies.apiContract + 'server');
       const srv = this._ensureArray(api[key]);
       return srv ? srv[0] : undefined;
     }
@@ -513,7 +515,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
         base = base.substr(0, base.length - 1);
       }
       base = this._ensureUrlScheme(base);
-      const path = this._getValue(endpoint, ns.raml.vocabularies.http + 'path');
+      const path = this._getValue(endpoint, ns.raml.vocabularies.apiContract + 'path');
       let result = base + (path || '');
       if (version && result) {
         result = result.replace('{version}', version);
@@ -551,7 +553,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @return {String|undefined} Base uri value if exists.
      */
     _getAmfBaseUri(server, protocols) {
-      let value = this._getValue(server, ns.raml.vocabularies.http + 'url');
+      let value = this._getValue(server, ns.raml.vocabularies.apiContract + 'url');
       value = this._ensureUrlScheme(value, protocols);
       return value;
     }
@@ -592,7 +594,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!api) {
         return;
       }
-      return this._getValueArray(api, ns.raml.vocabularies.http + 'scheme');
+      return this._getValueArray(api, ns.raml.vocabularies.apiContract + 'scheme');
     }
     /**
      * Computes value for the `expects` property.
@@ -617,7 +619,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @return {String|undefined}
      */
     _computePropertyValue(item) {
-      const skey = this._getAmfKey(ns.raml.vocabularies.http + 'schema');
+      const skey = this._getAmfKey(ns.raml.vocabularies.apiContract + 'schema');
       let schema = item && item[skey];
       if (!schema) {
         return;
@@ -627,7 +629,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       }
       let value = this._getValue(schema, ns.w3.shacl.name + 'defaultValue');
       if (!value) {
-        const examplesKey = this._getAmfKey(ns.raml.vocabularies.document + 'examples');
+        const examplesKey = this._getAmfKey(ns.raml.vocabularies.apiContract + 'examples');
         let example = schema[examplesKey];
         if (example) {
           if (example instanceof Array) {
@@ -647,7 +649,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!webApi) {
         return [];
       }
-      const key = this._getAmfKey(ns.raml.vocabularies.http + 'endpoint');
+      const key = this._getAmfKey(ns.raml.vocabularies.apiContract + 'endpoint');
       return this._ensureArray(webApi[key]);
     }
     /**
@@ -680,7 +682,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
         return;
       }
       for (let i = 0; i < endpoints.length; i++) {
-        const ePath = this._getValue(endpoints[i], this.ns.raml.vocabularies.http + 'path');
+        const ePath = this._getValue(endpoints[i], this.ns.raml.vocabularies.apiContract + 'path');
         if (ePath === path) {
           return endpoints[i];
         }
@@ -711,7 +713,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!endpoint) {
         return [];
       }
-      const opKey = this._getAmfKey(ns.w3.hydra.supportedOperation);
+      const opKey = this._getAmfKey(ns.raml.vocabularies.apiContract + 'supportedOperation');
       return this._ensureArray(endpoint[opKey]);
     }
     /**
@@ -728,7 +730,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!endpoints) {
         return;
       }
-      const opKey = this._getAmfKey(ns.w3.hydra.supportedOperation);
+      const opKey = this._getAmfKey(ns.raml.vocabularies.apiContract + 'supportedOperation');
       for (let i = 0, len = endpoints.length; i < len; i++) {
         const endpoint = endpoints[i];
         let methods = endpoint[opKey];
@@ -758,7 +760,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (!endpoint) {
         return;
       }
-      const opKey = this._getAmfKey(ns.w3.hydra.supportedOperation);
+      const opKey = this._getAmfKey(ns.raml.vocabularies.apiContract + 'supportedOperation');
       return this._ensureArray(endpoint[opKey]);
     }
     /**

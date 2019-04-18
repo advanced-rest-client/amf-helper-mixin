@@ -94,7 +94,8 @@ suite('amf-helper-mixin', () => {
       const key = 'http://a.ml/vocabularies/';
       assert.equal(v.name, key);
       assert.equal(v.document, key + 'document#');
-      assert.equal(v.http, key + 'http#');
+      assert.equal(v.core, key + 'core#');
+      assert.equal(v.http, key + 'apiContract#'); // mapped
       assert.equal(v.security, key + 'security#');
       assert.equal(v.shapes, key + 'shapes#');
       assert.equal(v.data, key + 'data#');
@@ -120,12 +121,12 @@ suite('amf-helper-mixin', () => {
       });
     });
 
-    test('hydra properties are set', () => {
+    test('hydra properties have been mapped to aml.apiContract', () => {
       const h = AmfNamespace.w3.hydra;
       const key = 'http://www.w3.org/ns/hydra/';
       assert.equal(h.name, key);
-      assert.equal(h.core, key + 'core#');
-      assert.equal(h.supportedOperation, key + 'core#supportedOperation');
+      assert.equal(h.core, AmfNamespace.raml.vocabularies.apiContract); // mapped
+      assert.equal(h.supportedOperation, AmfNamespace.raml.vocabularies.apiContract + 'supportedOperation');
     });
 
     test('hydra cannot be changed', () => {
@@ -154,20 +155,21 @@ suite('amf-helper-mixin', () => {
       });
     });
 
-    test('schema properties are set', () => {
+    test('schema properties are mapped to aml.core / aml.apiContract (only WebAPI, name, description, displayName, title)', () => {
       const s = AmfNamespace.schema;
-      const key = 'http://schema.org/';
+      const ns = AmfNamespace;
+      const key = AmfNamespace.raml.vocabularies.core;
       assert.equal(s.name, key);
-      assert.equal(s.schemaName, key + 'name');
-      assert.equal(s.desc, key + 'description');
+      assert.equal(s.schemaName, ns.raml.vocabularies.core + 'name');
+      assert.equal(s.desc, ns.raml.vocabularies.core + 'description');
       assert.equal(s.doc, key + 'documentation');
-      assert.equal(s.webApi, key + 'WebAPI');
+      assert.equal(s.webApi, ns.raml.vocabularies.apiContract + 'WebAPI'); // special
       assert.equal(s.creativeWork, key + 'CreativeWork');
       [
         'displayName', 'title'
       ]
       .forEach((name) => {
-        assert.equal(s[name], key + name);
+        assert.equal(s[name], ns.raml.vocabularies.core + name);
       });
     });
 
@@ -505,7 +507,7 @@ suite('amf-helper-mixin', () => {
 
     test('Returns undefined if no description key', () => {
       assert.equal(element._computeDescription({
-        'http://schema.org/description': [{
+        'http://a.ml/vocabularies/core#description': [{
           '@value': ['test']
         }]
       }), 'test');
@@ -740,7 +742,7 @@ suite('amf-helper-mixin', () => {
       const id = endpoint['@id'];
       const result = element._computeEndpointModel(webApi, id);
       assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://a.ml/vocabularies/http#EndPoint');
+      assert.equal(result['@type'][0], 'http://a.ml/vocabularies/apiContract#EndPoint');
     });
   });
 
@@ -775,7 +777,7 @@ suite('amf-helper-mixin', () => {
       }
       const result = element._computeMethodModel(webApi, op['@id']);
       assert.typeOf(result, 'object');
-      assert.equal(result['@type'][0], 'http://www.w3.org/ns/hydra/core#Operation');
+      assert.equal(result['@type'][0], 'http://a.ml/vocabularies/apiContract#Operation');
     });
   });
 
@@ -841,7 +843,7 @@ suite('amf-helper-mixin', () => {
 
     test('Reference is resolved', () => {
       const itemsKey = 'http://a.ml/vocabularies/shapes#items';
-      const nameKey = 'http://schema.org/name';
+      const nameKey = 'http://a.ml/vocabularies/core#name';
       const shape = resolved[itemsKey][0];
       assert.equal(shape[nameKey][0]['@value'], 'Pic');
     });
@@ -904,10 +906,10 @@ suite('amf-helper-mixin', () => {
 
     test('Resolves link target', () => {
       const endpoint = element._computeEndpointByPath(webApi, '/referenceId');
-      const op = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'][0];
-      const expects = op['http://www.w3.org/ns/hydra/core#expects'][0];
-      const payload = expects['http://a.ml/vocabularies/http#payload'][0];
-      const schema = payload['http://a.ml/vocabularies/http#schema'][0];
+      const op = endpoint['http://a.ml/vocabularies/apiContract#supportedOperation'][0];
+      const expects = op['http://a.ml/vocabularies/apiContract#expects'][0];
+      const payload = expects['http://a.ml/vocabularies/apiContract#payload'][0];
+      const schema = payload['http://a.ml/vocabularies/apiContract#schema'][0];
       const result = element._resolve(schema);
       assert.typeOf(result['http://www.w3.org/ns/shacl#name'], 'array');
     });
@@ -1023,7 +1025,7 @@ suite('amf-helper-mixin', () => {
     test('Returns value from example', () => {
       const ns = AmfNamespace;
       const sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
-      const exKey = element._getAmfKey(ns.raml.vocabularies.document + 'examples');
+      const exKey = element._getAmfKey(ns.raml.vocabularies.apiContract + 'examples');
       const rKey = element._getAmfKey(ns.w3.shacl.name + 'raw');
       const obj = {};
       obj[sKey] = [{}];
