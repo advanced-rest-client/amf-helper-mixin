@@ -378,5 +378,6 @@
 * Updating AMF models and tests ([091fa97949b12e773cead36aa087636847c86f06](https://github.com/advanced-rest-client/amf-helper-mixin/commit/091fa97949b12e773cead36aa087636847c86f06))
 * Updating the library to work with new AMF model. ([4bb9664cda4f32bea5907ba007750d8d87ec0f7e](https://github.com/advanced-rest-client/amf-helper-mixin/commit/4bb9664cda4f32bea5907ba007750d8d87ec0f7e))
 
+### Update
 
-
+* Updating namespaces in the AMF model, updating tests ([8d3830b41d43f5d20a2e46e3a4c8c4efcb9589d6](https://github.com/antoniogarrote/amf-helper-mixin/commit/8d3830b41d43f5d20a2e46e3a4c8c4efcb9589d6))
