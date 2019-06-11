@@ -4,9 +4,13 @@ sudo: required
 addons:
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
 script:
 - npm run test
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test:sl; fi
+env:
+  global:
+  - secure: CRwIdB1vDECNK87FFoZKQ6NCFHabMxZc+CzHZSdCiN7SxdyplTs1kkzhxQ+XaM3XZd4/0u/Hd2nX6hgCX2kVYVpiBcOQVeAQxDAHN9mX0k3pM/xL5pgUi0E9zLQEy/0X4zUc+FE/9qpueGVC3xQMvMQjXbOJ+tlL+rWDAuwORQhkgQqtf5+NiDnEHGx6DGc6ytnotXPh4HhYk1aDFsJQNpQid8bMmIyW5zFchILp5b+5XWjUMnowFxMwYoLlSyD43swI5r1oQTKD95ftoKvzaelW/SmUbzGgaJe+5waU/atnZQa7l01TChmWIFaPPJqFrLuPnHHzX2COK8+67CDefu7bVTkD27JUilBxEtrWius2DZ7iGT9q2QJiwzo8PHQ1k/vIndYGWVr/qzNkIwZ1OYoMVB5l88hfYv4BCv9dGECiBW/kYhPF9w5nJ+swPTt+lJyVzqIz0Nc+AkdQV+ZHYfC9Z83Nj61gtPqJ1Y4pZat5Ui7v9f0Eiu7Ia59qfVeog/dD9vJQbDvpXFkJOtRB9HhjC1ZFt8WD0juYR2bdgQkL0/63nYkPa7vz2jae7BYFM00W9oa6sQ2hbH4zXkCLk8bbYVqDNqyw4OYln7bMnYt+6YtKz0VCX4dleheUFQsRpm2vBYLk1+fE6UFkl7AdefZtE7EgKqH50/3TJ1N/BpU=
+  - secure: TsOxX61aHJRcYTcuYNDHr7mFHaNjbT7h4mCep1l7+YLyEGfNs74theOYSs7dFj8SY9flvHzIc37JMgv2qLkjroUZ7cgn92jLwtwZ7uDAnn9LHTnnHZyLr9McSfxvfcZDWLdFjtpT74UpnhAUI5D7PSTVkgfi51nXfmRfPDhiJik1EA4VPU0Cwc0hD5ILbabi7jxVzjdSlEzmUfpFmdzug83V01GZNktNce7PK25i7DeWr7bcEZnIz3RI3uKYfNigjXNF44NzRstFEBEgosSNc8OJ+7aCj7C2N0noivUnMbqd4wSSiXXwkRn9pPIl0Au+T+lpHHx0cMbQnHb9QCnJLEy1hCU/GVSfbhb4DxJVumgXPyi6RIBVFJwRNh44KdmPtIuU1tCtzxUYelh2gyN6H+o+ccpG7upCAMH/wgTLFW/v3SH1AS/wqGKKpt5dDC56O/6HSPhe7E0dP7j2cb2wF/ADuUf3fwD+W29v2VdXFFnyM+CcfMLOLu02WjhpfvmSAHP1wQCgqd+9uGwDfgYl85wpTBc+WMKUuPIZ7hd5o6HdaQU8Sy5KdRFzrNyVy1k7dgrYKjihshhRiowl/8CNT7zRFHcjIjIizqUK5++TDg9r3hltdRxa/xfDhU72eiXnmLgznG/D2m3+uVkMxAT9mbcw3c0RturZfwo2va2yUI4=
