@@ -5,14 +5,18 @@
  *   https://github.com/Polymer/tools/tree/master/packages/gen-typescript-declarations
  *
  * To modify these typings, edit the source file(s):
- *   amf-helper-mixin.html
+ *   amf-helper-mixin.js
  */
 
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-/// <reference path="../polymer/types/lib/utils/mixin.d.ts" />
+import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin.js';
+
+import {IronMeta} from '@polymer/iron-meta/iron-meta.js';
+
+export {AmfHelperMixin};
 
 declare namespace ApiElements {
 
@@ -36,7 +40,7 @@ declare namespace ApiElements {
    * [monostate pattern](http://wiki.c2.com/?MonostatePattern)
    * to manage base URI property.
    *
-   * When the component constructs the funal URI for the endpoint it does the following:
+   * When the component constructs the final URI for the endpoint it does the following:
    * - if `baseUri` is set it uses this value as a base uri for the endpoint
    * - else if `iron-meta` with key `ApiBaseUri` exists and contains a value
    * it uses it uses this value as a base uri for the endpoint
@@ -53,6 +57,11 @@ declare namespace ApiElements {
   interface AmfHelperMixin {
 
     /**
+     * A namespace for AMF model.
+     */
+    readonly ns: object|null;
+
+    /**
      * Generated AMF json/ld model form the API spec.
      * The element assumes the object of the first array item to be a
      * type of `"http://raml.org/vocabularies/document#Document`
@@ -61,11 +70,6 @@ declare namespace ApiElements {
      * It is only usefult for the element to resolve references.
      */
     amfModel: object|any[]|null;
-
-    /**
-     * A namespace for AMF model
-     */
-    readonly ns: object|null|undefined;
 
     /**
      * Returns compact model key for given value.
@@ -456,3 +460,5 @@ declare namespace ApiElements {
     _computeStructuredExampleValue(model: object|null): String|Boolean|Number|null;
   }
 }
+
+export {AmfHelperMixinConstructor};
