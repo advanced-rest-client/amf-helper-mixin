@@ -11,8 +11,8 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
-import {dedupingMixin} from '../../@polymer/polymer/lib/utils/mixin.js';
-import {IronMeta} from '../../@polymer/iron-meta/iron-meta.js';
+import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { IronMeta } from '@polymer/iron-meta/iron-meta.js';
 export const ns = {};
 // RAML namespace
 ns.raml = {};
@@ -88,7 +88,7 @@ Object.freeze(ns);
  * [monostate pattern](http://wiki.c2.com/?MonostatePattern)
  * to manage base URI property.
  *
- * When the component constructs the funal URI for the endpoint it does the following:
+ * When the component constructs the final URI for the endpoint it does the following:
  * - if `baseUri` is set it uses this value as a base uri for the endpoint
  * - else if `iron-meta` with key `ApiBaseUri` exists and contains a value
  * it uses it uses this value as a base uri for the endpoint
@@ -118,18 +118,15 @@ export const AmfHelperMixin = dedupingMixin((base) => {
          *
          * @type {Object|Array}
          */
-        amfModel: {type: Object},
-        /**
-         * A namespace for AMF model
-         */
-        ns: {
-          type: Object,
-          value: function() {
-            return ns;
-          },
-          readOnly: true
-        }
+        amfModel: {type: Object}
       };
+    }
+    /**
+     * A namespace for AMF model.
+     * @return {Object}
+     */
+    get ns() {
+      return ns;
     }
     /**
      * Returns compact model key for given value.
@@ -142,7 +139,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
         return;
       }
       let amf = this.amfModel;
-      if (!amf || !property) {
+      if (!amf) {
         return property;
       }
       if (amf instanceof Array) {
@@ -956,6 +953,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * @param {Boolean} isJson If set it checks if the `raw` value is valid JSON.
      * If it isn't then it parses structured value.
      * @return {String}
+     * @deprecated Use `amf-excample-generator` for examples generation.
      */
     _getExampleValue(item, isJson) {
       item = this._resolve(item);
@@ -976,6 +974,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      *
      * @param {Object} model `structuredValue` item model.
      * @return {Object|Array} Javascript object or array with structured value.
+     * @deprecated Use `amf-excample-generator` for examples generation.
      */
     _computeExampleFromStructuredValue(model) {
       if (this._hasType(model, ns.raml.vocabularies.data + 'Scalar')) {
@@ -1003,6 +1002,7 @@ export const AmfHelperMixin = dedupingMixin((base) => {
      * Computes value with propert data type for a structured example.
      * @param {Object} model Structured example item model.
      * @return {String|Boolean|Number} Value for the example.
+     * @deprecated Use `amf-excample-generator` for examples generation.
      */
     _computeStructuredExampleValue(model) {
       if (!model) {

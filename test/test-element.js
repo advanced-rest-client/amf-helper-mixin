@@ -1,25 +1,21 @@
-import {PolymerElement} from '../../../@polymer/polymer/polymer-element.js';
-import {AmfHelperMixin} from '../amf-helper-mixin.js';
-import {html} from '../../../@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html, css } from 'lit-element';
+import { AmfHelperMixin } from '../amf-helper-mixin.js';
 /**
  * @customElement
  * @polymer
  * @demo demo/index.html
  * @appliesMixin AmfHelperMixin
  */
-class TestElement extends AmfHelperMixin(PolymerElement) {
-  static get template() {
-    return html`
-    <style include="api-form-styles">
+class TestElement extends AmfHelperMixin(LitElement) {
+  static get styles() {
+    return css`
     :host {
       display: block;
-    }
-    </style>
-`;
+    }`;
   }
 
-  static get is() {
-    return 'test-element';
+  render() {
+    return html`Test element`;
   }
 }
-window.customElements.define(TestElement.is, TestElement);
+window.customElements.define('test-element', TestElement);
