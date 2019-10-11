@@ -1718,6 +1718,41 @@ describe('AmfHelperMixin', function() {
           assert.deepEqual(result, ['a']);
         });
       });
+      // Keys caching is only enabled for compact model that requires cadditional
+      // computations.
+      (compact ? describe : describe.skip)('keys computation caching', () => {
+        before(async () => {
+          element = await modelFixture(model);
+        });
+
+        it('caches a key value', () => {
+          const prop = element.ns.aml.vocabularies.document.encodes;
+          const key = element._getAmfKey(prop);
+          assert.equal(element.__cachedKeys[prop], key);
+        });
+
+        it('retuens the same value', () => {
+          const prop = element.ns.aml.vocabularies.document.encodes;
+          const key1 = element._getAmfKey(prop);
+          const key2 = element._getAmfKey(prop);
+          assert.equal(key1, key2);
+        });
+
+        it('uses cached value', () => {
+          const prop = element.ns.aml.vocabularies.document.encodes;
+          element._getAmfKey(prop);
+          element.__cachedKeys[prop] = 'test';
+          const key = element._getAmfKey(prop);
+          assert.equal(key, 'test');
+        });
+
+        it('resets cahce when AMF changes', () => {
+          const prop = element.ns.aml.vocabularies.document.encodes;
+          element._getAmfKey(prop);
+          element.amf = undefined;
+          assert.deepEqual(element.__cachedKeys, {});
+        });
+      });
     });
   });
 });

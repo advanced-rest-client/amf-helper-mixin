@@ -283,6 +283,9 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (old === value) {
         return;
       }
+      // Cahced keys cannot be static as this element can be using in the sane
+      // document with different AMF models
+      this.__cachedKeys = {};
       this._amf = value;
       this.__amfChanged(value);
       if (this.requestUpdate) {
@@ -314,9 +317,16 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       if (amf instanceof Array) {
         amf = amf[0];
       }
+      if (!this.__cachedKeys) {
+        this.__cachedKeys = {};
+      }
       const ctx = amf['@context'];
       if (!ctx || !property) {
         return property;
+      }
+      const cache = this.__cachedKeys;
+      if (property in cache) {
+        return cache[property];
       }
       property = String(property);
       const hashIndex = property.indexOf('#');
@@ -325,12 +335,15 @@ export const AmfHelperMixin = dedupingMixin((base) => {
       for (let i = 0, len = keys.length; i < len; i++) {
         const k = keys[i];
         if (ctx[k] === property) {
+          cache[property] = ctx[k];
           return k;
         } else if (hashIndex === -1 && property.indexOf(ctx[k]) === 0) {
           const result = property.replace(ctx[k], k + ':');
+          cache[property] = result;
           return result;
         } else if (ctx[k] === hashProperty) {
           const result = k + ':' + property.substr(hashIndex + 1);
+          cache[property] = result;
           return result;
         }
       }
