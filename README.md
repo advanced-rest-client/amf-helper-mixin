@@ -7,6 +7,11 @@
 Common functions used by AMF components to compute AMF values.
 This mixin is safe to use in both Polymer and LitElement projects as well as pure web components.
 
+## Version compatibility
+
+This version only works with AMF model version 2 (AMF parser >= 4.0.0).
+For compatibility with previous model version use `3.x.x` version of the component.
+
 ## Updating API's base URI
 
 (Only applies when using `_computeEndpointUri()` function)
