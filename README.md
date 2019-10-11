@@ -29,6 +29,27 @@ When the component constructs the final URI for the endpoint it does the followi
 -   else if `amf` is set then it computes base URI value from main model document
 Then it concatenates computed base URI with `endpoint`'s path property.
 
+
+## Using AMF keys
+
+The mixin has AMF's model namespace defined under `ns` property. Use this
+structure to request AMF key (for example when calling `_getAmfKey()`).
+AMF keys may change over time. This way it allows to manage the keys change easier
+as the components don't have to change, just this mixin.
+
+**don't do this**
+```javascript
+const key = this._getAmfKey(this.ns.aml.vocabularies.document + 'encodes');
+const key = shape[this.ns.aml.vocabularies.document + 'encodes'];
+```
+
+**do this**
+```javascript
+const key = this._getAmfKey(this.ns.aml.vocabularies.document.encodes);
+// acceptable only if AMF model is not compact.
+const key = shape[this.ns.aml.vocabularies.document.encodes];
+```
+
 ### API components
 
 This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
