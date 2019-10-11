@@ -1,0 +1,96 @@
+ns.aml.vocabularies.apiContract;
+
+./api-resource-example-document/api-resource-example-document.js:      if (this._hasType(examples[0], this.ns.raml.vocabularies.http + 'Payload')) {
+./api-resource-example-document/api-resource-example-document.js:    } else if (this._hasType(examples, this.ns.raml.vocabularies.http + 'Payload')) {
+./api-resource-example-document/demo/index.js:      const label = helper._getValue(item, helper.ns.raml.vocabularies.http + 'mediaType');
+./api-resource-example-document/test/api-resource-example-document.test.js:    const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-resource-example-document/test/api-resource-example-document.test.js:          const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-headers-form/demo/index.js:    const hKey = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'header');
+./api-example-generator/test/amf-loader.js:  const pKey = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'payload');
+./api-example-generator/test/api-example-generator.test.js:    const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-example-generator/api-example-generator.js:      if (!this._hasType(payloads, this.ns.raml.vocabularies.http + 'Payload')) {
+./api-example-generator/api-example-generator.js:      return [this._getValue(payloads, this.ns.raml.vocabularies.http + 'mediaType')];
+./api-example-generator/api-example-generator.js:      const mime = this._getValue(payload, this.ns.raml.vocabularies.http + 'mediaType');
+./api-example-generator/api-example-generator.js:      const payloadMedia = this._getValue(payload, this.ns.raml.vocabularies.http + 'mediaType');
+./api-example-generator/api-example-generator.js:    if (!this._hasType(payload, this.ns.raml.vocabularies.http + 'Payload')) {
+./api-example-generator/api-example-generator.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:      if (this._hasType(model[0], this.ns.raml.vocabularies.http + 'Payload')) {
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:    if (!this._hasType(model, this.ns.raml.vocabularies.http + 'Request')) {
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:    const pKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'payload');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:    const schemaKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'mediaType');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:        const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          const type = element._getAmfKey(element.ns.raml.vocabularies.http + 'EndPoint');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          const plKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'payload');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:            sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:            sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:            sKey = element._getAmfKey(ns.raml.vocabularies.http + 'schema');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.http + 'header');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.http + 'parameter');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.http + 'variable');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.http + 'variable');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.http + 'payload');
+./api-request-editor/src/ApiRequestEditor.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'header');
+./api-request-editor/src/ApiRequestEditor.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'payload');
+./api-view-model-transformer/api-view-model-transformer.js:    if (this._hasType(amfItem, this.ns.raml.vocabularies.http + 'Parameter')) {
+./api-view-model-transformer/api-view-model-transformer.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-view-model-transformer/api-view-model-transformer.js:    const key = this.ns.raml.vocabularies.http + 'binding';
+./api-view-model-transformer/test/amf-model.test.js:    const hKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'header');
+./api-view-model-transformer/test/amf-model.test.js:            const pKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'parameter');
+./api-view-model-transformer/test/amf-model.test.js:            const pKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'parameter');
+./api-view-model-transformer/test/amf-model.test.js:            const pKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'parameter');
+./api-view-model-transformer/test/apic-168.test.js:    const qKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'queryString');
+./api-documentation/api-documentation.js:      name = this._getValue(item, this.ns.raml.vocabularies.http + 'path');
+./api-documentation/api-documentation.js:    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-documentation/api-documentation.js:    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+./api-documentation/api-documentation.js:    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-documentation/api-documentation.js:    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+./api-documentation/api-documentation.js:    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-documentation/api-documentation.js:    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-documentation/api-documentation.js:    return this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint');
+./api-documentation/api-documentation.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'accepts');
+./api-body-document/api-body-document.js:      const label = this._getValue(item, this.ns.raml.vocabularies.http + 'mediaType');
+./api-body-document/api-body-document.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-document/api-body-document.js:    return this._getValue(data, this.ns.raml.vocabularies.http + 'mediaType');
+./api-body-document/test/amf-loader.js:  const pKey = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'payload');
+./api-body-document/test/api-body-document.test.js:    const pKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'payload');
+./api-parameters-document/demo/index.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'parameter');
+./api-url-data-model/api-url-data-model.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'uriParameter');
+./api-url-data-model/api-url-data-model.js:    return this._getValue(endpoint, this.ns.raml.vocabularies.http + 'path');
+./api-url-data-model/api-url-data-model.js:    if (this._hasType(amf, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-url-data-model/test/api-url-data-model.test.js:          const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'Server');
+./api-url-data-model/test/api-url-data-model.test.js:          const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'Server');
+./api-navigation/api-navigation.js:    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+./api-navigation/api-navigation.js:    } else if (this._hasType(item, this.ns.raml.vocabularies.http + 'EndPoint')) {
+./api-navigation/api-navigation.js:    const path = this._getValue(item, this.ns.raml.vocabularies.http + 'path');
+./api-summary/api-summary.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+./api-summary/api-summary.js:        path: this._getValue(item, this.ns.raml.vocabularies.http + 'path'),
+./api-endpoint-documentation/demo/index.js:      name = helper._getValue(item, helper.ns.raml.vocabularies.http + 'path');
+./api-endpoint-documentation/demo/index.js:      name = helper._getValue(item, helper.ns.raml.vocabularies.http + 'path');
+./api-endpoint-documentation/api-endpoint-documentation.js:    return this._getValue(endpoint, this.ns.raml.vocabularies.http + 'path');
+./api-endpoint-documentation/api-endpoint-documentation.js:    let mt = this._getValue(payload, this.ns.raml.vocabularies.http + 'mediaType');
+./api-endpoint-documentation/api-endpoint-documentation.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./multipart-payload-editor/demo/index.js:    const skey = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'schema');
+./auth-methods/auth-method-custom.js:    const hKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'header');
+./auth-methods/auth-method-custom.js:    const pKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'parameter');
+./auth-methods/auth-method-custom.js:    const qKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'queryString');
+./auth-methods/auth-method-oauth2.js:    const http = this.ns.raml.vocabularies.http;
+./api-type-document/property-shape-document.js:      if (this._hasType(shape, this.ns.raml.vocabularies.http + 'Parameter')) {
+./api-type-document/property-shape-document.js:    if (this._hasType(shape, this.ns.raml.vocabularies.http + 'Parameter')) {
+./api-type-document/property-document-mixin.js:    } else if (this._hasType(shape, this.ns.raml.vocabularies.http + 'Parameter')) {
+./api-type-document/property-document-mixin.js:      const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-type-document/property-document-mixin.js:    if (this._hasType(shape, this.ns.raml.vocabularies.http + 'Parameter')) {
+./api-type-document/property-document-mixin.js:      //   name =  this._getValue(shape, this.ns.raml.vocabularies.http + 'paramName');
+./api-type-document/demo/index.js:    const mt = helper._getValue(payload, helper.ns.raml.vocabularies.http + 'mediaType');
+./api-type-document/demo/index.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'schema');
+./api-type-document/demo/index.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'accepts');
+./api-type-document/test/api-type-document.test.js:    const mt = element._getValue(payload, element.ns.raml.vocabularies.http + 'mediaType');
+./api-type-document/test/api-type-document.test.js:    const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-type-documentation/demo/index.js:    const key = helper._getAmfKey(ns.raml.vocabularies.http + 'accepts');
+./api-headers-editor/demo/index.js:    const hKey = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'header');
+./api-headers-editor/test/api-headers-editor.test.js:      const hKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'header');
+./api-method-documentation/api-method-documentation.js:    let mt = this._getValue(payload, this.ns.raml.vocabularies.http + 'mediaType');
+./api-method-documentation/api-method-documentation.js:    const skey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-method-documentation/test/api-method-documentation.test.js:          const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'mediaType');
+./form-data-editor/demo/index.js:      return this.helper._getValue(item, this.helper.ns.raml.vocabularies.http + 'mediaType');
+./form-data-editor/demo/index.js:    const key = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'schema');

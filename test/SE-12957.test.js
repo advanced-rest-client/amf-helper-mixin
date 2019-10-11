@@ -20,7 +20,7 @@ describe('SE-12957', function() {
     describe(label, () => {
       let amf;
       before(async () => {
-        amf = await AmfLoader.loadFile(apiFile, compact);
+        amf = await AmfLoader.load(compact, apiFile);
       });
 
       let element;

@@ -1,0 +1,7 @@
+ns.w3.shacl.name + 'raw' => ns.aml.vocabularies.document.raw
+
+./api-schema-document/api-schema-document.js:          raw = this._getValue(schema, this.ns.w3.shacl.name + 'raw');
+./api-schema-document/api-schema-document.js:      raw = this._getValue(item, this.ns.w3.shacl.name + 'raw');
+./api-example-generator/api-example-generator.js:      raw = this._getValue(example, this.ns.w3.shacl.name + 'raw');
+./api-example-generator/api-example-generator.js:    return this._getValue(example, this.ns.w3.shacl.name + 'raw');
+./amf-helper-mixin/test/amf-helper-mixin.test.js:            rKey = element._getAmfKey(ns.w3.shacl.name + 'raw');

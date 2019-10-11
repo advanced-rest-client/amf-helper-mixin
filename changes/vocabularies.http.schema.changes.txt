@@ -1,0 +1,18 @@
+raml.vocabularies.http + 'schema' =>  ns.aml.vocabularies.shapes.schema
+
+
+./api-resource-example-document/test/api-resource-example-document.test.js:    const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-resource-example-document/test/api-resource-example-document.test.js:          const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-example-generator/test/api-example-generator.test.js:    const sKey = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-example-generator/api-example-generator.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:    const schemaKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-editor/src/ApiBodyEditorAmfOverlay.js:        const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-view-model-transformer/api-view-model-transformer.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-body-document/api-body-document.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-endpoint-documentation/api-endpoint-documentation.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./multipart-payload-editor/demo/index.js:    const skey = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'schema');
+./api-type-document/property-document-mixin.js:      const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./api-type-document/demo/index.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.http + 'schema');
+./api-type-document/test/api-type-document.test.js:    const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'schema');
+./api-method-documentation/api-method-documentation.js:    const skey = this._getAmfKey(this.ns.raml.vocabularies.http + 'schema');
+./form-data-editor/demo/index.js:    const key = this.helper._getAmfKey(this.helper.ns.raml.vocabularies.http + 'schema');
