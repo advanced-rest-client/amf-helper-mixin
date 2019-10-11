@@ -55,7 +55,6 @@ declare namespace ApiElements {
   }
 
   interface AmfHelperMixin {
-    amfModel: any;
 
     /**
      * A namespace for AMF model.
@@ -175,6 +174,15 @@ declare namespace ApiElements {
     _computeDescription(shape: object|null): String|null;
     _computeHeaders(shape: any): any;
     _computeQueryParameters(shape: any): any;
+
+    /**
+     * In OAS URI parmaeters can be defined on an operation level under `uriParameter` proeprty.
+     * Normally `_computeQueryParameters()` function would be used to extract parameters from an endpoint.
+     * This is a fallback option to test when an API is OAS.
+     *
+     * @param shape Method or Expects model
+     */
+    _computeUriParameters(shape: object|null): Array<object|null>|null;
     _computeResponses(shape: any): any;
 
     /**
@@ -189,9 +197,11 @@ declare namespace ApiElements {
      * Computes value for `endpointVariables` property.
      *
      * @param endpoint Endpoint model
+     * @param method Optional method to be used to llokup the parameters from
+     * This is used for OAS model which can defined path parameters on a method level.
      * @returns Parameters if defined.
      */
-    _computeEndpointVariables(endpoint: object|null): Array<object|null>|null|undefined;
+    _computeEndpointVariables(endpoint: object|null, method: object|null): Array<object|null>|null|undefined;
 
     /**
      * Computes value for the `payload` property
@@ -434,31 +444,6 @@ declare namespace ApiElements {
     _getLinkTarget(amf: any, id: any): any;
     _getReferenceId(amf: any, id: any): any;
     _resolveRecursive(shape: any): void;
-
-    /**
-     * Gets string value for an example data model.
-     *
-     * @param item Example item model
-     * @param isJson If set it checks if the `raw` value is valid JSON.
-     * If it isn't then it parses structured value.
-     */
-    _getExampleValue(item: object|null, isJson: Boolean|null): String|null;
-
-    /**
-     * Computes an example from example structured value.
-     *
-     * @param model `structuredValue` item model.
-     * @returns Javascript object or array with structured value.
-     */
-    _computeExampleFromStructuredValue(model: object|null): object|any[]|null;
-
-    /**
-     * Computes value with propert data type for a structured example.
-     *
-     * @param model Structured example item model.
-     * @returns Value for the example.
-     */
-    _computeStructuredExampleValue(model: object|null): String|Boolean|Number|null;
   }
 }
 
