@@ -1,0 +1,107 @@
+ns2.w3.shacl
+
+
+./amf-helper-mixin/amf-helper-mixin.js:      let value = this._getValue(schema, this.ns.w3.shacl.defaultValue);
+./amf-helper-mixin/amf-helper-mixin.js:      let data = this._getValue(item, this.ns.w3.shacl.raw);
+./api-body-editor/api-body-editor-amf-overlay.js:    } else if (this._hasType(schema, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-body-editor/api-body-editor-amf-overlay.js:      const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-body-editor/api-body-editor-amf-overlay.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-body-editor/api-body-editor-amf-overlay.js:      if (this._hasType(item, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-navigation/api-navigation.js:    if (this._hasType(item, this.ns.w3.shacl.shape)) {
+./api-navigation/api-navigation.js:    const w3name = this._getValue(item, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:      const typeName = this._getValue(schema, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:      raw = this._getValue(example, this.ns.w3.shacl.name + 'raw');
+./api-example-generator/api-example-generator.js:      let name = this._getValue(unionSchape, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-example-generator/api-example-generator.js:      const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-example-generator/api-example-generator.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:      const typeName = this._getValue(schema, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:      const name = this._getValue(property, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    if (this._hasType(range, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-example-generator/api-example-generator.js:    const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-example-generator/api-example-generator.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:        const name = this._getValue(item, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:      if (this._hasType(item, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-example-generator/api-example-generator.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:    return this._getValue(example, this.ns.w3.shacl.name + 'raw');
+./api-example-generator/api-example-generator.js:    const dvKey = this._getAmfKey(this.ns.w3.shacl.name + 'defaultValue');
+./api-example-generator/api-example-generator.js:    if (this._hasType(property, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-example-generator/api-example-generator.js:      const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:        name = this._getValue(range, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    if (this._hasType(range, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-example-generator/api-example-generator.js:    const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-example-generator/api-example-generator.js:      name = this._getValue(range, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    let name = this._getValue(range, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    let nodeValue = this._getValue(range, this.ns.w3.shacl.name + 'defaultValueStr');
+./api-example-generator/api-example-generator.js:    const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-example-generator/api-example-generator.js:        const name = this._getValue(prop, this.ns.w3.shacl.name + 'name');
+./api-example-generator/api-example-generator.js:    const name = this._getValue(property, this.ns.w3.shacl.name + 'name') || 'unknown';
+./api-example-generator/api-example-generator.js:        const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-type-document/property-document-mixin.js:      const key = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-type-document/property-document-mixin.js:    if (this._hasType(range, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-type-document/property-document-mixin.js:          const pkey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-type-document/property-document-mixin.js:    return this._hasType(range, this.ns.w3.shacl.name + 'NodeShape');
+./api-type-document/property-document-mixin.js:        label = this._getValue(item, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-document-mixin.js:          label = this._getValue(item, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-document-mixin.js:    } else if (this._hasType(range, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-type-document/property-document-mixin.js:      return this._getValue(shape, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-document-mixin.js:      //   name = this._getValue(range, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-document-mixin.js:    //   name = this._getValue(shape, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-shape-document.js:      if (this._hasType(shape, this.ns.w3.shacl.name + 'PropertyShape') ||
+./api-type-document/property-shape-document.js:        return this._getValue(shape, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-shape-document.js:      const name = this._getValue(range, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-shape-document.js:    const data = this._getValue(shape, this.ns.w3.shacl.name + 'minCount');
+./api-type-document/property-shape-document.js:    const ikey = this._getAmfKey(this.ns.w3.shacl.name + 'in');
+./api-type-document/property-shape-document.js:    this._targetTypeName = this._getValue(type, this.ns.w3.shacl.name + 'name');
+./api-type-document/api-type-document.js:    } else if (this._hasType(type, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-type-document/api-type-document.js:      const key = this._getAmfKey(this.ns.w3.shacl.name + 'and');
+./api-type-document/api-type-document.js:    const key = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-type-document/api-type-document.js:        label = this._getValue(item, this.ns.w3.shacl.name + 'name');
+./api-type-document/property-range-document.js:    const key = this._getAmfKey(this.ns.w3.shacl.name + 'in');
+./api-type-document/property-range-document.js:    return this._hasType(range, this.ns.w3.shacl.name + 'NodeShape');
+./api-type-document/property-range-document.js:    const pkey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-type-document/property-range-document.js:    const ikey = this._getAmfKey(this.ns.w3.shacl.name + 'in');
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.minLength) ?
+./api-type-document/property-range-document.js:      this._listItemTemplate('Minimum characters', 'Minimum number of characters in the value', this.ns.w3.shacl.minLength) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.maxLength) ?
+./api-type-document/property-range-document.js:      this._listItemTemplate('Maximum characters', 'Maximum number of characters in the value', this.ns.w3.shacl.maxLength) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.fileType) ?
+./api-type-document/property-range-document.js:      this._listItemTemplate('File types', 'File mime types accepted by the endpoint', this.ns.w3.shacl.fileType, true) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.minLength) ?
+./api-type-document/property-range-document.js:        this.ns.w3.shacl.minLength) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.maxLength) ?
+./api-type-document/property-range-document.js:        this.ns.w3.shacl.maxLength) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.defaultValueStr) ?
+./api-type-document/property-range-document.js:      this._listItemTemplate('Default value', 'This value is used as a default value', this.ns.w3.shacl.defaultValueStr) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.pattern) ?
+./api-type-document/property-range-document.js:      this._listItemTemplate('Pattern', 'Regular expression value for this property', this.ns.w3.shacl.pattern) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.minInclusive) ?
+./api-type-document/property-range-document.js:        this.ns.w3.shacl.minInclusive) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.maxInclusive) ?
+./api-type-document/property-range-document.js:        this.ns.w3.shacl.maxInclusive) :
+./api-type-document/property-range-document.js:    ${this._hasProperty(range, this.ns.w3.shacl.multipleOf) ?
+./api-type-document/property-range-document.js:        this.ns.w3.shacl.multipleOf) :
+./api-type-documentation/api-type-documentation.js:      name = this._getValue(shape, this.ns.w3.shacl.name + 'name');
+./api-type-documentation/api-type-documentation.js:    return this._hasType(shape, this.ns.w3.shacl.name + 'SchemaShape');
+./api-schema-document/api-schema-document.js:      if (this._hasType(schema, this.ns.w3.shacl.name + 'SchemaShape') ||
+./api-schema-document/api-schema-document.js:        this._hasType(schema, this.ns.w3.shacl.name + 'NodeShape')) {
+./api-schema-document/api-schema-document.js:          raw = this._getValue(schema, this.ns.w3.shacl.name + 'raw');
+./api-schema-document/api-schema-document.js:      raw = this._getValue(item, this.ns.w3.shacl.name + 'raw');
+./api-body-document/api-body-document.js:    if (this._hasType(body, this.ns.w3.shacl.name + 'NodeShape') ||
+./api-body-document/api-body-document.js:    } else if (this._hasType(body, this.ns.w3.shacl.name + 'SchemaShape') ||
+./api-body-document/api-body-document.js:      const key = this._getAmfKey(this.ns.w3.shacl.name + 'and');
+./api-body-document/api-body-document.js:    let value = this._getValue(body, this.ns.w3.shacl.name + 'name');
+./api-method-documentation/api-method-documentation.js:    let value = this._getValue(schema, this.ns.w3.shacl.name + 'defaultValue');
+./api-endpoint-documentation/api-endpoint-documentation.js:    let value = this._getValue(item, this.ns.w3.shacl.name + 'defaultValue');
+./api-view-model-transformer/api-view-model-transformer.js:    if (this._hasType(amfItem, this.ns.w3.shacl.name + 'PropertyShape')) {
+./api-view-model-transformer/api-view-model-transformer.js:      result.schema.isEnum = this._hasProperty(def, this.ns.w3.shacl.in);
+./api-view-model-transformer/api-view-model-transformer.js:    result.schema.isEnum = this._hasProperty(def, this.ns.w3.shacl.in);
+./api-view-model-transformer/api-view-model-transformer.js:      const pKey = this._getAmfKey(this.ns.w3.shacl.name + 'property');
+./api-view-model-transformer/api-view-model-transformer.js:    const key = this.ns.w3.shacl.name + 'minCount';
+./api-view-model-transformer/api-view-model-transformer.js:    const sa = this.ns.w3.shacl.name;
+./api-view-model-transformer/api-view-model-transformer.js:    const key = this.ns.w3.shacl.name + String(property);
+./api-view-model-transformer/api-view-model-transformer.js:    const valueKey = this._getAmfKey(this.ns.w3.shacl.name + 'defaultValueStr');
+./api-view-model-transformer/api-view-model-transformer.js:      const dtKey = this._getAmfKey(this.ns.w3.shacl.name + 'datatype');
+./api-view-model-transformer/api-view-model-transformer.js:      const valueKey = this._getAmfKey(this.ns.w3.shacl.name + 'defaultValue');
+./api-view-model-transformer/api-view-model-transformer.js:    const key = this._getAmfKey(this.ns.w3.shacl.in);

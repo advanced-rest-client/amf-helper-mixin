@@ -1,0 +1,6 @@
+=> ns2.w3.rdfSyntax.member
+
+./auth-methods/auth-method-oauth2.js:    const list = model[0][this._getAmfKey(this.ns.w3.name + '1999/02/22-rdf-syntax-ns#member')];
+./api-example-generator/api-example-generator.js:    if (isArray && this._hasProperty(structure, this.ns.w3.name + '1999/02/22-rdf-syntax-ns#member')) {
+./api-example-generator/api-example-generator.js:      const key = this._getAmfKey(this.ns.w3.name + '1999/02/22-rdf-syntax-ns#member');
+./api-example-generator/api-example-generator.js:    const key = this._getAmfKey(this.ns.w3.name + '1999/02/22-rdf-syntax-ns#member');

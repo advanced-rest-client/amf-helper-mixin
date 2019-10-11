@@ -11,38 +11,38 @@
 {
 "@id": "#95",
 "@type": [
-"schema-org:WebAPI",
+"apiContract:WebAPI",
 "doc:RootDomainElement",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "SMART Downtime API Example4"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Programmatic access to SMART downtime event\n\nThis example is published after import of the currently published Swagger file, effective 13 August 2019.\n\nIn this file there was a duplicate 'Get' operationId and the two occurrences were edited to GetAlarmGroups and GetPenalisingStatus respectively.\n\nThere are some fundamental deficiencies with the publication of this example:\n1. The URI parameters are not described;\n2. The 'summary' text is not visible."
 }
 ],
-"schema-org:version": [
+"core:version": [
 {
 "@value": "v1"
 }
 ],
-"schema-org:provider": [
+"core:provider": [
 {
 "@id": "#96",
 "@type": [
-"schema-org:Organization",
+"core:Organization",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "SMART Support"
 }
 ],
-"schema-org:email": [
+"core:email": [
 {
 "@value": "smartsupport@res-group.com"
 }
@@ -57,7 +57,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:email"
+"@value": "core:email"
 }
 ],
 "sourcemaps:value": [
@@ -81,7 +81,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -95,42 +95,42 @@
 ]
 }
 ],
-"raml-http:endpoint": [
+"apiContract:endpoint": [
 {
 "@id": "#97",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/alarm/{scada-object-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#98",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetList"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of alarms for a single downtime event."
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -141,50 +141,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#99",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#100",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "time-on"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "time-on"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The downtime event start time"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#101",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -204,7 +205,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The downtime event start time"
 }
@@ -233,7 +234,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -293,31 +294,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(36,12)-(36,25)]"
+"@value": "[(34,10)-(41,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(37,12)-(37,58)]"
+"@value": "[(38,12)-(38,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -341,7 +342,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -353,12 +354,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(38,12)-(38,28)]"
+"@value": "[(37,12)-(37,58)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(36,12)-(36,25)]"
 }
 ]
 }
@@ -367,43 +380,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#102",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The key identifies the SCADA object"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#103",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -418,7 +432,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The key identifies the SCADA object"
 }
@@ -447,7 +461,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -495,31 +509,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(29,12)-(29,24)]"
+"@value": "[(27,10)-(33,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(30,12)-(30,64)]"
+"@value": "[(31,12)-(31,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -543,7 +557,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -555,12 +569,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(31,12)-(31,28)]"
+"@value": "[(30,12)-(30,64)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(29,12)-(29,24)]"
 }
 ]
 }
@@ -579,7 +605,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -591,7 +617,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -605,45 +631,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#104",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#105",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#106",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -653,6 +680,7 @@
 "@id": "#6/linked_5",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -685,7 +713,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -694,7 +722,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(48,14)-(48,20)]"
+"@value": ""
 }
 ]
 }
@@ -723,6 +751,42 @@
 "@value": "[(46,12)-(52,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#106"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(48,14)-(48,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#105/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#105"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(46,12)-(52,13)]"
 }
 ]
 }
@@ -733,19 +797,20 @@
 {
 "@id": "#107",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#106",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -755,6 +820,7 @@
 "@id": "#6/linked_6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -787,7 +853,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -796,7 +862,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(48,14)-(48,20)]"
+"@value": ""
 }
 ]
 }
@@ -825,6 +891,42 @@
 "@value": "[(46,12)-(52,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#106"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(48,14)-(48,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#107/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#107"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(46,12)-(52,13)]"
 }
 ]
 }
@@ -835,19 +937,20 @@
 {
 "@id": "#108",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#106",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -857,6 +960,7 @@
 "@id": "#6/linked_7",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -889,7 +993,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -898,7 +1002,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(48,14)-(48,20)]"
+"@value": ""
 }
 ]
 }
@@ -927,6 +1031,42 @@
 "@value": "[(46,12)-(52,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#106"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(48,14)-(48,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#108/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#108"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(46,12)-(52,13)]"
 }
 ]
 }
@@ -945,7 +1085,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -971,7 +1111,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Alarm"
 }
@@ -986,7 +1126,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -998,7 +1138,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -1010,7 +1150,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -1034,7 +1174,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -1046,7 +1186,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -1086,38 +1226,38 @@
 {
 "@id": "#109",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/site/{site-api-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#110",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetSite"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of downtime events for a site that overlap with a time period"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -1128,50 +1268,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#111",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#112",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "from"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "from"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#113",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1191,7 +1332,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
@@ -1220,7 +1361,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1280,31 +1421,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(80,12)-(80,25)]"
+"@value": "[(78,10)-(85,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(81,12)-(81,127)]"
+"@value": "[(82,12)-(82,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -1328,7 +1469,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -1340,12 +1481,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(82,12)-(82,28)]"
+"@value": "[(81,12)-(81,127)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(80,12)-(80,25)]"
 }
 ]
 }
@@ -1356,39 +1509,40 @@
 {
 "@id": "#114",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "to"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "to"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#115",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1408,7 +1562,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
@@ -1437,7 +1591,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1497,31 +1651,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(88,12)-(88,25)]"
+"@value": "[(86,10)-(93,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(89,12)-(89,125)]"
+"@value": "[(90,12)-(90,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -1545,7 +1699,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -1557,12 +1711,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(90,12)-(90,28)]"
+"@value": "[(89,12)-(89,125)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(88,12)-(88,25)]"
 }
 ]
 }
@@ -1571,43 +1737,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#116",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "site-api-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "site-api-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#117",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1622,7 +1789,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
@@ -1651,7 +1818,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1699,31 +1866,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(73,12)-(73,24)]"
+"@value": "[(71,10)-(77,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(74,12)-(74,58)]"
+"@value": "[(75,12)-(75,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -1747,7 +1914,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -1759,12 +1926,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(75,12)-(75,28)]"
+"@value": "[(74,12)-(74,58)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(73,12)-(73,24)]"
 }
 ]
 }
@@ -1783,7 +1962,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -1795,7 +1974,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -1809,45 +1988,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#118",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#119",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#120",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1857,6 +2037,7 @@
 "@id": "#62/linked_17",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1889,7 +2070,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -1898,7 +2079,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(100,14)-(100,20)]"
+"@value": ""
 }
 ]
 }
@@ -1927,6 +2108,42 @@
 "@value": "[(98,12)-(104,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#120"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(100,14)-(100,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#119/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#119"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(98,12)-(104,13)]"
 }
 ]
 }
@@ -1937,19 +2154,20 @@
 {
 "@id": "#121",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#120",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1959,6 +2177,7 @@
 "@id": "#62/linked_18",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -1991,7 +2210,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -2000,7 +2219,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(100,14)-(100,20)]"
+"@value": ""
 }
 ]
 }
@@ -2029,6 +2248,42 @@
 "@value": "[(98,12)-(104,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#120"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(100,14)-(100,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#121/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#121"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(98,12)-(104,13)]"
 }
 ]
 }
@@ -2039,19 +2294,20 @@
 {
 "@id": "#122",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#120",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -2061,6 +2317,7 @@
 "@id": "#62/linked_19",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -2093,7 +2350,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -2102,7 +2359,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(100,14)-(100,20)]"
+"@value": ""
 }
 ]
 }
@@ -2131,6 +2388,42 @@
 "@value": "[(98,12)-(104,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#120"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(100,14)-(100,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#122/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#122"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(98,12)-(104,13)]"
 }
 ]
 }
@@ -2149,7 +2442,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2175,7 +2468,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -2190,7 +2483,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -2202,7 +2495,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -2214,7 +2507,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -2238,7 +2531,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -2250,7 +2543,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -2290,38 +2583,38 @@
 {
 "@id": "#123",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/object/{scada-object-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#124",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetObject"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of downtime events for a SCADA object that overlap with a time period"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -2332,50 +2625,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#125",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#126",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "from"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "from"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#127",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -2395,7 +2689,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
@@ -2424,7 +2718,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2484,31 +2778,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(132,12)-(132,25)]"
+"@value": "[(130,10)-(137,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(133,12)-(133,127)]"
+"@value": "[(134,12)-(134,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -2532,7 +2826,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -2544,12 +2838,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(134,12)-(134,28)]"
+"@value": "[(133,12)-(133,127)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(132,12)-(132,25)]"
 }
 ]
 }
@@ -2560,39 +2866,40 @@
 {
 "@id": "#128",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "to"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "to"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#129",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -2612,7 +2919,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
@@ -2641,7 +2948,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2701,31 +3008,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(140,12)-(140,25)]"
+"@value": "[(138,10)-(145,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(141,12)-(141,125)]"
+"@value": "[(142,12)-(142,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -2749,7 +3056,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -2761,12 +3068,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(142,12)-(142,28)]"
+"@value": "[(141,12)-(141,125)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(140,12)-(140,25)]"
 }
 ]
 }
@@ -2775,43 +3094,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#130",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the object"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#131",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -2826,7 +3146,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the object"
 }
@@ -2855,7 +3175,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2903,31 +3223,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(125,12)-(125,24)]"
+"@value": "[(123,10)-(129,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(126,12)-(126,60)]"
+"@value": "[(127,12)-(127,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -2951,7 +3271,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -2963,12 +3283,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(127,12)-(127,28)]"
+"@value": "[(126,12)-(126,60)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(125,12)-(125,24)]"
 }
 ]
 }
@@ -2987,7 +3319,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -2999,7 +3331,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -3013,45 +3345,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#132",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#133",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#134",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3061,6 +3394,7 @@
 "@id": "#62/linked_20",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3093,7 +3427,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -3102,7 +3436,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(152,14)-(152,20)]"
+"@value": ""
 }
 ]
 }
@@ -3131,6 +3465,42 @@
 "@value": "[(150,12)-(156,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#134"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(152,14)-(152,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#133/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#133"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(150,12)-(156,13)]"
 }
 ]
 }
@@ -3141,19 +3511,20 @@
 {
 "@id": "#135",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#134",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3163,6 +3534,7 @@
 "@id": "#62/linked_21",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3195,7 +3567,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -3204,7 +3576,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(152,14)-(152,20)]"
+"@value": ""
 }
 ]
 }
@@ -3233,6 +3605,42 @@
 "@value": "[(150,12)-(156,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#134"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(152,14)-(152,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#135/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#135"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(150,12)-(156,13)]"
 }
 ]
 }
@@ -3243,19 +3651,20 @@
 {
 "@id": "#136",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#134",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3265,6 +3674,7 @@
 "@id": "#62/linked_22",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3297,7 +3707,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -3306,7 +3716,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(152,14)-(152,20)]"
+"@value": ""
 }
 ]
 }
@@ -3335,6 +3745,42 @@
 "@value": "[(150,12)-(156,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#134"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(152,14)-(152,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#136/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#136"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(150,12)-(156,13)]"
 }
 ]
 }
@@ -3353,7 +3799,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3379,7 +3825,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -3394,7 +3840,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -3406,7 +3852,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -3418,7 +3864,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -3442,7 +3888,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -3454,7 +3900,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -3494,38 +3940,38 @@
 {
 "@id": "#137",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/{site-api-key}/type/{scada-object-type}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#138",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetType"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of downtime events for all SCADA objects of a single type at one site that overlap with the selected time period"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -3536,50 +3982,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#139",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#140",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "from"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "from"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#141",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3599,7 +4046,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The inclusive start of the time period. A date without a time is converted to the start of the day"
 }
@@ -3628,7 +4075,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3688,31 +4135,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(191,12)-(191,25)]"
+"@value": "[(189,10)-(196,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(192,12)-(192,127)]"
+"@value": "[(193,12)-(193,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -3736,7 +4183,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -3748,12 +4195,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(193,12)-(193,28)]"
+"@value": "[(192,12)-(192,127)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(191,12)-(191,25)]"
 }
 ]
 }
@@ -3764,39 +4223,40 @@
 {
 "@id": "#142",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "to"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "to"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#143",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -3816,7 +4276,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The exclusive end of the time period. A date without a time is converted to the start of the day"
 }
@@ -3845,7 +4305,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3905,31 +4365,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(199,12)-(199,25)]"
+"@value": "[(197,10)-(204,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(200,12)-(200,125)]"
+"@value": "[(201,12)-(201,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -3953,7 +4413,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -3965,12 +4425,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(201,12)-(201,28)]"
+"@value": "[(200,12)-(200,125)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(199,12)-(199,25)]"
 }
 ]
 }
@@ -3979,43 +4451,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#144",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "site-api-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "site-api-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#145",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4030,7 +4503,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
@@ -4059,7 +4532,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4107,31 +4580,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(177,12)-(177,24)]"
+"@value": "[(175,10)-(181,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(178,12)-(178,58)]"
+"@value": "[(179,12)-(179,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -4155,7 +4628,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -4167,12 +4640,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(179,12)-(179,28)]"
+"@value": "[(178,12)-(178,58)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(177,12)-(177,24)]"
 }
 ]
 }
@@ -4183,39 +4668,40 @@
 {
 "@id": "#146",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-type"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-type"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SCADA object type"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#147",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4230,7 +4716,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SCADA object type"
 }
@@ -4259,7 +4745,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4307,31 +4793,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(184,12)-(184,24)]"
+"@value": "[(182,10)-(188,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(185,12)-(185,50)]"
+"@value": "[(186,12)-(186,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -4355,7 +4841,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -4367,12 +4853,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(186,12)-(186,28)]"
+"@value": "[(185,12)-(185,50)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(184,12)-(184,24)]"
 }
 ]
 }
@@ -4391,7 +4889,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -4403,7 +4901,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -4417,45 +4915,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#148",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#149",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#150",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4465,6 +4964,7 @@
 "@id": "#62/linked_23",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4497,7 +4997,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -4506,7 +5006,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(211,14)-(211,20)]"
+"@value": ""
 }
 ]
 }
@@ -4535,6 +5035,42 @@
 "@value": "[(209,12)-(215,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#150"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(211,14)-(211,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#149/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#149"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(209,12)-(215,13)]"
 }
 ]
 }
@@ -4545,19 +5081,20 @@
 {
 "@id": "#151",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#150",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4567,6 +5104,7 @@
 "@id": "#62/linked_24",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4599,7 +5137,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -4608,7 +5146,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(211,14)-(211,20)]"
+"@value": ""
 }
 ]
 }
@@ -4637,6 +5175,42 @@
 "@value": "[(209,12)-(215,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#150"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(211,14)-(211,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#151/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#151"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(209,12)-(215,13)]"
 }
 ]
 }
@@ -4647,19 +5221,20 @@
 {
 "@id": "#152",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#150",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4669,6 +5244,7 @@
 "@id": "#62/linked_25",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -4701,7 +5277,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -4710,7 +5286,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(211,14)-(211,20)]"
+"@value": ""
 }
 ]
 }
@@ -4739,6 +5315,42 @@
 "@value": "[(209,12)-(215,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#150"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(211,14)-(211,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#152/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#152"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(209,12)-(215,13)]"
 }
 ]
 }
@@ -4757,7 +5369,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4783,7 +5395,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -4798,7 +5410,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -4810,7 +5422,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -4822,7 +5434,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -4846,7 +5458,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -4858,7 +5470,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -4898,37 +5510,37 @@
 {
 "@id": "#153",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#154",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Put"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Update a downtime event"
 }
 ],
-"raml-http:accepts": [
+"apiContract:accepts": [
 {
 "@value": "application/json-patch+json"
 },
@@ -4942,31 +5554,32 @@
 "@value": "application/*+json"
 }
 ],
-"raml-http:contentType": [],
-"hydra:expects": [
+"core:mediaType": [],
+"apiContract:expects": [
 {
 "@id": "#155",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#156",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json-patch+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_11",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5023,19 +5636,20 @@
 {
 "@id": "#157",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_12",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5092,19 +5706,20 @@
 {
 "@id": "#158",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_13",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5161,19 +5776,20 @@
 {
 "@id": "#159",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/*+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_14",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5230,24 +5846,24 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#160",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
@@ -5262,7 +5878,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5288,7 +5904,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -5303,7 +5919,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -5315,7 +5931,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:contentType"
+"@value": "core:mediaType"
 }
 ],
 "sourcemaps:value": [
@@ -5327,7 +5943,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -5351,7 +5967,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -5363,7 +5979,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -5379,25 +5995,25 @@
 {
 "@id": "#161",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "post"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Post"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Create a new downtime event"
 }
 ],
-"raml-http:accepts": [
+"apiContract:accepts": [
 {
 "@value": "application/json-patch+json"
 },
@@ -5411,31 +6027,32 @@
 "@value": "application/*+json"
 }
 ],
-"raml-http:contentType": [],
-"hydra:expects": [
+"core:mediaType": [],
+"apiContract:expects": [
 {
 "@id": "#162",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#163",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json-patch+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_15",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5492,19 +6109,20 @@
 {
 "@id": "#164",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_16",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5561,19 +6179,20 @@
 {
 "@id": "#165",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_17",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5630,19 +6249,20 @@
 {
 "@id": "#166",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/*+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#40/linked_18",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5699,24 +6319,24 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#167",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
@@ -5731,7 +6351,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5757,7 +6377,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -5772,7 +6392,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -5784,7 +6404,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:contentType"
+"@value": "core:mediaType"
 }
 ],
 "sourcemaps:value": [
@@ -5796,7 +6416,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -5820,7 +6440,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -5832,7 +6452,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -5872,38 +6492,38 @@
 {
 "@id": "#168",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/revert/{scada-object-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#169",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Revert"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Revert changes to a previously split downtime event"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -5914,50 +6534,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#170",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#171",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "time-on"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "time-on"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#172",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -5977,7 +6598,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event. A date without a time is converted to the start of the day"
 }
@@ -6006,7 +6627,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6066,31 +6687,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(305,12)-(305,25)]"
+"@value": "[(303,10)-(310,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(306,12)-(306,125)]"
+"@value": "[(307,12)-(307,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -6114,7 +6735,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -6126,12 +6747,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(307,12)-(307,28)]"
+"@value": "[(306,12)-(306,125)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(305,12)-(305,25)]"
 }
 ]
 }
@@ -6140,43 +6773,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#173",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#174",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6191,7 +6825,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
@@ -6220,7 +6854,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6268,31 +6902,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(298,12)-(298,24)]"
+"@value": "[(296,10)-(302,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(299,12)-(299,83)]"
+"@value": "[(300,12)-(300,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -6316,7 +6950,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -6328,12 +6962,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(300,12)-(300,28)]"
+"@value": "[(299,12)-(299,83)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(298,12)-(298,24)]"
 }
 ]
 }
@@ -6352,7 +6998,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -6364,7 +7010,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -6378,45 +7024,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#175",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#176",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#62/linked_26",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6429,6 +7076,28 @@
 "doc:link-label": [
 {
 "@value": "DowntimeEvent"
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#176/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#176"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(315,12)-(317,13)]"
+}
+]
 }
 ]
 }
@@ -6437,19 +7106,20 @@
 {
 "@id": "#177",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#62/linked_27",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6462,6 +7132,28 @@
 "doc:link-label": [
 {
 "@value": "DowntimeEvent"
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#177/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#177"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(315,12)-(317,13)]"
+}
+]
 }
 ]
 }
@@ -6470,19 +7162,20 @@
 {
 "@id": "#178",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#62/linked_28",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6495,6 +7188,28 @@
 "doc:link-label": [
 {
 "@value": "DowntimeEvent"
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#178/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#178"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(315,12)-(317,13)]"
+}
+]
 }
 ]
 }
@@ -6511,7 +7226,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6537,7 +7252,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -6552,7 +7267,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -6564,7 +7279,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -6576,7 +7291,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -6600,7 +7315,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -6612,7 +7327,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -6652,82 +7367,83 @@
 {
 "@id": "#179",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/split/{scada-object-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#180",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Split"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Split a downtime event"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [],
-"hydra:expects": [
+"apiContract:accepts": [],
+"core:mediaType": [],
+"apiContract:expects": [
 {
 "@id": "#181",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#182",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "time-on"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "time-on"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#183",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6747,7 +7463,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event. A date without a time is converted to the start of the day"
 }
@@ -6776,7 +7492,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6836,31 +7552,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(341,12)-(341,25)]"
+"@value": "[(339,10)-(346,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(342,12)-(342,125)]"
+"@value": "[(343,12)-(343,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -6884,7 +7600,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -6896,12 +7612,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(343,12)-(343,28)]"
+"@value": "[(342,12)-(342,125)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(341,12)-(341,25)]"
 }
 ]
 }
@@ -6912,39 +7640,40 @@
 {
 "@id": "#184",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "split-time"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "split-time"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The time to split. A date without a time is converted to the start of the day"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#185",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -6964,7 +7693,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The time to split. A date without a time is converted to the start of the day"
 }
@@ -6993,7 +7722,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7053,31 +7782,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(349,12)-(349,25)]"
+"@value": "[(347,10)-(354,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(350,12)-(350,106)]"
+"@value": "[(351,12)-(351,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -7101,7 +7830,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -7113,12 +7842,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(351,12)-(351,28)]"
+"@value": "[(350,12)-(350,106)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(349,12)-(349,25)]"
 }
 ]
 }
@@ -7127,43 +7868,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#186",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#187",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -7178,7 +7920,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
@@ -7207,7 +7949,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7255,31 +7997,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(334,12)-(334,24)]"
+"@value": "[(332,10)-(338,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(335,12)-(335,83)]"
+"@value": "[(336,12)-(336,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -7303,7 +8045,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -7315,12 +8057,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(336,12)-(336,28)]"
+"@value": "[(335,12)-(335,83)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(334,12)-(334,24)]"
 }
 ]
 }
@@ -7339,7 +8093,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -7351,7 +8105,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -7365,24 +8119,24 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#188",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
@@ -7397,7 +8151,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7423,7 +8177,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -7438,7 +8192,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -7450,7 +8204,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:contentType"
+"@value": "core:mediaType"
 }
 ],
 "sourcemaps:value": [
@@ -7462,7 +8216,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -7486,7 +8240,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -7498,7 +8252,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -7510,7 +8264,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -7550,42 +8304,42 @@
 {
 "@id": "#189",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/downtime/copy/{scada-object-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#190",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Copy"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The following properties are copied:\r\nAlarmGroup\r\nAlarmDefinition\r\nAvailabilityIndicator\r\nDescription"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Copy the properties of a downtime event to a list of downtime events."
 }
 ],
-"raml-http:accepts": [
+"apiContract:accepts": [
 {
 "@value": "application/json-patch+json"
 },
@@ -7599,51 +8353,52 @@
 "@value": "application/*+json"
 }
 ],
-"raml-http:contentType": [],
-"hydra:expects": [
+"core:mediaType": [],
+"apiContract:expects": [
 {
 "@id": "#191",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#192",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "time-on"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "time-on"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#193",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -7663,7 +8418,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The start time of the downtime event"
 }
@@ -7692,7 +8447,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7752,31 +8507,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(388,12)-(388,25)]"
+"@value": "[(386,10)-(393,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(389,12)-(389,65)]"
+"@value": "[(390,12)-(390,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -7800,7 +8555,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -7812,12 +8567,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(390,12)-(390,28)]"
+"@value": "[(389,12)-(389,65)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(388,12)-(388,25)]"
 }
 ]
 }
@@ -7826,23 +8593,24 @@
 ]
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#196",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json-patch+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#197",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -7852,6 +8620,7 @@
 "@id": "#1/linked_6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -7994,19 +8763,20 @@
 {
 "@id": "#198",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#197",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8016,6 +8786,7 @@
 "@id": "#1/linked_7",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8158,19 +8929,20 @@
 {
 "@id": "#199",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#197",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8180,6 +8952,7 @@
 "@id": "#1/linked_8",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8322,19 +9095,20 @@
 {
 "@id": "#200",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/*+json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#197",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8344,6 +9118,7 @@
 "@id": "#1/linked_9",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8484,43 +9259,44 @@
 ]
 }
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#194",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#195",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -8535,7 +9311,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the downtime event's SCADA object"
 }
@@ -8564,7 +9340,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8612,31 +9388,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(381,12)-(381,24)]"
+"@value": "[(379,10)-(385,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(382,12)-(382,83)]"
+"@value": "[(383,12)-(383,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -8660,7 +9436,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -8672,12 +9448,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(383,12)-(383,28)]"
+"@value": "[(382,12)-(382,83)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(381,12)-(381,24)]"
 }
 ]
 }
@@ -8696,7 +9484,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -8708,7 +9496,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -8722,24 +9510,24 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#201",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
@@ -8754,7 +9542,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8780,7 +9568,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Downtime"
 }
@@ -8795,7 +9583,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -8807,7 +9595,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:contentType"
+"@value": "core:mediaType"
 }
 ],
 "sourcemaps:value": [
@@ -8819,7 +9607,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8843,7 +9631,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -8855,7 +9643,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -8867,7 +9655,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -8907,38 +9695,38 @@
 {
 "@id": "#202",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/group"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#203",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetAlarmGroups"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of all alarm groups"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -8949,54 +9737,55 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#204",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#205",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#206",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#207",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9006,6 +9795,7 @@
 "@id": "#28/linked_5",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9038,7 +9828,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -9047,7 +9837,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(434,14)-(434,20)]"
+"@value": ""
 }
 ]
 }
@@ -9076,6 +9866,42 @@
 "@value": "[(432,12)-(438,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#207"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(434,14)-(434,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#206/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#206"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(432,12)-(438,13)]"
 }
 ]
 }
@@ -9086,19 +9912,20 @@
 {
 "@id": "#208",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#207",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9108,6 +9935,7 @@
 "@id": "#28/linked_6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9140,7 +9968,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -9149,7 +9977,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(434,14)-(434,20)]"
+"@value": ""
 }
 ]
 }
@@ -9178,6 +10006,42 @@
 "@value": "[(432,12)-(438,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#207"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(434,14)-(434,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#208/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#208"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(432,12)-(438,13)]"
 }
 ]
 }
@@ -9188,19 +10052,20 @@
 {
 "@id": "#209",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#207",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9210,6 +10075,7 @@
 "@id": "#28/linked_7",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9242,7 +10108,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -9251,7 +10117,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(434,14)-(434,20)]"
+"@value": ""
 }
 ]
 }
@@ -9280,6 +10146,42 @@
 "@value": "[(432,12)-(438,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#207"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(434,14)-(434,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#209/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#209"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(432,12)-(438,13)]"
 }
 ]
 }
@@ -9298,7 +10200,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9324,7 +10226,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Group"
 }
@@ -9339,7 +10241,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -9351,7 +10253,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -9363,7 +10265,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -9387,7 +10289,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -9399,7 +10301,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -9439,38 +10341,38 @@
 {
 "@id": "#210",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/object/{site-api-key}/{scada-object-type}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#211",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetObjects"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of SCADA objects of a single type at one site that can have Downtimes"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -9481,50 +10383,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#212",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#213",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "site-api-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "site-api-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#214",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9539,7 +10442,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
@@ -9568,7 +10471,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9616,31 +10519,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(459,12)-(459,24)]"
+"@value": "[(457,10)-(463,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(460,12)-(460,58)]"
+"@value": "[(461,12)-(461,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -9664,7 +10567,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -9676,12 +10579,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(461,12)-(461,28)]"
+"@value": "[(460,12)-(460,58)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(459,12)-(459,24)]"
 }
 ]
 }
@@ -9692,39 +10607,40 @@
 {
 "@id": "#215",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scada-object-type"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "scada-object-type"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SCADA object type"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#216",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9739,7 +10655,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SCADA object type"
 }
@@ -9768,7 +10684,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9816,31 +10732,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(466,12)-(466,24)]"
+"@value": "[(464,10)-(470,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(467,12)-(467,50)]"
+"@value": "[(468,12)-(468,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -9864,7 +10780,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -9876,12 +10792,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(468,12)-(468,28)]"
+"@value": "[(467,12)-(467,50)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(466,12)-(466,24)]"
 }
 ]
 }
@@ -9900,7 +10828,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -9914,45 +10842,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#217",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#218",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#219",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9962,6 +10891,7 @@
 "@id": "#57/linked_5",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -9994,7 +10924,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -10003,7 +10933,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(477,14)-(477,20)]"
+"@value": ""
 }
 ]
 }
@@ -10032,6 +10962,42 @@
 "@value": "[(475,12)-(481,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#219"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(477,14)-(477,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#218/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#218"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(475,12)-(481,13)]"
 }
 ]
 }
@@ -10042,19 +11008,20 @@
 {
 "@id": "#220",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#219",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10064,6 +11031,7 @@
 "@id": "#57/linked_6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10096,7 +11064,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -10105,7 +11073,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(477,14)-(477,20)]"
+"@value": ""
 }
 ]
 }
@@ -10134,6 +11102,42 @@
 "@value": "[(475,12)-(481,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#219"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(477,14)-(477,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#220/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#220"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(475,12)-(481,13)]"
 }
 ]
 }
@@ -10144,19 +11148,20 @@
 {
 "@id": "#221",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#219",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10166,6 +11171,7 @@
 "@id": "#57/linked_7",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10198,7 +11204,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -10207,7 +11213,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(477,14)-(477,20)]"
+"@value": ""
 }
 ]
 }
@@ -10236,6 +11242,42 @@
 "@value": "[(475,12)-(481,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#219"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(477,14)-(477,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#221/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#221"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(475,12)-(481,13)]"
 }
 ]
 }
@@ -10254,7 +11296,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10280,7 +11322,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "Object"
 }
@@ -10295,7 +11337,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -10307,7 +11349,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -10319,7 +11361,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -10343,7 +11385,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -10355,7 +11397,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -10395,38 +11437,38 @@
 {
 "@id": "#222",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/objecttype/{site-api-key}"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#223",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetTypes"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of types of the SCADA objects at one site that can have Downtimes"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -10437,50 +11479,51 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#224",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:uriParameter": [
+"apiContract:uriParameter": [
 {
 "@id": "#225",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "site-api-key"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "site-api-key"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#226",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10495,7 +11538,7 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The SMART API key of the site"
 }
@@ -10524,7 +11567,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10572,31 +11615,31 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:binding"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(502,12)-(502,24)]"
+"@value": "[(500,10)-(506,11)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(503,12)-(503,58)]"
+"@value": "[(504,12)-(504,28)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "apiContract:paramName"
 }
 ],
 "sourcemaps:value": [
@@ -10620,7 +11663,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:paramName"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -10632,12 +11675,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(504,12)-(504,28)]"
+"@value": "[(503,12)-(503,58)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "apiContract:binding"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(502,12)-(502,24)]"
 }
 ]
 }
@@ -10656,7 +11711,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:uriParameter"
+"@value": "apiContract:uriParameter"
 }
 ],
 "sourcemaps:value": [
@@ -10670,45 +11725,46 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#227",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#228",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#229",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10718,6 +11774,7 @@
 "@id": "#230",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10798,7 +11855,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -10807,7 +11864,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(513,14)-(513,20)]"
+"@value": ""
 }
 ]
 }
@@ -10836,6 +11893,42 @@
 "@value": "[(511,12)-(517,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#229"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(513,14)-(513,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#228/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#228"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(511,12)-(517,13)]"
 }
 ]
 }
@@ -10846,19 +11939,20 @@
 {
 "@id": "#231",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#229",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10868,6 +11962,7 @@
 "@id": "#230",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -10948,7 +12043,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -10957,7 +12052,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(513,14)-(513,20)]"
+"@value": ""
 }
 ]
 }
@@ -10986,6 +12081,42 @@
 "@value": "[(511,12)-(517,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#229"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(513,14)-(513,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#231/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#231"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(511,12)-(517,13)]"
 }
 ]
 }
@@ -10996,19 +12127,20 @@
 {
 "@id": "#232",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#229",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11018,6 +12150,7 @@
 "@id": "#230",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11098,7 +12231,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -11107,7 +12240,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(513,14)-(513,20)]"
+"@value": ""
 }
 ]
 }
@@ -11136,6 +12269,42 @@
 "@value": "[(511,12)-(517,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#229"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(513,14)-(513,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#232/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#232"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(511,12)-(517,13)]"
 }
 ]
 }
@@ -11154,7 +12323,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11180,7 +12349,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "ObjectType"
 }
@@ -11195,7 +12364,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -11207,7 +12376,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -11219,7 +12388,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -11243,7 +12412,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -11255,7 +12424,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -11295,38 +12464,38 @@
 {
 "@id": "#233",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/api/v1/penalising-status"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#234",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "GetPenalisingStatus"
 }
 ],
-"raml-http:guiSummary": [
+"apiContract:guiSummary": [
 {
 "@value": "Get a list of all penalising status"
 }
 ],
-"raml-http:accepts": [],
-"raml-http:contentType": [
+"apiContract:accepts": [],
+"core:mediaType": [
 {
 "@value": "text/plain"
 },
@@ -11337,54 +12506,55 @@
 "@value": "text/json"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#235",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#236",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Success"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#237",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#238",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11394,6 +12564,7 @@
 "@id": "#25/linked_5",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11426,7 +12597,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -11435,7 +12606,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(541,14)-(541,20)]"
+"@value": ""
 }
 ]
 }
@@ -11464,6 +12635,42 @@
 "@value": "[(539,12)-(545,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#238"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(541,14)-(541,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#237/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#237"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(539,12)-(545,13)]"
 }
 ]
 }
@@ -11474,19 +12681,20 @@
 {
 "@id": "#239",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#238",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11496,6 +12704,7 @@
 "@id": "#25/linked_6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11528,7 +12737,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -11537,7 +12746,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(541,14)-(541,20)]"
+"@value": ""
 }
 ]
 }
@@ -11566,6 +12775,42 @@
 "@value": "[(539,12)-(545,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#238"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(541,14)-(541,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#239/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#239"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(539,12)-(545,13)]"
 }
 ]
 }
@@ -11576,19 +12821,20 @@
 {
 "@id": "#240",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#238",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11598,6 +12844,7 @@
 "@id": "#25/linked_7",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11630,7 +12877,7 @@
 "@type": [
 "sourcemaps:SourceMap"
 ],
-"sourcemaps:type-property-lexical-info": [
+"sourcemaps:auto-generated-name": [
 {
 "sourcemaps:element": [
 {
@@ -11639,7 +12886,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(541,14)-(541,20)]"
+"@value": ""
 }
 ]
 }
@@ -11668,6 +12915,42 @@
 "@value": "[(539,12)-(545,13)]"
 }
 ]
+}
+],
+"sourcemaps:type-property-lexical-info": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#238"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(541,14)-(541,20)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#240/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#240"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(539,12)-(545,13)]"
 }
 ]
 }
@@ -11686,7 +12969,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11712,7 +12995,7 @@
 ]
 }
 ],
-"raml-http:tag": [
+"apiContract:tag": [
 {
 "@value": "PenalisingStatus"
 }
@@ -11727,7 +13010,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:tag"
+"@value": "apiContract:tag"
 }
 ],
 "sourcemaps:value": [
@@ -11739,7 +13022,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:accepts"
+"@value": "apiContract:accepts"
 }
 ],
 "sourcemaps:value": [
@@ -11751,7 +13034,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -11775,7 +13058,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:guiSummary"
+"@value": "apiContract:guiSummary"
 }
 ],
 "sourcemaps:value": [
@@ -11787,7 +13070,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -11849,7 +13132,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:endpoint"
+"@value": "apiContract:endpoint"
 }
 ],
 "sourcemaps:value": [
@@ -11861,12 +13144,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:version"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(6,4)-(6,483)]"
+"@value": "[(4,4)-(4,19)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "core:name"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(5,4)-(5,42)]"
 }
 ]
 },
@@ -11885,30 +13180,35 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(5,4)-(5,42)]"
+"@value": "[(6,4)-(6,483)]"
 }
 ]
 },
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:version"
+"@value": "core:provider"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(4,4)-(4,19)]"
+"@value": "[(7,4)-(10,5)]"
 }
 ]
 }
 ]
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ],
 "doc:declares": [
@@ -11916,6 +13216,7 @@
 "@id": "#1",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -11931,7 +13232,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -11943,6 +13245,7 @@
 "@id": "#3",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12045,7 +13348,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12057,6 +13361,7 @@
 "@id": "#5",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12249,6 +13554,7 @@
 "@id": "#6",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12264,7 +13570,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12276,6 +13583,7 @@
 "@id": "#8",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12395,7 +13703,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12407,6 +13716,7 @@
 "@id": "#10",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12526,7 +13836,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12538,6 +13849,7 @@
 "@id": "#12",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12640,7 +13952,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12652,6 +13965,7 @@
 "@id": "#14",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12754,7 +14068,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12766,6 +14081,7 @@
 "@id": "#16",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -12868,7 +14184,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -12880,6 +14197,7 @@
 "@id": "#18",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13055,6 +14373,7 @@
 "@id": "#19",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13070,7 +14389,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13082,6 +14402,7 @@
 "@id": "#21",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13252,6 +14573,7 @@
 "@id": "#22",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13267,7 +14589,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13279,6 +14602,7 @@
 "@id": "#24",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13449,6 +14773,7 @@
 "@id": "#25",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13464,7 +14789,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13476,6 +14802,7 @@
 "@id": "#27",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13651,6 +14978,7 @@
 "@id": "#28",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13666,7 +14994,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13678,6 +15007,7 @@
 "@id": "#30",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13780,7 +15110,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13792,6 +15123,7 @@
 "@id": "#32",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -13894,7 +15226,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -13906,6 +15239,7 @@
 "@id": "#34",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14008,7 +15342,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14020,6 +15355,7 @@
 "@id": "#36",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14122,7 +15458,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14134,6 +15471,7 @@
 "@id": "#22",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14149,7 +15487,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14161,6 +15500,7 @@
 "@id": "#24",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14366,7 +15706,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14378,6 +15719,7 @@
 "@id": "#39",
 "@type": [
 "raml-shapes:ArrayShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14387,6 +15729,7 @@
 "@id": "#19",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14402,7 +15745,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14414,6 +15758,7 @@
 "@id": "#21",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14752,6 +16097,7 @@
 "@id": "#40",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14767,7 +16113,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14779,6 +16126,7 @@
 "@id": "#42",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -14898,7 +16246,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -14910,6 +16259,7 @@
 "@id": "#44",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15012,7 +16362,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15024,6 +16375,7 @@
 "@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15126,7 +16478,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15138,6 +16491,7 @@
 "@id": "#48",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15240,7 +16594,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15252,6 +16607,7 @@
 "@id": "#50",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15354,7 +16710,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15366,6 +16723,7 @@
 "@id": "#52",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15468,7 +16826,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15480,6 +16839,7 @@
 "@id": "#54",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15582,7 +16942,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15594,6 +16955,7 @@
 "@id": "#56",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15786,6 +17148,7 @@
 "@id": "#57",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15801,7 +17164,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15813,6 +17177,7 @@
 "@id": "#59",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -15915,7 +17280,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -15927,6 +17293,7 @@
 "@id": "#61",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16102,6 +17469,7 @@
 "@id": "#62",
 "@type": [
 "shacl:NodeShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16117,7 +17485,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16129,6 +17498,7 @@
 "@id": "#64",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16231,7 +17601,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16243,6 +17614,7 @@
 "@id": "#66",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16345,7 +17717,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16357,6 +17730,7 @@
 "@id": "#68",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16459,7 +17833,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16471,6 +17846,7 @@
 "@id": "#70",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16590,7 +17966,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16602,6 +17979,7 @@
 "@id": "#72",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16721,7 +18099,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16733,6 +18112,7 @@
 "@id": "#74",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16852,7 +18232,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16864,6 +18245,7 @@
 "@id": "#76",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -16966,7 +18348,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -16978,6 +18361,7 @@
 "@id": "#78",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17080,7 +18464,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17092,6 +18477,7 @@
 "@id": "#80",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17211,7 +18597,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17223,6 +18610,7 @@
 "@id": "#82",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17325,7 +18713,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17337,6 +18726,7 @@
 "@id": "#84",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17439,7 +18829,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17451,6 +18842,7 @@
 "@id": "#86",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17553,7 +18945,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17565,6 +18958,7 @@
 "@id": "#88",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17667,7 +19061,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17679,6 +19074,7 @@
 "@id": "#90",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17781,7 +19177,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17793,6 +19190,7 @@
 "@id": "#92",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -17895,7 +19293,8 @@
 "@type": [
 "shacl:PropertyShape",
 "shacl:Shape",
-"raml-shapes:Shape"
+"raml-shapes:Shape",
+"doc:DomainElement"
 ],
 "shacl:path": [
 {
@@ -17907,6 +19306,7 @@
 "@id": "#94",
 "@type": [
 "raml-shapes:ScalarShape",
+"raml-shapes:AnyShape",
 "shacl:Shape",
 "raml-shapes:Shape",
 "doc:DomainElement"
@@ -18098,13 +19498,12 @@
 ],
 "@context": {
 "@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
 "shacl": "http://www.w3.org/ns/shacl#",
 "raml-shapes": "http://a.ml/vocabularies/shapes#",
 "doc": "http://a.ml/vocabularies/document#",
-"sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
-"schema-org": "http://schema.org/",
-"hydra": "http://www.w3.org/ns/hydra/core#"
+"apiContract": "http://a.ml/vocabularies/apiContract#",
+"core": "http://a.ml/vocabularies/core#",
+"sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
 }
 }
 ]

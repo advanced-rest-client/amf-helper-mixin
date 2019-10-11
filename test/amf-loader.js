@@ -8,10 +8,9 @@ window.customElements.define('helper-element', HelperElement);
 
 const helper = new HelperElement();
 
-AmfLoader.load = async function(opts) {
-  opts = opts || {};
-  const fileTemplate = opts.isCompact ? 'demo-api-compact.VERSION.json' : 'demo-api.VERSION.json';
-  const file = fileTemplate.replace('VERSION', opts.version || 'v1');
+AmfLoader.load = async function(compact, modelFile) {
+  modelFile = modelFile || 'demo-api';
+  const file = '/' + modelFile + (compact ? '-compact' : '') + '.json';
   const url = location.protocol + '//' + location.host + '/base/test/' + file;
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -26,30 +25,6 @@ AmfLoader.load = async function(opts) {
       resolve(data);
     });
     xhr.addEventListener('error', () => reject(new Error('Unable to load model file')));
-    xhr.open('GET', url);
-    xhr.send();
-  });
-};
-
-AmfLoader.loadFile = async function(fileName, compact) {
-  compact = compact ? '-compact' : '';
-  fileName = fileName || 'demo-api';
-  const file = `${fileName}${compact}.json`;
-  const url = location.protocol + '//' + location.host + '/base/test/'+ file;
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', (e) => {
-      let data;
-      try {
-        data = JSON.parse(e.target.response);
-      } catch (e) {
-        reject(e);
-        return;
-      }
-      resolve(data);
-    });
-    xhr.addEventListener('error',
-      () => reject(new Error('Unable to load model file')));
     xhr.open('GET', url);
     xhr.send();
   });

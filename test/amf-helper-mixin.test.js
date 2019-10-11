@@ -1,30 +1,28 @@
-import { fixture, assert } from '@open-wc/testing';
+import { fixture, assert, html } from '@open-wc/testing';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
-import { ns1 as AmfNamespace } from '../amf-helper-mixin.js';
 import { AmfLoader } from './amf-loader.js';
 import './test-element.js';
 
-describe('AmfHelperMixin', function() {
+describe.only('AmfHelperMixin', function() {
   async function basicFixture() {
     return await fixture(`<test-element></test-element>`);
   }
 
+  async function modelFixture(amf) {
+    return await fixture(html`<test-element
+      .amf="${amf}"></test-element>`);
+  }
+
   [
-    ['Compact model V1', 'v1', true],
-    ['Compact model V2', 'v2', true],
-    ['Regular model V1', 'v1', false],
-    ['Regular model V2', 'v2', false]
-  ].forEach((item) => {
-    describe(item[0], () => {
+    ['Compact model', true],
+    // ['Regular model', false]
+  ].forEach(([label, compact]) => {
+    describe(label, () => {
       let element;
       let model;
-      const VERSION = item[1];
-      const IS_COMPACT = item[2];
+
       before(async () => {
-        model = await AmfLoader.load({
-          isCompact: IS_COMPACT,
-          version: VERSION
-        });
+        model = await AmfLoader.load(compact);
       });
 
       describe('amf setter/getter', () => {
@@ -36,19 +34,6 @@ describe('AmfHelperMixin', function() {
         it('sets _amf property', () => {
           element.amf = model;
           assert.isTrue(element._amf === model);
-        });
-
-        it('sets model version', () => {
-          const versionNumber = Number(VERSION.substr(1));
-          element.amf = model;
-          assert.equal(element._modelVersion, versionNumber);
-        });
-
-        it('sets version to 0 when no model', () => {
-          element.amf = model;
-          assert.notEqual(element._modelVersion, 0);
-          element.amf = undefined;
-          assert.equal(element._modelVersion, 0);
         });
       });
 
@@ -63,12 +48,8 @@ describe('AmfHelperMixin', function() {
           assert.typeOf(element.ns, 'object');
         });
 
-        it('returns correct namespace', () => {
-          if (VERSION === 'v2') {
-            assert.include(element.ns.raml.vocabularies.apiContract, 'apiContract#');
-          } else {
-            assert.isUndefined(element.ns.raml.vocabularies.apiContract);
-          }
+        it('returns namespace', () => {
+          assert.include(element.ns.aml.vocabularies.apiContract.key, 'apiContract#');
         });
       });
 
@@ -106,12 +87,12 @@ describe('AmfHelperMixin', function() {
         it('Returns passed property when no amf', () => {
           element.amf = undefined;
           const result = element._getAmfKey(element.ns.schema.desc);
-          assert.equal(result, AmfNamespace.schema.desc);
+          assert.equal(result, element.ns.schema.desc);
         });
 
-        it('Returns value for property', () => {
+        it.only('Returns value for property', () => {
           const result = element._getAmfKey(element.ns.schema.desc);
-          if (IS_COMPACT) {
+          if (compact) {
             assert.equal(result.split(':')[1], 'description');
           } else {
             assert.equal(result, element.ns.schema.desc);
@@ -150,30 +131,35 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('AMF keys namespace', () => {
+        let element;
+        beforeEach(async () => {
+          element = await modelFixture(model);
+        });
+
         it('Exposes namespace object', () => {
-          assert.typeOf(AmfNamespace, 'object');
+          assert.typeOf(element.ns, 'object');
         });
 
         it('ns has all keys', () => {
-          const keys = Object.keys(AmfNamespace);
+          const keys = Object.keys(element.ns);
           const compare = ['raml', 'aml', 'w3', 'schema'];
           assert.deepEqual(keys, compare);
         });
 
         it('raml properties are set', () => {
-          const r = AmfNamespace.raml;
+          const r = element.ns.raml;
           assert.equal(r.name, 'http://a.ml/');
           assert.typeOf(r.vocabularies, 'object');
         });
 
         it('raml cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.raml = 'test';
+            element.ns.raml = 'test';
           });
         });
 
         it('vocabularies properties are set', () => {
-          const v = AmfNamespace.raml.vocabularies;
+          const v = element.ns.raml.vocabularies;
           const key = 'http://a.ml/vocabularies/';
           assert.equal(v.name, key);
           assert.equal(v.document, key + 'document#');
@@ -185,12 +171,12 @@ describe('AmfHelperMixin', function() {
 
         it('vocabularies cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.raml.vocabularies = 'test';
+            element.ns.raml.vocabularies = 'test';
           });
         });
 
         it('w3 properties are set', () => {
-          const r = AmfNamespace.w3;
+          const r = element.ns.w3;
           assert.equal(r.name, 'http://www.w3.org/');
           assert.typeOf(r.hydra, 'object');
           assert.typeOf(r.shacl, 'object');
@@ -199,12 +185,12 @@ describe('AmfHelperMixin', function() {
 
         it('w3 cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.w3 = 'test';
+            element.ns.w3 = 'test';
           });
         });
 
         it('hydra properties are set', () => {
-          const h = AmfNamespace.w3.hydra;
+          const h = element.ns.w3.hydra;
           const key = 'http://www.w3.org/ns/hydra/';
           assert.equal(h.name, key);
           assert.equal(h.core, key + 'core#');
@@ -213,12 +199,12 @@ describe('AmfHelperMixin', function() {
 
         it('hydra cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.w3.hydra = 'test';
+            element.ns.w3.hydra = 'test';
           });
         });
 
         it('shacl properties are set', () => {
-          const s = AmfNamespace.w3.shacl;
+          const s = element.ns.w3.shacl;
           const key = 'http://www.w3.org/ns/shacl#';
           assert.equal(s.name, key);
           [
@@ -239,12 +225,12 @@ describe('AmfHelperMixin', function() {
 
         it('shacl cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.w3.shacl = 'test';
+            element.ns.w3.shacl = 'test';
           });
         });
 
         it('schema properties are set', () => {
-          const s = AmfNamespace.schema;
+          const s = element.ns.schema;
           const key = 'http://schema.org/';
           assert.equal(s.name, key);
           assert.equal(s.schemaName, key + 'name');
@@ -259,7 +245,7 @@ describe('AmfHelperMixin', function() {
 
         it('schema cannot be changed', () => {
           assert.throws(() => {
-            AmfNamespace.schema = 'test';
+            element.ns.schema = 'test';
           });
         });
 
@@ -1053,7 +1039,7 @@ describe('AmfHelperMixin', function() {
         });
 
         it('Returns type for non-compact id', () => {
-          if (!IS_COMPACT) {
+          if (!compact) {
             // This only affects compact model.
             return;
           }

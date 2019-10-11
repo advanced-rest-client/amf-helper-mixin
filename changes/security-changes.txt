@@ -1,0 +1,59 @@
+ns2.aml.vocabularies.security
+
+
+
+
+./auth-methods/demo/oauth2.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./auth-methods/demo/oauth2.js:    const secPrefix = helper.ns.raml.vocabularies.security;
+./auth-methods/demo/custom.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./auth-methods/demo/custom.js:    const secPrefix = helper.ns.raml.vocabularies.security;
+./auth-methods/demo/oauth1.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./auth-methods/demo/oauth1.js:    const secPrefix = helper.ns.raml.vocabularies.security;
+./auth-methods/test/amf-loader.js:  const secKey = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./auth-methods/auth-method-oauth1.js:    const prefix = this.ns.raml.vocabularies.security;
+./auth-methods/auth-method-oauth1.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.security + 'settings');
+./auth-methods/auth-method-oauth2.js:    const prefix = this.ns.raml.vocabularies.security;
+./auth-methods/auth-method-oauth2.js:    const sKey = this._getAmfKey(this.ns.raml.vocabularies.security + 'settings');
+./auth-methods/auth-method-oauth2.js:    const sec = this.ns.raml.vocabularies.security;
+./auth-methods/auth-method-oauth2.js:      const value = this._getValue(model[i], this.ns.raml.vocabularies.security + 'name');
+./auth-methods/auth-method-custom.js:    const prefix = this.ns.raml.vocabularies.security;
+./auth-methods/auth-method-custom.js:    if (!this._hasType(model, this.ns.raml.vocabularies.security + 'ParametrizedSecurityScheme')) {
+./api-navigation/api-navigation.js:    } else if (this._hasType(item, this.ns.raml.vocabularies.security + 'SecurityScheme')) {
+./api-navigation/api-navigation.js:      name = this._getValue(item, this.ns.raml.vocabularies.security + 'name');
+./api-navigation/api-navigation.js:      name = this._getValue(item, this.ns.raml.vocabularies.security + 'type');
+./api-request-editor/api-request-editor.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.security + 'security');
+./amf-examples/amf-client-module.js:    this.Security$1 = new $c_Lamf_core_vocabulary_Namespace().init___T("http://raml.org/vocabularies/security#");
+./amf-examples/amf-client-module.js:    } else if ((uri === "http://raml.org/vocabularies/security")) {
+./amf-examples/build/browserified.js:    this.Security$1 = new $c_Lamf_core_vocabulary_Namespace().init___T("http://raml.org/vocabularies/security#");
+./amf-examples/build/browserified.js:    } else if ((uri === "http://raml.org/vocabularies/security")) {
+./authorization-panel/demo/index.js:    const key = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./authorization-panel/test/amf-loader.js:  const secKey = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'security');
+./authorization-panel/test/amf-loader.js:  const shKey = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'scheme');
+./authorization-panel/test/amf-loader.js:  const key = helper._getAmfKey(helper.ns.raml.vocabularies.security + 'settings');
+./authorization-panel/authorization-panel-amf-overlay.js:       * It is `http://raml.org/vocabularies/security#security`
+./authorization-panel/authorization-panel-amf-overlay.js:    const secPrefix = this.ns.raml.vocabularies.security;
+./authorization-panel/authorization-panel-amf-overlay.js:    const secPrefix = this.ns.raml.vocabularies.security;
+./api-documentation/test/amf-loader.js:    const result = helper._getValue(item, helper.ns.raml.vocabularies.security + 'name') === name;
+./api-documentation/api-documentation.js:    return this._hasType(model, this.ns.raml.vocabularies.security + 'SecurityScheme');
+./api-security-documentation/test/api-security-documentation.oauth1.test.js:            element.ns.raml.vocabularies.security + 'settings');
+./api-security-documentation/test/api-security-documentation.oauth1.test.js:            element.ns.raml.vocabularies.security + 'settings');
+./api-security-documentation/test/amf-loader.js:      const securityKey = helper._getAmfKey(ns.raml.vocabularies.security + 'name');
+./api-security-documentation/test/api-security-documentation.oauth2.test.js:            element.ns.raml.vocabularies.security + 'settings');
+./api-security-documentation/test/api-security-documentation.oauth2.test.js:            element.ns.raml.vocabularies.security + 'settings');
+./api-security-documentation/api-oauth1-settings-document.js:    const result = this._getValue(settings, this.ns.raml.vocabularies.security + 'requestTokenUri');
+./api-security-documentation/api-oauth1-settings-document.js:    const result = this._getValue(settings, this.ns.raml.vocabularies.security + 'authorizationUri');
+./api-security-documentation/api-oauth1-settings-document.js:    const result = this._getValue(settings, this.ns.raml.vocabularies.security + 'tokenCredentialsUri');
+./api-security-documentation/api-oauth1-settings-document.js:    return this._getValueArray(settings, this.ns.raml.vocabularies.security + 'signature');
+./api-security-documentation/api-security-documentation.js:       * This should be AMF's type of `http://raml.org/vocabularies/security#SecurityScheme`.
+./api-security-documentation/api-security-documentation.js:    if (this._hasType(security, this.ns.raml.vocabularies.security + 'SecurityScheme')) {
+./api-security-documentation/api-security-documentation.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.security + 'scheme');
+./api-security-documentation/api-security-documentation.js:    return this._getValue(shape, this.ns.raml.vocabularies.security + 'type');
+./api-security-documentation/api-security-documentation.js:    return this._computePropertyObject(shape, this.ns.raml.vocabularies.security + 'settings');
+./api-security-documentation/api-security-documentation.js:    return this._hasType(settings, this.ns.raml.vocabularies.security + 'OAuth2Settings');
+./api-security-documentation/api-security-documentation.js:    return this._hasType(settings, this.ns.raml.vocabularies.security + 'OAuth1Settings');
+./api-security-documentation/api-oauth2-settings-document.js:    return this._getValue(settings, this.ns.raml.vocabularies.security + 'accessTokenUri');
+./api-security-documentation/api-oauth2-settings-document.js:    return this._getValue(settings, this.ns.raml.vocabularies.security + 'authorizationUri');
+./api-security-documentation/api-oauth2-settings-document.js:    return this._getValueArray(settings, this.ns.raml.vocabularies.security + 'authorizationGrant');
+./api-security-documentation/api-oauth2-settings-document.js:    if (!this._hasProperty(settings, this.ns.raml.vocabularies.security + 'scope')) {
+./api-security-documentation/api-oauth2-settings-document.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.security + 'scope');
+./api-security-documentation/api-oauth2-settings-document.js:        label: this._getValue(item, this.ns.raml.vocabularies.security + 'name')

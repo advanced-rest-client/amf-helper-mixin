@@ -1,0 +1,32 @@
+ns2.aml.vocabularies.data
+
+./auth-methods/auth-method-oauth2.js:    const data = this.ns.raml.vocabularies.data;
+./auth-methods/auth-method-oauth2.js:    const d = this.ns.raml.vocabularies.data;
+./auth-methods/auth-method-oauth2.js:    const d = this.ns.raml.vocabularies.data;
+./api-example-generator/api-example-generator.js:    if (this._hasType(structure, this.ns.raml.vocabularies.data + 'Scalar')) {
+./api-example-generator/api-example-generator.js:    const prefix = this.ns.raml.vocabularies.data;
+./api-example-generator/api-example-generator.js:    const dataPrefix = this._getAmfKey(this.ns.raml.vocabularies.data);
+./api-example-generator/api-example-generator.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.data + 'value');
+./api-example-generator/api-example-generator.js:      return this._getValue(dv, this.ns.raml.vocabularies.data + 'value');
+./api-example-generator/api-example-generator.js:    if (this._hasType(property, this.ns.raml.vocabularies.data + 'Scalar')) {
+./api-example-generator/api-example-generator.js:    } else if (this._hasType(property, this.ns.raml.vocabularies.data + 'Array')) {
+./api-example-generator/api-example-generator.js:    } else if (this._hasType(property, this.ns.raml.vocabularies.data + 'Object')) {
+./api-example-generator/api-example-generator.js:    if (this._hasType(model, this.ns.raml.vocabularies.data + 'Scalar')) {
+./api-example-generator/api-example-generator.js:      return this._computeStructuredExampleValue(this._getValue(model, this.ns.raml.vocabularies.data + 'value'));
+./api-example-generator/api-example-generator.js:    const isObject = this._hasType(model, this.ns.raml.vocabularies.data + 'Object');
+./api-example-generator/api-example-generator.js:    if (this._hasType(model, this.ns.raml.vocabularies.data + 'Scalar')) {
+./api-example-generator/api-example-generator.js:      const key = this._getAmfKey(this.ns.raml.vocabularies.data + 'value');
+./api-example-generator/api-example-generator.js:    const prefix = this.ns.raml.vocabularies.data;
+./api-type-document/property-range-document.js:      let result = this._getValue(value, this.ns.raml.vocabularies.data + 'value');
+./api-view-model-transformer/api-view-model-transformer.js:      if (this._hasType(items, this.ns.raml.vocabularies.data + 'Object')) {
+./api-view-model-transformer/api-view-model-transformer.js:    const dataKey = this._getAmfKey(this.ns.raml.vocabularies.data);
+./api-view-model-transformer/api-view-model-transformer.js:    const dPrefix = this.ns.raml.vocabularies.data;
+./api-view-model-transformer/api-view-model-transformer.js:      const dKey = this._getAmfKey(this.ns.raml.vocabularies.data);
+./api-view-model-transformer/api-view-model-transformer.js:      case this._getAmfKey(this.ns.raml.vocabularies.data + 'Scalar'):
+./api-view-model-transformer/api-view-model-transformer.js:      case this._getAmfKey(this.ns.raml.vocabularies.data + 'Array'):
+./api-view-model-transformer/api-view-model-transformer.js:    const valueKey = this._getAmfKey(this.ns.raml.vocabularies.data + 'value');
+./api-view-model-transformer/api-view-model-transformer.js:      const vKey = this._getAmfKey(this.ns.raml.vocabularies.data + 'value');
+./api-annotation-document/api-annotation-document.js:    const key = this._getAmfKey(this.ns.raml.vocabularies.data + 'value');
+./api-annotation-document/api-annotation-document.js:    return this._hasType(item, this.ns.raml.vocabularies.data + 'Scalar');
+./api-annotation-document/api-annotation-document.js:    return this._getValue(item, this.ns.raml.vocabularies.data + 'value');
+./api-annotation-document/api-annotation-document.js:    const dataKey = this._getAmfKey(this.ns.raml.vocabularies.data);
