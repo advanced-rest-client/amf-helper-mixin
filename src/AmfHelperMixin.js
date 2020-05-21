@@ -522,6 +522,9 @@ export const AmfHelperMixin = (base) => class extends base {
    * @private
    */
   _isValidServerPartial(model) {
+    if (Array.isArray(model)) {
+      model = model[0];
+    }
     if (!model) {
       return false;
     }
