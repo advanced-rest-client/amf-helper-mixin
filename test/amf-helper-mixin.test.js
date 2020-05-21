@@ -2103,6 +2103,65 @@ describe('AmfHelperMixin', function() {
           assert.deepEqual(result, { '@id': '1'});
         });
       });
+
+			describe('_isValidServerPartial()', () => {
+				describe('with mock objects', () => {
+					describe('not in arrays', () =>{
+						it('should return true for endpoint type', () => {
+							const endpointKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.EndPoint);
+							const model = { '@type': [endpointKey] }
+							assert.isTrue(element._isValidServerPartial(model));
+						});
+
+						it('should return true for method type', () => {
+							const methodKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.Operation);
+							const model = { '@type': [methodKey] }
+							assert.isTrue(element._isValidServerPartial(model));
+						});
+
+						it('should return false for any other type', () => {
+							const otherKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.WebAPI);
+							const model = { '@type': [otherKey] }
+							assert.isFalse(element._isValidServerPartial(model));
+						});
+					});
+					describe('in arrays', () =>{
+						it('should return true for endpoint type', () => {
+							const endpointKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.EndPoint);
+							const model = { '@type': [endpointKey] }
+							assert.isTrue(element._isValidServerPartial([model]));
+						});
+
+						it('should return true for method type', () => {
+							const methodKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.Operation);
+							const model = { '@type': [methodKey] }
+							assert.isTrue(element._isValidServerPartial([model]));
+						});
+
+						it('should return false for any other type', () => {
+							const otherKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.WebAPI);
+							const model = { '@type': [otherKey] }
+							assert.isFalse(element._isValidServerPartial([model]));
+						});
+					})
+				});
+
+				describe('with real nodes', () => {
+					it('should return true for endpoint type', () => {
+						const endpoint = AmfLoader.lookupEndpoint(model, '/files');
+						assert.isTrue(element._isValidServerPartial(endpoint));
+					});
+
+					it('should return true for method type', () => {
+						const method = AmfLoader.lookupOperation(model, '/files', 'get');
+						assert.isTrue(element._isValidServerPartial(method));
+					});
+
+					it('should return false for any other type', () => {
+						assert.isFalse(element._isValidServerPartial(model));
+					});
+				})
+			});
       // Keys caching is only enabled for compact model that requires additional
       // computations.
       (compact ? describe : describe.skip)('keys computation caching', () => {
