@@ -257,6 +257,7 @@ ns.w3.shacl.name = n2shaclName + 'name';
 ns.w3.shacl.raw = n2shaclName + 'raw';
 ns.w3.shacl.datatype = n2shaclName + 'datatype';
 ns.w3.shacl.minCount = n2shaclName + 'minCount';
+ns.w3.shacl.xone = n2shaclName + 'xone'
 // Hydra shortcuts
 ns.w3.hydra.supportedOperation = contractKey + 'supportedOperation';
 // Schema org namespace
