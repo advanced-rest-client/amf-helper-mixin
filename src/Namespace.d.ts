@@ -154,6 +154,7 @@ interface Shapes {
   xmlName: string;
   xmlAttribute: string;
   xmlWrapped: string;
+  readOnly: string;
 }
 
 interface Data {
@@ -270,6 +271,9 @@ interface Shacl {
   raw: string;
   datatype: string;
   minCount: string;
+  xone: string;
+  not: string;
+  or: string;
 }
 
 interface W3 {
