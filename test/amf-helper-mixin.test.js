@@ -258,7 +258,10 @@ describe('AmfHelperMixin', function() {
             'Shape',
             'NodeShape',
             'SchemaShape',
-            'PropertyShape'
+            'PropertyShape',
+            'xone',
+            'not',
+            'or',
           ].forEach((name) => {
             assert.equal(s[name], key + name, name + ' is set');
           });
@@ -492,6 +495,7 @@ describe('AmfHelperMixin', function() {
           ['xmlName', key + 'xmlName'],
           ['xmlAttribute', key + 'xmlAttribute'],
           ['xmlWrapped', key + 'xmlWrapped'],
+          ['readOnly', key + 'readOnly'],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.shapes[property];
