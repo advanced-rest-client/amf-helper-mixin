@@ -2210,4 +2210,36 @@ describe('AmfHelperMixin', () => {
       });
     });
   });
+
+  describe('_getLexicalOrder', () => {
+    let element;
+    beforeEach(async () => {
+      element = await basicFixture();
+    });
+
+    it('returns first appearance in lexical order', () => {
+      const model = {
+        'http://a.ml/vocabularies/document-source-maps#sources': {
+          'http://a.ml/vocabularies/document-source-maps#lexical': [
+            '[(11,4)-(12,0)]',
+            '[(12,4)-(17,0)]',
+            '[(10,2)-(17,0)]',
+          ],
+        },
+      };
+      assert.equal(element._getLexicalOrder(model), 11);
+    });
+
+    it('returns undefined when no sources',  () => {
+      const model = {};
+      assert.isUndefined(element._getLexicalOrder(model));
+    });
+
+    it('returns undefined when no lexical',  () => {
+      const model = {
+        'http://a.ml/vocabularies/document-source-maps#': {},
+      };
+      assert.isUndefined(element._getLexicalOrder(model));
+    });
+  });
 });
