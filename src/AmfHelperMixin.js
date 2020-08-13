@@ -1222,4 +1222,33 @@ export const AmfHelperMixin = (base) => class extends base {
       }
     });
   }
+
+  /**
+   * Get first appearance in lexical information
+   * @param {Object} value
+   * @return {String|undefined} order.
+   */
+  _getLexicalOrder(value) {
+    const sKey = this._getAmfKey(
+      this.ns.aml.vocabularies.docSourceMaps.sources
+    );
+    const sources = value[sKey];
+    if (!sources) {
+      return undefined;
+    }
+
+    const lKey = this._getAmfKey(
+      this.ns.aml.vocabularies.docSourceMaps.lexical
+    );
+    const lexical = sources[lKey];
+
+    if (!lexical || lexical.length === 0) {
+      return undefined;
+    }
+
+    const firstPosition = lexical[0];
+    const positionStart = firstPosition.indexOf('(') + 1;
+    const positionEnd = firstPosition.indexOf(',');
+    return firstPosition.substring(positionStart, positionEnd);
+  }
 };
