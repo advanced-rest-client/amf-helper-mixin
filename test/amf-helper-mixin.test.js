@@ -2211,7 +2211,7 @@ describe('AmfHelperMixin', () => {
     });
   });
 
-  describe('_getLexicalOrder', () => {
+  describe('_computeLexicalStart', () => {
     let element;
     beforeEach(async () => {
       element = await basicFixture();
@@ -2227,19 +2227,19 @@ describe('AmfHelperMixin', () => {
           ],
         },
       };
-      assert.equal(element._getLexicalOrder(model), 11);
+      assert.equal(element._computeLexicalStart(model), 10);
     });
 
     it('returns undefined when no sources',  () => {
       const model = {};
-      assert.isUndefined(element._getLexicalOrder(model));
+      assert.isUndefined(element._computeLexicalStart(model));
     });
 
     it('returns undefined when no lexical',  () => {
       const model = {
         'http://a.ml/vocabularies/document-source-maps#': {},
       };
-      assert.isUndefined(element._getLexicalOrder(model));
+      assert.isUndefined(element._computeLexicalStart(model));
     });
   });
 });

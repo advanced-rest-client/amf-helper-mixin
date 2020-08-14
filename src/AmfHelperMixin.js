@@ -1226,9 +1226,9 @@ export const AmfHelperMixin = (base) => class extends base {
   /**
    * Get first appearance in lexical information
    * @param {Object} value
-   * @return {String|undefined} order.
+   * @return {Number|undefined} order.
    */
-  _getLexicalOrder(value) {
+  _computeLexicalStart(value) {
     const sKey = this._getAmfKey(
       this.ns.aml.vocabularies.docSourceMaps.sources
     );
@@ -1246,9 +1246,12 @@ export const AmfHelperMixin = (base) => class extends base {
       return undefined;
     }
 
-    const firstPosition = lexical[0];
-    const positionStart = firstPosition.indexOf('(') + 1;
-    const positionEnd = firstPosition.indexOf(',');
-    return firstPosition.substring(positionStart, positionEnd);
+    const lexicalLines = lexical.map((position) => {
+      const lineStart = position.indexOf('(') + 1;
+      const lineEnd = position.indexOf(',');
+      return parseInt(position.substring(lineStart, lineEnd), 10);
+    });
+
+    return Math.min(...lexicalLines)
   }
 };
