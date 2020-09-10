@@ -191,6 +191,7 @@ interface DocSourceMaps {
   declaredElement: string;
   trackedElement: string;
   parsedJsonSchema: string;
+  lexical: string;
 }
 
 interface Vocabularies {

@@ -976,13 +976,13 @@ export const AmfHelperMixin = (base) => class extends base {
    * @return {Object} A type definition
    */
   _computeType(declares, references, selected) {
-    if (!declares || !selected) {
+    if ((!declares && !references) || !selected) {
       return undefined;
     }
     // In compact model some IDs are presented in long version (in source maps for examples)
     // This must test for this case as well.
     const compactId = selected.replace('amf://id', '');
-    let type = declares.find((item) => item['@id'] === selected || item['@id'] === compactId);
+    let type = declares && declares.find((item) => item['@id'] === selected || item['@id'] === compactId);
     if (!type && references && references.length) {
       for (let i = 0, len = references.length; i < len; i++) {
         if (!this._hasType(references[i], this.ns.aml.vocabularies.document.Module)) {

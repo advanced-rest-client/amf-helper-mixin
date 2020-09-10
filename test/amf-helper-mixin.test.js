@@ -3,13 +3,13 @@ import * as sinon from 'sinon';
 import { AmfLoader } from './amf-loader.js';
 import './test-element.js';
 
-describe('AmfHelperMixin', function() {
+describe('AmfHelperMixin', () => {
   async function basicFixture() {
-    return await fixture(`<test-element></test-element>`);
+    return fixture(`<test-element></test-element>`);
   }
 
   async function modelFixture(amf) {
-    return await fixture(html`<test-element
+    return fixture(html`<test-element
       .amf="${amf}"></test-element>`);
   }
 
@@ -26,7 +26,6 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('amf setter/getter', () => {
-        let element;
         beforeEach(async () => {
           element = await basicFixture();
         });
@@ -38,7 +37,6 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('ns getter', () => {
-        let element;
         beforeEach(async () => {
           element = await modelFixture(model);
         });
@@ -53,7 +51,6 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('__amfChanged()', () => {
-        let element;
         beforeEach(async () => {
           element = await basicFixture();
         });
@@ -128,7 +125,6 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('AMF keys namespace', () => {
-        let element;
         beforeEach(async () => {
           element = await modelFixture(model);
         });
@@ -166,24 +162,24 @@ describe('AmfHelperMixin', function() {
           const key = 'http://a.ml/vocabularies/';
           assert.equal(v.key, key, 'key is set');
           assert.typeOf(v.document, 'object', 'document is set');
-          assert.equal(v.document.toString(), key + 'document#', 'document namespace as string is the key');
-          assert.equal(v.document.key, key + 'document#', 'document key is set');
+          assert.equal(v.document.toString(), `${key  }document#`, 'document namespace as string is the key');
+          assert.equal(v.document.key, `${key  }document#`, 'document key is set');
           assert.typeOf(v.core, 'object', 'core is set');
-          assert.equal(v.core.toString(), key + 'core#', 'core namespace as string is the key');
-          assert.equal(v.core.key, key + 'core#', 'core key is set');
+          assert.equal(v.core.toString(), `${key  }core#`, 'core namespace as string is the key');
+          assert.equal(v.core.key, `${key  }core#`, 'core key is set');
           assert.typeOf(v.apiContract, 'object', 'apiContract is set');
-          assert.equal(v.apiContract.toString(), key + 'apiContract#', 'apiContract namespace as string is the key');
-          assert.equal(v.apiContract.key, key + 'apiContract#', 'apiContract.key is set');
+          assert.equal(v.apiContract.toString(), `${key  }apiContract#`, 'apiContract namespace as string is the key');
+          assert.equal(v.apiContract.key, `${key  }apiContract#`, 'apiContract.key is set');
           assert.equal(v.http, v.apiContract, 'apiContract is old http');
           assert.typeOf(v.security, 'object', 'security is set');
-          assert.equal(v.security.toString(), key + 'security#', 'security namespace as string is the key');
-          assert.equal(v.security.key, key + 'security#', 'security.key is set');
+          assert.equal(v.security.toString(), `${key  }security#`, 'security namespace as string is the key');
+          assert.equal(v.security.key, `${key  }security#`, 'security.key is set');
           assert.typeOf(v.shapes, 'object', 'shapes is set');
-          assert.equal(v.shapes.toString(), key + 'shapes#', 'shapes namespace as string is the key');
-          assert.equal(v.shapes.key, key + 'shapes#', 'shapes.key is set');
+          assert.equal(v.shapes.toString(), `${key  }shapes#`, 'shapes namespace as string is the key');
+          assert.equal(v.shapes.key, `${key  }shapes#`, 'shapes.key is set');
           assert.typeOf(v.data, 'object', 'data is set');
-          assert.equal(v.data.toString(), key + 'data#', 'data namespace as string is the key');
-          assert.equal(v.data.key, key + 'data#', 'data.key is set');
+          assert.equal(v.data.toString(), `${key  }data#`, 'data namespace as string is the key');
+          assert.equal(v.data.key, `${key  }data#`, 'data.key is set');
         });
 
         it('vocabularies cannot be changed', () => {
@@ -194,23 +190,23 @@ describe('AmfHelperMixin', function() {
 
         it('w3 properties are set', () => {
           const r = element.ns.w3;
-          const key = r.key;
+          const {key} = r;
           assert.equal(r.key, 'http://www.w3.org/', 'key is set');
           assert.typeOf(r.rdfSyntax, 'object', 'rdfSyntax is set');
-          assert.equal(r.rdfSyntax.toString(), key + '1999/02/22-rdf-syntax-ns#', 'rdfSyntax namespace as string is the key');
-          assert.equal(r.rdfSyntax.key, key + '1999/02/22-rdf-syntax-ns#', 'rdfSyntax.key is set');
+          assert.equal(r.rdfSyntax.toString(), `${key  }1999/02/22-rdf-syntax-ns#`, 'rdfSyntax namespace as string is the key');
+          assert.equal(r.rdfSyntax.key, `${key  }1999/02/22-rdf-syntax-ns#`, 'rdfSyntax.key is set');
           assert.typeOf(r.rdfSchema, 'object', 'rdfSchema is set');
-          assert.equal(r.rdfSchema.toString(), key + '2000/01/rdf-schema#', 'rdfSchema namespace as string is the key');
-          assert.equal(r.rdfSchema.key, key + '2000/01/rdf-schema#', 'rdfSchema.key is set');
+          assert.equal(r.rdfSchema.toString(), `${key  }2000/01/rdf-schema#`, 'rdfSchema namespace as string is the key');
+          assert.equal(r.rdfSchema.key, `${key  }2000/01/rdf-schema#`, 'rdfSchema.key is set');
           assert.typeOf(r.hydra, 'object', 'hydra is set');
-          assert.equal(r.hydra.toString(), key + 'ns/hydra/', 'hydra namespace as string is the key');
-          assert.equal(r.hydra.key, key + 'ns/hydra/', 'hydra.key is set');
+          assert.equal(r.hydra.toString(), `${key  }ns/hydra/`, 'hydra namespace as string is the key');
+          assert.equal(r.hydra.key, `${key  }ns/hydra/`, 'hydra.key is set');
           assert.typeOf(r.xmlSchema, 'object', 'xmlSchema is set');
-          assert.equal(r.xmlSchema.toString(), key + '2001/XMLSchema#', 'xmlSchema namespace as string is the key');
-          assert.equal(r.xmlSchema.key, key + '2001/XMLSchema#', 'xmlSchema.key is set');
+          assert.equal(r.xmlSchema.toString(), `${key  }2001/XMLSchema#`, 'xmlSchema namespace as string is the key');
+          assert.equal(r.xmlSchema.key, `${key  }2001/XMLSchema#`, 'xmlSchema.key is set');
           assert.typeOf(r.shacl, 'object', 'shacl is set');
-          assert.equal(r.shacl.toString(), key + 'ns/shacl#', 'shacl namespace as string is the key');
-          assert.equal(r.shacl.key, key + 'ns/shacl#', 'shacl.key is set');
+          assert.equal(r.shacl.toString(), `${key  }ns/shacl#`, 'shacl namespace as string is the key');
+          assert.equal(r.shacl.key, `${key  }ns/shacl#`, 'shacl.key is set');
         });
 
         it('w3 cannot be changed', () => {
@@ -263,7 +259,7 @@ describe('AmfHelperMixin', function() {
             'not',
             'or',
           ].forEach((name) => {
-            assert.equal(s[name], key + name, name + ' is set');
+            assert.equal(s[name], key + name, `${name  } is set`);
           });
         });
 
@@ -275,13 +271,13 @@ describe('AmfHelperMixin', function() {
 
         it('schema properties are set', () => {
           const s = element.ns.schema;
-          const key = element.ns.aml.vocabularies.core.key;
+          const {key} = element.ns.aml.vocabularies.core;
           assert.equal(s.key, key, 'key is set');
-          assert.equal(s.name, key + 'name', 'name is set');
-          assert.equal(s.desc, key + 'description');
-          assert.equal(s.doc, key + 'documentation');
-          assert.equal(s.webApi, element.ns.aml.vocabularies.apiContract.key + 'WebAPI');
-          assert.equal(s.creativeWork, key + 'CreativeWork');
+          assert.equal(s.name, `${key  }name`, 'name is set');
+          assert.equal(s.desc, `${key  }description`);
+          assert.equal(s.doc, `${key  }documentation`);
+          assert.equal(s.webApi, `${element.ns.aml.vocabularies.apiContract.key  }WebAPI`);
+          assert.equal(s.creativeWork, `${key  }CreativeWork`);
           ['displayName', 'title'].forEach((name) => {
             assert.equal(s[name], key + name);
           });
@@ -295,32 +291,31 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.document namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/document#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['Module', key + 'Module'],
-          ['Document', key + 'Document'],
-          ['SecuritySchemeFragment', key + 'SecuritySchemeFragment'],
-          ['UserDocumentation', key + 'UserDocumentation'],
-          ['DataType', key + 'DataType'],
-          ['NamedExamples', key + 'NamedExamples'],
-          ['DomainElement', key + 'DomainElement'],
-          ['customDomainProperties', key + 'customDomainProperties'],
-          ['encodes', key + 'encodes'],
-          ['declares', key + 'declares'],
-          ['references', key + 'references'],
-          ['examples', key + 'examples'],
-          ['linkTarget', key + 'link-target'],
-          ['referenceId', key + 'reference-id'],
-          ['structuredValue', key + 'structuredValue'],
-          ['raw', key + 'raw'],
-          ['extends', key + 'extends'],
-          ['value', key + 'value'],
-          ['name', key + 'name'],
+          ['Module', `${key  }Module`],
+          ['Document', `${key  }Document`],
+          ['SecuritySchemeFragment', `${key  }SecuritySchemeFragment`],
+          ['UserDocumentation', `${key  }UserDocumentation`],
+          ['DataType', `${key  }DataType`],
+          ['NamedExamples', `${key  }NamedExamples`],
+          ['DomainElement', `${key  }DomainElement`],
+          ['customDomainProperties', `${key  }customDomainProperties`],
+          ['encodes', `${key  }encodes`],
+          ['declares', `${key  }declares`],
+          ['references', `${key  }references`],
+          ['examples', `${key  }examples`],
+          ['linkTarget', `${key  }link-target`],
+          ['referenceId', `${key  }reference-id`],
+          ['structuredValue', `${key  }structuredValue`],
+          ['raw', `${key  }raw`],
+          ['extends', `${key  }extends`],
+          ['value', `${key  }value`],
+          ['name', `${key  }name`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.document[property];
@@ -330,34 +325,33 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.security namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/security#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['ParametrizedSecurityScheme', key + 'ParametrizedSecurityScheme'],
-          ['SecuritySchemeFragment', key + 'SecuritySchemeFragment'],
-          ['SecurityScheme', key + 'SecurityScheme'],
-          ['OAuth1Settings', key + 'OAuth1Settings'],
-          ['OAuth2Settings', key + 'OAuth2Settings'],
-          ['Scope', key + 'Scope'],
-          ['security', key + 'security'],
-          ['scheme', key + 'scheme'],
-          ['settings', key + 'settings'],
-          ['name', key + 'name'],
-          ['type', key + 'type'],
-          ['scope', key + 'scope'],
-          ['accessTokenUri', key + 'accessTokenUri'],
-          ['authorizationUri', key + 'authorizationUri'],
-          ['authorizationGrant', key + 'authorizationGrant'],
-          ['signature', key + 'signature'],
-          ['tokenCredentialsUri', key + 'tokenCredentialsUri'],
-          ['requestTokenUri', key + 'requestTokenUri'],
-          ['in', key + 'in'],
-          ['flows', key + 'flows'],
-          ['flow', key + 'flow'],
+          ['ParametrizedSecurityScheme', `${key  }ParametrizedSecurityScheme`],
+          ['SecuritySchemeFragment', `${key  }SecuritySchemeFragment`],
+          ['SecurityScheme', `${key  }SecurityScheme`],
+          ['OAuth1Settings', `${key  }OAuth1Settings`],
+          ['OAuth2Settings', `${key  }OAuth2Settings`],
+          ['Scope', `${key  }Scope`],
+          ['security', `${key  }security`],
+          ['scheme', `${key  }scheme`],
+          ['settings', `${key  }settings`],
+          ['name', `${key  }name`],
+          ['type', `${key  }type`],
+          ['scope', `${key  }scope`],
+          ['accessTokenUri', `${key  }accessTokenUri`],
+          ['authorizationUri', `${key  }authorizationUri`],
+          ['authorizationGrant', `${key  }authorizationGrant`],
+          ['signature', `${key  }signature`],
+          ['tokenCredentialsUri', `${key  }tokenCredentialsUri`],
+          ['requestTokenUri', `${key  }requestTokenUri`],
+          ['in', `${key  }in`],
+          ['flows', `${key  }flows`],
+          ['flow', `${key  }flow`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.security[property];
@@ -367,29 +361,28 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.core namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/core#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['CreativeWork', key + 'CreativeWork'],
-          ['version', key + 'version'],
-          ['urlTemplate', key + 'urlTemplate'],
-          ['displayName', key + 'displayName'],
-          ['title', key + 'title'],
-          ['name', key + 'name'],
-          ['description', key + 'description'],
-          ['documentation', key + 'documentation'],
-          ['version', key + 'version'],
-          ['provider', key + 'provider'],
-          ['email', key + 'email'],
-          ['url', key + 'url'],
-          ['termsOfService', key + 'termsOfService'],
-          ['license', key + 'license'],
-          ['mediaType', key + 'mediaType'],
-          ['extensionName', key + 'extensionName'],
+          ['CreativeWork', `${key  }CreativeWork`],
+          ['version', `${key  }version`],
+          ['urlTemplate', `${key  }urlTemplate`],
+          ['displayName', `${key  }displayName`],
+          ['title', `${key  }title`],
+          ['name', `${key  }name`],
+          ['description', `${key  }description`],
+          ['documentation', `${key  }documentation`],
+          ['version', `${key  }version`],
+          ['provider', `${key  }provider`],
+          ['email', `${key  }email`],
+          ['url', `${key  }url`],
+          ['termsOfService', `${key  }termsOfService`],
+          ['license', `${key  }license`],
+          ['mediaType', `${key  }mediaType`],
+          ['extensionName', `${key  }extensionName`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.core[property];
@@ -399,57 +392,56 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.apiContract namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/apiContract#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['Payload', key + 'Payload'],
-          ['Request', key + 'Request'],
-          ['EndPoint', key + 'EndPoint'],
-          ['Parameter', key + 'Parameter'],
-          ['Operation', key + 'Operation'],
-          ['WebAPI', key + 'WebAPI'],
-          ['UserDocumentationFragment', key + 'UserDocumentationFragment'],
-          ['Example', key + 'Example'],
-          ['Server', key + 'Server'],
-          ['ParametrizedResourceType', key + 'ParametrizedResourceType'],
-          ['ParametrizedTrait', key + 'ParametrizedTrait'],
-          ['TemplatedLink', key + 'TemplatedLink'],
-          ['IriTemplateMapping', key + 'IriTemplateMapping'],
-          ['Callback', key + 'Callback'],
-          ['header', key + 'header'],
-          ['parameter', key + 'parameter'],
-          ['paramName', key + 'paramName'],
-          ['uriParameter', key + 'uriParameter'],
-          ['variable', key + 'variable'],
-          ['payload', key + 'payload'],
-          ['path', key + 'path'],
-          ['url', key + 'url'],
-          ['scheme', key + 'scheme'],
-          ['endpoint', key + 'endpoint'],
-          ['queryString', key + 'queryString'],
+          ['Payload', `${key  }Payload`],
+          ['Request', `${key  }Request`],
+          ['EndPoint', `${key  }EndPoint`],
+          ['Parameter', `${key  }Parameter`],
+          ['Operation', `${key  }Operation`],
+          ['WebAPI', `${key  }WebAPI`],
+          ['UserDocumentationFragment', `${key  }UserDocumentationFragment`],
+          ['Example', `${key  }Example`],
+          ['Server', `${key  }Server`],
+          ['ParametrizedResourceType', `${key  }ParametrizedResourceType`],
+          ['ParametrizedTrait', `${key  }ParametrizedTrait`],
+          ['TemplatedLink', `${key  }TemplatedLink`],
+          ['IriTemplateMapping', `${key  }IriTemplateMapping`],
+          ['Callback', `${key  }Callback`],
+          ['header', `${key  }header`],
+          ['parameter', `${key  }parameter`],
+          ['paramName', `${key  }paramName`],
+          ['uriParameter', `${key  }uriParameter`],
+          ['variable', `${key  }variable`],
+          ['payload', `${key  }payload`],
+          ['path', `${key  }path`],
+          ['url', `${key  }url`],
+          ['scheme', `${key  }scheme`],
+          ['endpoint', `${key  }endpoint`],
+          ['queryString', `${key  }queryString`],
           // ['mediaType', key + 'mediaType'],
-          ['accepts', key + 'accepts'],
-          ['guiSummary', key + 'guiSummary'],
-          ['binding', key + 'binding'],
-          ['response', key + 'response'],
-          ['returns', key + 'returns'],
-          ['expects', key + 'expects'],
-          ['examples', key + 'examples'],
-          ['supportedOperation', key + 'supportedOperation'],
-          ['statusCode', key + 'statusCode'],
-          ['method', key + 'method'],
-          ['required', key + 'required'],
-          ['callback', key + 'callback'],
-          ['expression', key + 'expression'],
-          ['link', key + 'link'],
-          ['linkExpression', key + 'linkExpression'],
-          ['templateVariable', key + 'templateVariable'],
-          ['mapping', key + 'mapping'],
-          ['operationId', key + 'operationId'],
+          ['accepts', `${key  }accepts`],
+          ['guiSummary', `${key  }guiSummary`],
+          ['binding', `${key  }binding`],
+          ['response', `${key  }response`],
+          ['returns', `${key  }returns`],
+          ['expects', `${key  }expects`],
+          ['examples', `${key  }examples`],
+          ['supportedOperation', `${key  }supportedOperation`],
+          ['statusCode', `${key  }statusCode`],
+          ['method', `${key  }method`],
+          ['required', `${key  }required`],
+          ['callback', `${key  }callback`],
+          ['expression', `${key  }expression`],
+          ['link', `${key  }link`],
+          ['linkExpression', `${key  }linkExpression`],
+          ['templateVariable', `${key  }templateVariable`],
+          ['mapping', `${key  }mapping`],
+          ['operationId', `${key  }operationId`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.apiContract[property];
@@ -459,43 +451,42 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.shapes namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/shapes#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['ScalarShape', key + 'ScalarShape'],
-          ['ArrayShape', key + 'ArrayShape'],
-          ['UnionShape', key + 'UnionShape'],
-          ['NilShape', key + 'NilShape'],
-          ['FileShape', key + 'FileShape'],
-          ['AnyShape', key + 'AnyShape'],
-          ['SchemaShape', key + 'SchemaShape'],
-          ['MatrixShape', key + 'MatrixShape'],
-          ['TupleShape', key + 'TupleShape'],
-          ['DataTypeFragment', key + 'DataTypeFragment'],
-          ['RecursiveShape', key + 'RecursiveShape'],
-          ['range', key + 'range'],
-          ['items', key + 'items'],
-          ['anyOf', key + 'anyOf'],
-          ['fileType', key + 'fileType'],
-          ['number', key + 'number'],
-          ['integer', key + 'integer'],
-          ['long', key + 'long'],
-          ['double', key + 'double'],
-          ['boolean', key + 'boolean'],
-          ['float', key + 'float'],
-          ['nil', key + 'nil'],
-          ['dateTimeOnly', key + 'dateTimeOnly'],
-          ['password', key + 'password'],
-          ['schema', key + 'schema'],
-          ['xmlSerialization', key + 'xmlSerialization'],
-          ['xmlName', key + 'xmlName'],
-          ['xmlAttribute', key + 'xmlAttribute'],
-          ['xmlWrapped', key + 'xmlWrapped'],
-          ['readOnly', key + 'readOnly'],
+          ['ScalarShape', `${key  }ScalarShape`],
+          ['ArrayShape', `${key  }ArrayShape`],
+          ['UnionShape', `${key  }UnionShape`],
+          ['NilShape', `${key  }NilShape`],
+          ['FileShape', `${key  }FileShape`],
+          ['AnyShape', `${key  }AnyShape`],
+          ['SchemaShape', `${key  }SchemaShape`],
+          ['MatrixShape', `${key  }MatrixShape`],
+          ['TupleShape', `${key  }TupleShape`],
+          ['DataTypeFragment', `${key  }DataTypeFragment`],
+          ['RecursiveShape', `${key  }RecursiveShape`],
+          ['range', `${key  }range`],
+          ['items', `${key  }items`],
+          ['anyOf', `${key  }anyOf`],
+          ['fileType', `${key  }fileType`],
+          ['number', `${key  }number`],
+          ['integer', `${key  }integer`],
+          ['long', `${key  }long`],
+          ['double', `${key  }double`],
+          ['boolean', `${key  }boolean`],
+          ['float', `${key  }float`],
+          ['nil', `${key  }nil`],
+          ['dateTimeOnly', `${key  }dateTimeOnly`],
+          ['password', `${key  }password`],
+          ['schema', `${key  }schema`],
+          ['xmlSerialization', `${key  }xmlSerialization`],
+          ['xmlName', `${key  }xmlName`],
+          ['xmlAttribute', `${key  }xmlAttribute`],
+          ['xmlWrapped', `${key  }xmlWrapped`],
+          ['readOnly', `${key  }readOnly`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.shapes[property];
@@ -505,32 +496,31 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.data namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/data#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['Scalar', key + 'Scalar'],
-          ['Object', key + 'Object'],
-          ['Array', key + 'Array'],
-          ['value', key + 'value'],
-          ['description', key + 'description'],
-          ['required', key + 'required'],
-          ['displayName', key + 'displayName'],
-          ['minLength', key + 'minLength'],
-          ['maxLength', key + 'maxLength'],
-          ['default', key + 'default'],
-          ['multipleOf', key + 'multipleOf'],
-          ['minimum', key + 'minimum'],
-          ['maximum', key + 'maximum'],
-          ['enum', key + 'enum'],
-          ['pattern', key + 'pattern'],
-          ['items', key + 'items'],
-          ['format', key + 'format'],
-          ['example', key + 'example'],
-          ['examples', key + 'examples'],
+          ['Scalar', `${key  }Scalar`],
+          ['Object', `${key  }Object`],
+          ['Array', `${key  }Array`],
+          ['value', `${key  }value`],
+          ['description', `${key  }description`],
+          ['required', `${key  }required`],
+          ['displayName', `${key  }displayName`],
+          ['minLength', `${key  }minLength`],
+          ['maxLength', `${key  }maxLength`],
+          ['default', `${key  }default`],
+          ['multipleOf', `${key  }multipleOf`],
+          ['minimum', `${key  }minimum`],
+          ['maximum', `${key  }maximum`],
+          ['enum', `${key  }enum`],
+          ['pattern', `${key  }pattern`],
+          ['items', `${key  }items`],
+          ['format', `${key  }format`],
+          ['example', `${key  }example`],
+          ['examples', `${key  }examples`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.data[property];
@@ -540,19 +530,19 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('vocabularies.docSourceMaps namespace', () => {
-        let element;
         const key = 'http://a.ml/vocabularies/document-source-maps#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['sources', key + 'sources'],
-          ['element', key + 'element'],
-          ['value', key + 'value'],
-          ['declaredElement', key + 'declared-element'],
-          ['trackedElement', key + 'tracked-element'],
-          ['parsedJsonSchema', key + 'parsed-json-schema'],
+          ['sources', `${key  }sources`],
+          ['element', `${key  }element`],
+          ['value', `${key  }value`],
+          ['declaredElement', `${key  }declared-element`],
+          ['trackedElement', `${key  }tracked-element`],
+          ['parsedJsonSchema', `${key  }parsed-json-schema`],
+          ['lexical', `${key  }lexical`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.docSourceMaps[property];
@@ -562,33 +552,32 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('w3.shacl namespace', () => {
-        let element;
         const key = 'http://www.w3.org/ns/shacl#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['Shape', key + 'Shape'],
-          ['NodeShape', key + 'NodeShape'],
-          ['SchemaShape', key + 'SchemaShape'],
-          ['PropertyShape', key + 'PropertyShape'],
-          ['in', key + 'in'],
-          ['defaultValue', key + 'defaultValue'],
-          ['defaultValueStr', key + 'defaultValueStr'],
-          ['pattern', key + 'pattern'],
-          ['minInclusive', key + 'minInclusive'],
-          ['maxInclusive', key + 'maxInclusive'],
-          ['multipleOf', key + 'multipleOf'],
-          ['minLength', key + 'minLength'],
-          ['maxLength', key + 'maxLength'],
-          ['fileType', key + 'fileType'],
-          ['and', key + 'and'],
-          ['property', key + 'property'],
-          ['name', key + 'name'],
-          ['raw', key + 'raw'],
-          ['datatype', key + 'datatype'],
-          ['minCount', key + 'minCount'],
+          ['Shape', `${key  }Shape`],
+          ['NodeShape', `${key  }NodeShape`],
+          ['SchemaShape', `${key  }SchemaShape`],
+          ['PropertyShape', `${key  }PropertyShape`],
+          ['in', `${key  }in`],
+          ['defaultValue', `${key  }defaultValue`],
+          ['defaultValueStr', `${key  }defaultValueStr`],
+          ['pattern', `${key  }pattern`],
+          ['minInclusive', `${key  }minInclusive`],
+          ['maxInclusive', `${key  }maxInclusive`],
+          ['multipleOf', `${key  }multipleOf`],
+          ['minLength', `${key  }minLength`],
+          ['maxLength', `${key  }maxLength`],
+          ['fileType', `${key  }fileType`],
+          ['and', `${key  }and`],
+          ['property', `${key  }property`],
+          ['name', `${key  }name`],
+          ['raw', `${key  }raw`],
+          ['datatype', `${key  }datatype`],
+          ['minCount', `${key  }minCount`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.w3.shacl[property];
@@ -598,25 +587,24 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('w3.xmlSchema namespace', () => {
-        let element;
         const key = 'http://www.w3.org/2001/XMLSchema#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['boolean', key + 'boolean'],
-          ['string', key + 'string'],
-          ['number', key + 'number'],
-          ['integer', key + 'integer'],
-          ['long', key + 'long'],
-          ['double', key + 'double'],
-          ['float', key + 'float'],
-          ['nil', key + 'nil'],
-          ['dateTime', key + 'dateTime'],
-          ['time', key + 'time'],
-          ['date', key + 'date'],
-          ['base64Binary', key + 'base64Binary'],
+          ['boolean', `${key  }boolean`],
+          ['string', `${key  }string`],
+          ['number', `${key  }number`],
+          ['integer', `${key  }integer`],
+          ['long', `${key  }long`],
+          ['double', `${key  }double`],
+          ['float', `${key  }float`],
+          ['nil', `${key  }nil`],
+          ['dateTime', `${key  }dateTime`],
+          ['time', `${key  }time`],
+          ['date', `${key  }date`],
+          ['base64Binary', `${key  }base64Binary`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.w3.xmlSchema[property];
@@ -626,15 +614,14 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('w3.rdfSyntax namespace', () => {
-        let element;
         const key = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['member', key + 'member'],
-          ['Seq', key + 'Seq'],
+          ['member', `${key  }member`],
+          ['Seq', `${key  }Seq`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.w3.rdfSyntax[property];
@@ -644,15 +631,14 @@ describe('AmfHelperMixin', function() {
       });
 
       describe('w3.rdfSchema namespace', () => {
-        let element;
         const key = 'http://www.w3.org/2000/01/rdf-schema#';
         beforeEach(async () => {
           element = await modelFixture(model);
         });
 
         [
-          ['member', key + 'member'],
-          ['Seq', key + 'Seq'],
+          ['member', `${key  }member`],
+          ['Seq', `${key  }Seq`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.w3.rdfSchema[property];
@@ -1100,14 +1086,14 @@ describe('AmfHelperMixin', function() {
         });
 
         it('Returns the description', () => {
-          const model = {};
+          const shape = {};
           const key = element._getAmfKey(element.ns.schema.desc);
-          model[key] = [
+          shape[key] = [
             {
               '@value': ['test']
             }
           ];
-          assert.equal(element._computeDescription(model), 'test');
+          assert.equal(element._computeDescription(shape), 'test');
         });
       });
 
@@ -1201,9 +1187,9 @@ describe('AmfHelperMixin', function() {
 
         it('Returns undefined if no WebApi', () => {
           const key = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
-          const model = {};
-          model[key] = {};
-          assert.isUndefined(element._computeWebApi(model));
+          const amfModel = {};
+          amfModel[key] = {};
+          assert.isUndefined(element._computeWebApi(amfModel));
         });
 
         it('Returns an object from AMF model', () => {
@@ -1428,7 +1414,9 @@ describe('AmfHelperMixin', function() {
           const webApi = element._computeWebApi(model);
           const endpoint = element._computeEndpointByPath(webApi, '/changes/watch');
           const key = element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation);
+          // eslint-disable-next-line prefer-destructuring
           operation = endpoint[key][0];
+          // eslint-disable-next-line prefer-destructuring
           noExpectsOperation = endpoint[key][1];
         });
 
@@ -1506,6 +1494,7 @@ describe('AmfHelperMixin', function() {
           const endpoint = element._computeEndpointByPath(webApi, '/permissionIds/{email}');
           let op = element._computeOperations(webApi, endpoint['@id']);
           if (op instanceof Array) {
+            // eslint-disable-next-line prefer-destructuring
             op = op[0];
           }
           const result = element._computeMethodModel(webApi, op['@id']);
@@ -1553,7 +1542,7 @@ describe('AmfHelperMixin', function() {
             // This only affects compact model.
             return;
           }
-          const id = 'amf://id' + declares[1]['@id'];
+          const id = `amf://id${  declares[1]['@id']}`;
           const result = element._computeType(declares, undefined, id);
           assert.typeOf(result, 'object');
           const type = element._getAmfKey(element.ns.w3.shacl.NodeShape);
@@ -1562,12 +1551,13 @@ describe('AmfHelperMixin', function() {
 
         it('Returns type in references (library)', () => {
           const dKey = element._getAmfKey(element.ns.aml.vocabularies.document.declares);
-          const library = references.find(function(unit) {
+          const library = references.find((unit) => {
             return unit['@type'].find((t) => t.indexOf('Module') !== -1);
           });
           // let ref = references[4][dKey][0];
           let ref = library[dKey][0];
           if (ref instanceof Array) {
+            // eslint-disable-next-line prefer-destructuring
             ref = ref[0];
           }
           const id = ref['@id'];
@@ -1575,6 +1565,23 @@ describe('AmfHelperMixin', function() {
           assert.typeOf(result, 'object');
           const type = element._getAmfKey(element.ns.w3.shacl.NodeShape);
           assert.equal(result['@type'][0], type);
+        });
+
+        it('Returns type in references (library) when no declarations', () => {
+          const dKey = element._getAmfKey(element.ns.aml.vocabularies.document.declares);
+          const library = references.find((unit) => {
+            return unit['@type'].find((t) => t.indexOf('Module') !== -1);
+          });
+          let ref = library[dKey][0];
+          if (ref instanceof Array) {
+            // eslint-disable-next-line prefer-destructuring
+            ref = ref[0];
+          }
+          const id = ref['@id'];
+          const result = element._computeType(undefined, references, id);
+          assert.typeOf(result, 'object');
+          const type = element._getAmfKey(element.ns.w3.shacl.NodeShape);
+          assert.isTrue(result['@type'].includes(type));
         });
       });
 
@@ -1620,7 +1627,7 @@ describe('AmfHelperMixin', function() {
         before(async () => {
           element = await modelFixture(model);
           const refs = element._computeReferences(model);
-          const ref = refs.find(function(unit) {
+          const ref = refs.find((unit) => {
             return (unit['@type'] || []).find((t) => t.indexOf('ExternalFragment') !== -1);
           });
           const enc = element._computeEncodes(ref);
@@ -1769,7 +1776,7 @@ describe('AmfHelperMixin', function() {
         });
 
         it('Returns default value', () => {
-          const ns = element.ns;
+          const {ns} = element;
           const sKey = element._getAmfKey(ns.aml.vocabularies.shapes.schema);
           const dvKey = element._getAmfKey(ns.w3.shacl.defaultValue);
           const obj = {};
@@ -1782,7 +1789,7 @@ describe('AmfHelperMixin', function() {
         });
 
         it('Returns default value when schema is array', () => {
-          const ns = element.ns;
+          const {ns} = element;
           const sKey = element._getAmfKey(ns.aml.vocabularies.shapes.schema);
           const dvKey = element._getAmfKey(ns.w3.shacl.defaultValue);
           const obj = {};
@@ -1795,7 +1802,7 @@ describe('AmfHelperMixin', function() {
         });
 
         it('Returns value from example', () => {
-          const ns = element.ns;
+          const {ns} = element;
           const sKey = element._getAmfKey(ns.aml.vocabularies.shapes.schema);
           const exKey = element._getAmfKey(ns.aml.vocabularies.apiContract.examples);
           const rKey = element._getAmfKey(ns.aml.vocabularies.document.raw);
@@ -1823,10 +1830,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeHeaders(model);
+          const shape = {};
+          element._computeHeaders(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1847,10 +1854,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeQueryParameters(model);
+          const shape = {};
+          element._computeQueryParameters(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1871,10 +1878,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeResponses(model);
+          const shape = {};
+          element._computeResponses(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1895,10 +1902,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeServerVariables(model);
+          const shape = {};
+          element._computeServerVariables(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1919,10 +1926,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeServerVariables(model);
+          const shape = {};
+          element._computeServerVariables(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1943,10 +1950,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computeQueryParameters() with passed shape', () => {
           const spy = sinon.spy(element, '_computeQueryParameters');
-          const model = {};
-          element._computeEndpointVariables(model);
+          const shape = {};
+          element._computeEndpointVariables(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
       });
 
@@ -1961,10 +1968,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computePayload(model);
+          const shape = {};
+          element._computePayload(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -1985,10 +1992,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeReturns(model);
+          const method = {};
+          element._computeReturns(method);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === method);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -2009,10 +2016,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _computePropertyArray() with passed shape', () => {
           const spy = sinon.spy(element, '_computePropertyArray');
-          const model = {};
-          element._computeSecurity(model);
+          const method = {};
+          element._computeSecurity(method);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === method);
         });
 
         it('Calls _computePropertyArray() with proper key', () => {
@@ -2033,10 +2040,10 @@ describe('AmfHelperMixin', function() {
 
         it('Calls _hasProperty() with passed shape', () => {
           const spy = sinon.spy(element, '_hasProperty');
-          const model = {};
-          element._computeHasCustomProperties(model);
+          const shape = {};
+          element._computeHasCustomProperties(shape);
           assert.isTrue(spy.called);
-          assert.isTrue(spy.args[0][0] === model);
+          assert.isTrue(spy.args[0][0] === shape);
         });
 
         it('Calls _hasProperty() with proper key', () => {
@@ -2113,39 +2120,39 @@ describe('AmfHelperMixin', function() {
 					describe('not in arrays', () =>{
 						it('should return true for endpoint type', () => {
 							const endpointKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.EndPoint);
-							const model = { '@type': [endpointKey] }
-							assert.isTrue(element._isValidServerPartial(model));
+							const shape = { '@type': [endpointKey] };
+							assert.isTrue(element._isValidServerPartial(shape));
 						});
 
 						it('should return true for method type', () => {
 							const methodKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.Operation);
-							const model = { '@type': [methodKey] }
-							assert.isTrue(element._isValidServerPartial(model));
+							const shape = { '@type': [methodKey] };
+							assert.isTrue(element._isValidServerPartial(shape));
 						});
 
 						it('should return false for any other type', () => {
 							const otherKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.WebAPI);
-							const model = { '@type': [otherKey] }
-							assert.isFalse(element._isValidServerPartial(model));
+							const shape = { '@type': [otherKey] };
+							assert.isFalse(element._isValidServerPartial(shape));
 						});
 					});
 					describe('in arrays', () =>{
 						it('should return true for endpoint type', () => {
 							const endpointKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.EndPoint);
-							const model = { '@type': [endpointKey] }
-							assert.isTrue(element._isValidServerPartial([model]));
+							const shape = { '@type': [endpointKey] };
+							assert.isTrue(element._isValidServerPartial([shape]));
 						});
 
 						it('should return true for method type', () => {
 							const methodKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.Operation);
-							const model = { '@type': [methodKey] }
-							assert.isTrue(element._isValidServerPartial([model]));
+							const shape = { '@type': [methodKey] };
+							assert.isTrue(element._isValidServerPartial([shape]));
 						});
 
 						it('should return false for any other type', () => {
 							const otherKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.WebAPI);
-							const model = { '@type': [otherKey] }
-							assert.isFalse(element._isValidServerPartial([model]));
+							const shape = { '@type': [otherKey] };
+							assert.isFalse(element._isValidServerPartial([shape]));
 						});
 					})
 				});
