@@ -391,3 +391,10 @@ types:
     body:
       application/json:
         type: !include types/external-type.raml
+/mail:
+  get:
+    queryParameters:
+      box:
+        type: string
+        example: "foo"
+        required: true

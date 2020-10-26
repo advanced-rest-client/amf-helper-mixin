@@ -1402,7 +1402,7 @@ describe('AmfHelperMixin', () => {
         it('Returns a loist of endpoints', () => {
           const result = element._computeEndpoints(webApi);
           assert.typeOf(result, 'array');
-          assert.lengthOf(result, 35);
+          assert.lengthOf(result, 36);
         });
       });
 

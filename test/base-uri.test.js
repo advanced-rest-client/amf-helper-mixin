@@ -2,16 +2,17 @@ import { fixture, assert } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import './test-element.js';
 
-describe('Base URI test', function() {
+describe('Base URI test', () => {
   async function basicFixture() {
-    return await fixture(`<test-element></test-element>`);
+    return fixture(`<test-element></test-element>`);
   }
 
   describe('Base URI test', () => {
     let element;
     let model;
     let server;
-    let endpoint;
+    let filesEndpoint;
+    let mailEndpoint;
 
     before(async () => {
       model = await AmfLoader.load();
@@ -22,7 +23,8 @@ describe('Base URI test', function() {
       element.amf = model;
       server = element._computeServer(model);
       const webApi = element._computeWebApi(model);
-      endpoint = element._computeEndpointByPath(webApi, '/files');
+      filesEndpoint = element._computeEndpointByPath(webApi, '/files');
+      mailEndpoint = element._computeEndpointByPath(webApi, '/mail');
     });
 
     it('_getAmfBaseUri returns servers base uri', () => {
@@ -53,12 +55,11 @@ describe('Base URI test', function() {
       ]
     };
 
-    const noSchemeServer = function(element) {
-      if (element._modelVersion === 1) {
+    const noSchemeServer = (elem) => {
+      if (elem._modelVersion === 1) {
         return noSchemeServerV1;
-      } else {
-        return noSchemeServerV2;
       }
+      return noSchemeServerV2;
     };
 
     it('_getAmfBaseUri() uses protocols with the base uri', () => {
@@ -78,17 +79,17 @@ describe('Base URI test', function() {
     });
 
     it('_computeEndpointUri() computes APIs encoded URI', () => {
-      const result = element._computeEndpointUri(server, endpoint);
+      const result = element._computeEndpointUri(server, filesEndpoint);
       assert.equal(result, 'https://api.mulesoft.com/{version}/files');
     });
 
     it('_computeEndpointUri() computes URI for altered baseUri', () => {
-      const result = element._computeEndpointUri(server, endpoint, 'https://domain.com');
+      const result = element._computeEndpointUri(server, filesEndpoint, 'https://domain.com');
       assert.equal(result, 'https://domain.com/files');
     });
 
     it('_computeEndpointUri() computes URI for altered baseUri withouth scheme', () => {
-      const result = element._computeEndpointUri(server, endpoint, 'domain.com');
+      const result = element._computeEndpointUri(server, filesEndpoint, 'domain.com');
       assert.equal(result, 'https://domain.com/files');
     });
 
@@ -109,33 +110,39 @@ describe('Base URI test', function() {
     });
 
     it('_computeUri() computes APIs encoded URI', () => {
-      const result = element._computeUri(endpoint, { server });
+      const result = element._computeUri(filesEndpoint, { server });
       assert.equal(result, 'https://api.mulesoft.com/{version}/files');
     });
 
     it('_computeUri() computes version', () => {
-      const result = element._computeUri(endpoint, { server, version: 'v1.0.0' });
+      const result = element._computeUri(filesEndpoint, { server, version: 'v1.0.0' });
       assert.equal(result, 'https://api.mulesoft.com/v1.0.0/files');
     });
 
     it('_computeUri() computes URI for altered baseUri', () => {
-      const result = element._computeUri(endpoint, { server, baseUri: 'https://domain.com' });
+      const result = element._computeUri(filesEndpoint, { server, baseUri: 'https://domain.com' });
       assert.equal(result, 'https://domain.com/files');
     });
 
     it('_computeUri() computes URI for altered baseUri withouth scheme', () => {
-      const result = element._computeUri(endpoint, { server, baseUri: 'domain.com' });
+      const result = element._computeUri(filesEndpoint, { server, baseUri: 'domain.com' });
       assert.equal(result, 'https://domain.com/files');
     });
 
     it('_computeUri() computes URI without optional parameters', () => {
-      const result = element._computeUri(endpoint);
+      const result = element._computeUri(filesEndpoint);
       assert.equal(result, '/files');
     });
 
     it('_computeUri() ignores base URI computation', () => {
-      const result = element._computeUri(endpoint, { server, baseUri: 'https://domain.com', ignoreBase: true });
+      const result = element._computeUri(filesEndpoint, { server, baseUri: 'https://domain.com', ignoreBase: true });
       assert.equal(result, '/files');
+    });
+
+    it('_computeUri() add queryParameters when defined in method', () => {
+      const getMail = AmfLoader.lookupOperation(model, '/mail', 'get');
+      const result = element._computeUri(mailEndpoint, { server, method: getMail });
+      assert.equal(result, 'https://api.mulesoft.com/{version}/mail?box=foo');
     });
   });
 });
