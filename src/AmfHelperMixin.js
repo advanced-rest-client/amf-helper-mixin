@@ -687,9 +687,10 @@ export const AmfHelperMixin = (base) => class extends base {
    * `{version}` from the URI template.
    * @param {boolean=} [opts.ignoreBase = false] Whether or not to ignore rendering
    * of the base URI with path.
+   * @param {boolean=} [opts.method] Model for the method
    * @return {string} The base uri for the endpoint.
    */
-  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false } = {}) {
+  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false, method } = {}) {
     let baseValue = '';
     if (ignoreBase === false) {
       baseValue = this._getBaseUri(baseUri, server) || '';
@@ -703,7 +704,29 @@ export const AmfHelperMixin = (base) => class extends base {
     if (version && result) {
       result = result.replace('{version}', version);
     }
-    return result;
+    const queryParams = this._computeMethodParameters(method);
+    return result + queryParams;
+  }
+
+  _computeMethodParameters(method) {
+    let queryParams = '';
+    if (!method) {
+      return queryParams
+    }
+
+    const expects = this._computeExpects(method);
+    const params = this._computeQueryParameters(expects);
+    if (params) {
+      params.forEach(param => {
+        const paramName = this._getValue(param, this.ns.aml.vocabularies.apiContract.paramName);
+        const paramExample = this._computePropertyValue(param);
+        if (paramName && paramExample) {
+          queryParams = `${queryParams ? '&' : '?'}${paramName}=${paramExample}`
+        }
+      });
+    }
+
+    return queryParams
   }
 
   /**
