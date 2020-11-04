@@ -686,17 +686,18 @@ export const AmfHelperMixin = (base) => class extends base {
    * @param {string=} opts.version Current version of the API. It is used to replace
    * `{version}` from the URI template.
    * @param {boolean=} [opts.ignoreBase = false] Whether or not to ignore rendering
+   * @param {string[]=} [opts.protocols] List of available protocols
    * of the base URI with path.
    * @return {string} The base uri for the endpoint.
    */
-  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false } = {}) {
+  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false, protocols } = {}) {
     let baseValue = '';
     if (ignoreBase === false) {
-      baseValue = this._getBaseUri(baseUri, server) || '';
+      baseValue = this._getBaseUri(baseUri, server, protocols) || '';
       if (baseValue && baseValue[baseValue.length - 1] === '/') {
         baseValue = baseValue.substr(0, baseValue.length - 1);
       }
-      baseValue = this._ensureUrlScheme(baseValue);
+      baseValue = this._ensureUrlScheme(baseValue, protocols);
     }
     const path = this._getValue(endpoint, this.ns.aml.vocabularies.apiContract.path);
     let result = baseValue + (path || '');
@@ -756,8 +757,11 @@ export const AmfHelperMixin = (base) => class extends base {
           protocols = this._computeProtocols(this.amf);
         }
         if (protocols && protocols.length) {
-          /* eslint-disable-next-line no-param-reassign */
-          value = `${protocols[0].toLowerCase()  }://${  value}`;
+          const protocol = protocols[0].toLowerCase();
+          if (!value.startsWith(protocol)) {
+            /* eslint-disable-next-line no-param-reassign */
+            value = `${protocol}://${value}`;
+          }
         } else {
           /* eslint-disable-next-line no-param-reassign */
           value = `http://${  value}`;

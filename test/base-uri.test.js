@@ -2,9 +2,9 @@ import { fixture, assert } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import './test-element.js';
 
-describe('Base URI test', function() {
+describe('Base URI test', () => {
   async function basicFixture() {
-    return await fixture(`<test-element></test-element>`);
+    return fixture(`<test-element></test-element>`);
   }
 
   describe('Base URI test', () => {
@@ -53,12 +53,11 @@ describe('Base URI test', function() {
       ]
     };
 
-    const noSchemeServer = function(element) {
-      if (element._modelVersion === 1) {
+    const noSchemeServer = (elem) =>  {
+      if (elem._modelVersion === 1) {
         return noSchemeServerV1;
-      } else {
-        return noSchemeServerV2;
-      }
+      } 
+      return noSchemeServerV2;
     };
 
     it('_getAmfBaseUri() uses protocols with the base uri', () => {
@@ -108,6 +107,18 @@ describe('Base URI test', function() {
       assert.equal(result, 'http://domain.com');
     });
 
+    it('_ensureUrlScheme() adds non-http protocol if supplied', () => {
+      element.amf = undefined;
+      const result = element._ensureUrlScheme('domain.com', ['mqtt']);
+      assert.equal(result, 'mqtt://domain.com');
+    });
+
+    it('_ensureUrlScheme() does not add http protocol if url has protocol and protocols are supplied', () => {
+      element.amf = undefined;
+      const result = element._ensureUrlScheme('mqtt://domain.com', ['mqtt']);
+      assert.equal(result, 'mqtt://domain.com');
+    });
+
     it('_computeUri() computes APIs encoded URI', () => {
       const result = element._computeUri(endpoint, { server });
       assert.equal(result, 'https://api.mulesoft.com/{version}/files');
@@ -126,6 +137,11 @@ describe('Base URI test', function() {
     it('_computeUri() computes URI for altered baseUri withouth scheme', () => {
       const result = element._computeUri(endpoint, { server, baseUri: 'domain.com' });
       assert.equal(result, 'https://domain.com/files');
+    });
+
+    it('_computeUri() add non-http protocol if provided', () => {
+      const result = element._computeUri(endpoint, { server, baseUri: 'domain.com', protocols: ['mqtt'] });
+      assert.equal(result, 'mqtt://domain.com/files');
     });
 
     it('_computeUri() computes URI without optional parameters', () => {
