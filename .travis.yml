@@ -3,6 +3,7 @@ node_js: stable
 addons:
   chrome: stable
 script:
+- npm run prepare
 - npm run test
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test:sl; fi
 env:
