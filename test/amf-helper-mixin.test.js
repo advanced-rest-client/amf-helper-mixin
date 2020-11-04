@@ -442,6 +442,9 @@ describe('AmfHelperMixin', () => {
           ['templateVariable', `${key  }templateVariable`],
           ['mapping', `${key  }mapping`],
           ['operationId', `${key  }operationId`],
+          ['protocol', `${key  }protocol`],
+          ['protocolVersion', `${key  }protocolVersion`],
+          ['Message', `${key  }Message`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.apiContract[property];
