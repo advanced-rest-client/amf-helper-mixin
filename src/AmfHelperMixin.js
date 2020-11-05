@@ -690,7 +690,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * of the base URI with path.
    * @return {string} The base uri for the endpoint.
    */
-  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false, protocols } = {}) {
+  _computeUri(endpoint, { server, baseUri, version, ignoreBase=false, protocols, ignorePath = false } = {}) {
     let baseValue = '';
     if (ignoreBase === false) {
       baseValue = this._getBaseUri(baseUri, server, protocols) || '';
@@ -700,7 +700,7 @@ export const AmfHelperMixin = (base) => class extends base {
       baseValue = this._ensureUrlScheme(baseValue, protocols);
     }
     let result = baseValue
-    if (!this._isNotHttp(protocols)) {
+    if (!ignorePath) {
       result = this._appendPath(result, endpoint);
     }
     if (version && result) {
@@ -718,19 +718,6 @@ export const AmfHelperMixin = (base) => class extends base {
   _appendPath(url, endpoint) {
     const path = this._getValue(endpoint, this.ns.aml.vocabularies.apiContract.path);
     return url + (path || '');
-  }
-
-  /**
-   * Reads first element of a protocol array to check if it is HTTP or HTTPS
-   * @param {string[]=} protocols 
-   * @return {boolean} True if first protocol is not http or https, false if it is, or if array is empty, or not defined
-   */
-  _isNotHttp(protocols) {
-    if (protocols && protocols.length) {
-      const protocol = protocols[0].toLowerCase();
-      return protocol !== 'http' && protocol !== 'https';
-    }
-    return false;
   }
 
   /**
