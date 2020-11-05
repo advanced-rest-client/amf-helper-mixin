@@ -139,9 +139,9 @@ describe('Base URI test', () => {
       assert.equal(result, 'https://domain.com/files');
     });
 
-    it('_computeUri() add non-http protocol if provided', () => {
+    it('_computeUri() adds non-http protocol if provided, without path', () => {
       const result = element._computeUri(endpoint, { server, baseUri: 'domain.com', protocols: ['mqtt'] });
-      assert.equal(result, 'mqtt://domain.com/files');
+      assert.equal(result, 'mqtt://domain.com');
     });
 
     it('_computeUri() computes URI without optional parameters', () => {
