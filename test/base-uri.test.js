@@ -154,4 +154,38 @@ describe('Base URI test', () => {
       assert.equal(result, '/files');
     });
   });
+
+  describe('_isNotHttp()', () => {
+    let element;
+
+    before(async () => {
+      element = await basicFixture();
+    });
+
+    it('should return false if called without protocols', () => {
+      assert.isFalse(element._isNotHttp());
+    });
+
+    it('should return false if first protocol is http', () => {
+      assert.isFalse(element._isNotHttp(['http']));
+    });
+
+    it('should return false if first protocol is HTTP', () => {
+      assert.isFalse(element._isNotHttp(['HTTP']));
+    });
+
+
+    it('should return false if first protocol is https', () => {
+      assert.isFalse(element._isNotHttp(['https']));
+    });
+
+    it('should return false if first protocol is HTTPS', () => {
+      assert.isFalse(element._isNotHttp(['HTTPS']));
+    });
+
+
+    it('should return true if first protocol is not http or https', () => {
+      assert.isTrue(element._isNotHttp(['mqtt']));
+    });
+  })
 });
