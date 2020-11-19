@@ -711,8 +711,8 @@ export const AmfHelperMixin = (base) => class extends base {
 
   /**
    * Appends endpoint's path to url
-   * @param {string} url 
-   * @param {Object} endpoint 
+   * @param {string} url
+   * @param {Object} endpoint
    * @return {string}
    */
   _appendPath(url, endpoint) {
@@ -1127,7 +1127,7 @@ export const AmfHelperMixin = (base) => class extends base {
       }
       delete copy['@type'];
     }
-    Object.assign(shape, copy);
+    this._mergeShapes(shape, copy);
     /* eslint-disable-next-line no-param-reassign */
     shape.__apicResolved = true;
     this._resolveRecursive(shape);
@@ -1238,5 +1238,50 @@ export const AmfHelperMixin = (base) => class extends base {
         shape[key] = this._resolve(currentShape);
       }
     });
+  }
+
+  /**
+   * Merge two shapes together. If the resulting shape has one of the "special merge" keys,
+   * then the special merge function for that key will be used to match that property
+   * @param shapeA AMF node
+   * @param shapeB AMF node
+   * @return {*} Merged AMF node
+   * @private
+   */
+  _mergeShapes(shapeA, shapeB) {
+    const merged = { ...shapeA, ...shapeB };
+    const specialMerges = [
+      { key: this._getAmfKey(this.ns.aml.vocabularies.docSourceMaps.sources), merger: this._mergeSourceMapsSources.bind(this) },
+    ];
+    specialMerges.forEach(({ key, merger }) => {
+      if (this._hasProperty(merged, key)) {
+        merged[key] = merger(shapeA, shapeB);
+      }
+    });
+    return Object.assign(shapeA, merged);
+  }
+
+  /**
+   * Obtains source map sources value from two shapes and returns the merged result
+   * If neither shape has a sources node, then an empty object will be returned.
+   * Result is wrapped in an array as per AMF model standard
+   * @param shapeA AMF node
+   * @param shapeB AMF node
+   * @return {(*|{})[]} Empty object or resulting merge, wrapped in an array
+   * @private
+   */
+  _mergeSourceMapsSources(shapeA, shapeB) {
+    const sourcesKey = this._getAmfKey(this.ns.aml.vocabularies.docSourceMaps.sources);
+    let aSources = shapeA[sourcesKey] || {};
+    if (Array.isArray(aSources)) {
+      /* eslint-disable prefer-destructuring */
+      aSources = aSources[0];
+    }
+    let bSources = shapeB[sourcesKey] || {};
+    if (Array.isArray(bSources)) {
+      /* eslint-disable prefer-destructuring */
+      bSources = bSources[0];
+    }
+    return [Object.assign(aSources, bSources)];
   }
 };
