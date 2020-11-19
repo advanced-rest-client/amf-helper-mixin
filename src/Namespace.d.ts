@@ -82,6 +82,8 @@ interface ApiContract {
   Parameter: string;
   Operation: string;
   WebAPI: string;
+  AsyncAPI: string;
+  API: string;
   UserDocumentationFragment: string;
   Example: string;
   Server: string;
@@ -294,6 +296,8 @@ interface Schema {
   desc: string;
   doc: string;
   webApi: string;
+  asyncApi: string;
+  api: string;
   creativeWork: string;
   displayName: string;
   title: string;
