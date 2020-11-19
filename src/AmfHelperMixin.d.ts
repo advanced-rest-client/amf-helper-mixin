@@ -494,4 +494,6 @@ interface AmfHelperMixin {
   _findById(array: object[], id: string): object|undefined;
   _getReferenceId(amf: object, id: string): object|undefined;
   _resolveRecursive(shape: object): void;
+  _mergeShapes(shapeA: object, shapeB: object): object;
+  _mergeSourceMapsSources(shapeA: object, shapeB: object): object[];
 }
