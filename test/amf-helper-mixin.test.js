@@ -2183,8 +2183,11 @@ describe('AmfHelperMixin', () => {
 
 
       describe('_mergeShapes()', () => {
+        let sourcesKey;
+
         before(async () => {
           element = await modelFixture(model);
+          sourcesKey = element._getAmfKey(element.ns.aml.vocabularies.docSourceMaps.sources);
         });
 
         it('should merge two objects together', () => {
@@ -2194,39 +2197,52 @@ describe('AmfHelperMixin', () => {
           assert.deepEqual(merged, { foo: 'foo', bar: 'bar', a: 2, b: 3 });
         });
 
+        it('should merge sources from both nodes', () => {
+          const a = { foo: 'foo', a: 1, [sourcesKey]: [{ s1: 1, s2: 2 }] };
+          const b = { bar: 'bar', a: 2, b: 3, [sourcesKey]: [{ s2: 20, s3: 30 }] };
+          const merged = element._mergeShapes(a, b);
+          assert.deepEqual(merged, {
+            foo: 'foo',
+            bar: 'bar',
+            a: 2,
+            b: 3,
+            [sourcesKey]: [{ s1: 1, s2: 20, s3: 30 }]
+          });
+        });
+
         describe('special merges', () => {
           describe('_mergeSourceMapsSources()', () => {
-            let sourcesKey;
-
             before(async () => {
               element = await modelFixture(model)
-              sourcesKey = element._getAmfKey(element.ns.aml.vocabularies.docSourceMaps.sources);
             })
 
             it('should merge sources from both nodes', () => {
               const a = { foo: 'foo', a: 1, [sourcesKey]: [{ s1: 1, s2: 2 }] };
               const b = { bar: 'bar', a: 2, b: 3, [sourcesKey]: [{ s2: 20, s3: 30 }] };
-              const merged = element._mergeShapes(a, b);
-              assert.deepEqual(merged, {
-                foo: 'foo',
-                bar: 'bar',
-                a: 2,
-                b: 3,
-                [sourcesKey]: [{ s1: 1, s2: 20, s3: 30 }]
-              });
+              const result = element._mergeSourceMapsSources(a, b);
+              assert.deepEqual(result, [{ s1: 1, s2: 20, s3: 30 }]);
             });
 
-            it('should merge nodes when only one has sources', () => {
+            it('should merge nodes when only A has sources', () => {
+              const a = { foo: 'foo', a: 1, [sourcesKey]: [{ s2: 20, s3: 30 }] };
+              const b = { bar: 'bar', a: 2, b: 3 };
+              const merged = element._mergeSourceMapsSources(a, b);
+              assert.deepEqual(merged, [{ s2: 20, s3: 30 }]);
+            });
+
+            it('should merge nodes when only B has sources', () => {
               const a = { foo: 'foo', a: 1 };
               const b = { bar: 'bar', a: 2, b: 3, [sourcesKey]: [{ s2: 20, s3: 30 }] };
-              const merged = element._mergeShapes(a, b);
-              assert.deepEqual(merged, {
-                foo: 'foo',
-                bar: 'bar',
-                a: 2,
-                b: 3,
-                [sourcesKey]: [{ s2: 20, s3: 30 }]
-              });
+              const merged = element._mergeSourceMapsSources(a, b);
+              assert.deepEqual(merged, [{ s2: 20, s3: 30 }]);
+            });
+
+
+            it('should return empty object when neither node has sources', () => {
+              const a = { foo: 'foo', a: 1 };
+              const b = { bar: 'bar', a: 2, b: 3 };
+              const merged = element._mergeSourceMapsSources(a, b);
+              assert.deepEqual(merged, [{}]);
             });
           });
         });
