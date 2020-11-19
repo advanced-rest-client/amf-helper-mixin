@@ -32,6 +32,8 @@
     "@open-wc/eslint-config": "^2.0.0",
     "@open-wc/testing": "^2.5.17",
     "@open-wc/testing-karma": "^3.4.0",
+    "@web/test-runner": "^0.9.12",
+    "@web/test-runner-playwright": "^0.6.6",
     "deepmerge": "^4.2.2",
     "es-dev-server": "^1.53.0",
     "eslint": "^6.8.0",
@@ -54,9 +56,8 @@
     "lint:types": "tsc",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "format": "npm run format:eslint && npm run format:prettier",
-    "test": "karma start --coverage",
-    "test:watch": "karma start --auto-watch=true --single-run=false",
-    "test:sl": "karma start karma.sl.config.js --compatibility auto --coverage",
+    "test": "web-test-runner test/**/*.test.js --coverage --node-resolve --playwright --browsers chromium firefox webkit",
+    "test:watch": "web-test-runner test/**/*.test.js --node-resolve --watch",
     "prepare": "node test/model.js"
   },
   "eslintConfig": {
