@@ -580,7 +580,7 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!enc) {
       return false;
     }
-    return this._hasType(enc, this.ns.schema.asyncApi);
+    return this._hasType(enc, this.ns.aml.vocabularies.apiContract.AsyncAPI);
   }
 
   /**
@@ -594,7 +594,7 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!enc) {
       return false;
     }
-    return this._hasType(enc, this.ns.schema.api);
+    return this._hasType(enc, this.ns.aml.vocabularies.apiContract.API);
   }
 
   /**

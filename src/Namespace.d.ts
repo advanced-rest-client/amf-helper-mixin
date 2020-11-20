@@ -296,8 +296,6 @@ interface Schema {
   desc: string;
   doc: string;
   webApi: string;
-  asyncApi: string;
-  api: string;
   creativeWork: string;
   displayName: string;
   title: string;
