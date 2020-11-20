@@ -280,8 +280,6 @@ describe('AmfHelperMixin', () => {
           assert.equal(s.desc, `${key  }description`);
           assert.equal(s.doc, `${key  }documentation`);
           assert.equal(s.webApi, `${element.ns.aml.vocabularies.apiContract.key  }WebAPI`);
-          assert.equal(s.asyncApi, `${element.ns.aml.vocabularies.apiContract.key  }AsyncAPI`);
-          assert.equal(s.api, `${element.ns.aml.vocabularies.apiContract.key  }API`);
           assert.equal(s.creativeWork, `${key  }CreativeWork`);
           ['displayName', 'title'].forEach((name) => {
             assert.equal(s[name], key + name);
