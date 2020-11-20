@@ -496,4 +496,8 @@ interface AmfHelperMixin {
   _resolveRecursive(shape: object): void;
   _mergeShapes(shapeA: object, shapeB: object): object;
   _mergeSourceMapsSources(shapeA: object, shapeB: object): object[];
+  _computeApi(model: object): object | undefined;
+  _isWebAPI(model: object): boolean;
+  _isAsyncAPI(model: object): boolean;
+  _isAPI(model: object): boolean;
 }
