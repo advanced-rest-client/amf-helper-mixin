@@ -448,7 +448,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @return {string}
    */
   _computeApiVersion(amf) {
-    const api = this._computeWebApi(amf);
+    const api = this._computeApi(amf);
     if (!api) {
       return undefined;
     }
@@ -604,7 +604,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @return {Object|undefined} The server model
    */
   _computeServer(model) {
-    const api = this._computeWebApi(model);
+    const api = this._computeApi(model);
     if (!api) {
       return undefined;
     }
@@ -654,7 +654,7 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!amf) {
       return undefined;
     }
-    let api = this._computeWebApi(amf);
+    let api = this._computeApi(amf);
     if (Array.isArray(api)) {
       [api] = api;
     }
@@ -850,7 +850,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @return {Array<string>|undefined}
    */
   _computeProtocols(model) {
-    const api = this._computeWebApi(model);
+    const api = this._computeApi(model);
     if (!api) {
       return undefined;
     }
