@@ -18,11 +18,14 @@ describe('AmfHelperMixin', () => {
     ['Regular model', false]
   ].forEach(([label, compact]) => {
     describe(label, () => {
+      const asyncApi = 'async-api';
       let element;
       let model;
+      let asyncModel;
 
       before(async () => {
         model = await AmfLoader.load(compact);
+        asyncModel = await AmfLoader.load(compact, asyncApi);
       });
 
       describe('amf setter/getter', () => {
@@ -1202,6 +1205,126 @@ describe('AmfHelperMixin', () => {
         it('Returns an object from AMF model', () => {
           const result = element._computeWebApi(model);
           assert.typeOf(result, 'object');
+        });
+
+        it('should return undefined for AsyncAPI model', async () => {
+          element = await modelFixture(asyncModel);
+          assert.isUndefined(element._computeWebApi(asyncModel));
+        })
+      });
+
+      describe('_computeApi()', () => {
+        beforeEach(async () => {
+          element = await basicFixture();
+        });
+
+        it('should return undefined if no argument', () => {
+          assert.isUndefined(element._computeApi());
+        });
+
+        it('should return undefined if no encodes', () => {
+          assert.isUndefined(element._computeApi({}));
+        });
+
+        it('should return undefined if not API', () => {
+          const key = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+          const amfModel = {};
+          amfModel[key] = {};
+          assert.isUndefined(element._computeApi(amfModel));
+        });
+
+        describe('WebAPI', () => {
+          beforeEach(async () => {
+            element = await modelFixture(model);
+          });
+
+          it('should return encodes node from AMF model', () => {
+            const result = element._computeApi(asyncModel);
+            assert.typeOf(result, 'object');
+          });
+        });
+
+        describe('AsyncAPI', () => {
+          beforeEach(async () => {
+            element = await modelFixture(asyncModel);
+          });
+
+          it('should return encodes node from AMF model', () => {
+            const result = element._computeApi(asyncModel);
+            assert.typeOf(result, 'object');
+          });
+        });
+      });
+
+      describe('_isWebAPI()', () => {
+        beforeEach(async () => {
+          element = await basicFixture();
+        });
+
+        it('should return false if no argument', () => {
+          assert.isFalse(element._isWebAPI());
+        });
+
+        it('should return false if no encodes', () => {
+          assert.isFalse(element._isWebAPI({}));
+        });
+
+        it('should return false for AsyncAPI', async () => {
+          element = await modelFixture(asyncModel);
+          assert.isFalse(element._isWebAPI(asyncModel));
+        });
+
+        it('should return true for WebAPI', async () => {
+          element = await modelFixture(model);
+          assert.isTrue(element._isWebAPI(model));
+        });
+      });
+
+      describe('_isAsyncAPI()', () => {
+        beforeEach(async () => {
+          element = await basicFixture();
+        });
+
+        it('should return false if no argument', () => {
+          assert.isFalse(element._isAsyncAPI());
+        });
+
+        it('should return false if no encodes', () => {
+          assert.isFalse(element._isAsyncAPI({}));
+        });
+
+        it('should return true for AsyncAPI', async () => {
+          element = await modelFixture(asyncModel);
+          assert.isTrue(element._isAsyncAPI(asyncModel));
+        });
+
+        it('should return false for WebAPI', async () => {
+          element = await modelFixture(model);
+          assert.isFalse(element._isAsyncAPI(model));
+        });
+      });
+
+      describe('_isAPI()', () => {
+        beforeEach(async () => {
+          element = await basicFixture();
+        });
+
+        it('should return false if no argument', () => {
+          assert.isFalse(element._isAPI());
+        });
+
+        it('should return false if no encodes', () => {
+          assert.isFalse(element._isAPI({}));
+        });
+
+        it('should return true for AsyncAPI', async () => {
+          element = await modelFixture(asyncModel);
+          assert.isTrue(element._isAPI(asyncModel));
+        });
+
+        it('should return true for WebAPI', async () => {
+          element = await modelFixture(model);
+          assert.isTrue(element._isAPI(model));
         });
       });
 

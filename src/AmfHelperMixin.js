@@ -539,6 +539,65 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Computes AMF's `http://schema.org/API` model
+   *
+   * @param {Array<Object>|Object} model AMF json/ld model for an API
+   * @return {Object} API declaration.
+   */
+  _computeApi(model) {
+    const enc = this._computeEncodes(model);
+    if (!enc) {
+      return undefined;
+    }
+    if (this._hasType(enc, this.ns.schema.api)) {
+      return enc;
+    }
+    return undefined;
+  }
+
+  /**
+   * Returns whether an AMF node is a WebAPI node
+   * 
+   * @param {Array<Object>|Object} model  AMF json/ld model for an API
+   * @return {Boolean}
+   */
+  _isWebAPI(model) {
+    const enc = this._computeEncodes(model);
+    if (!enc) {
+      return false;
+    }
+    return this._hasType(enc, this.ns.schema.webApi);
+  }
+
+  /**
+   * Returns whether an AMF node is an AsyncAPI node
+   * 
+   * @param {Array<Object>|Object} model  AMF json/ld model for an API
+   * @return {Boolean}
+   */
+  _isAsyncAPI(model) {
+    const enc = this._computeEncodes(model);
+    if (!enc) {
+      return false;
+    }
+    return this._hasType(enc, this.ns.schema.asyncApi);
+  }
+
+  /**
+   * Returns whether an AMF node is an API node
+   * 
+   * @param {Array<Object>|Object} model  AMF json/ld model for an API
+   * @return {Boolean}
+   */
+  _isAPI(model) {
+    const enc = this._computeEncodes(model);
+    if (!enc) {
+      return false;
+    }
+    return this._hasType(enc, this.ns.schema.api);
+  }
+
+  /**
    * Computes value for `server` property that is later used with other computations.
    *
    * @param {Array<Object>|Object} model AMF model for an API
