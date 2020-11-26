@@ -1969,6 +1969,14 @@ describe('AmfHelperMixin', () => {
           element._computeHeaders({});
           assert.equal(spy.args[0][1], element.ns.aml.vocabularies.apiContract.header);
         });
+
+        it('returns header schema object for async api message', async () => {
+          element = await modelFixture(asyncModel);
+          const operation = AmfLoader.lookupOperation(asyncModel, 'hello', 'publish');
+          const eKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects);
+          const expects = operation[eKey];
+          assert.isDefined(element._computeHeaders(expects[0]));
+        });
       });
 
       describe('_computeQueryParameters()', () => {
