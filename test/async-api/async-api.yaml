@@ -22,6 +22,8 @@ channels:
 components:
   messages:
     hello-msg:
+      headers:
+        $ref: '#/components/schemas/hello-headers'
       payload:
         type: object
         properties:
@@ -40,6 +42,18 @@ components:
       type: string
       description: The date and time a message was sent.
       format: datetime
+    hello-headers:
+      type: object
+      properties:
+        x-custom-header:
+          description: You can put whatever you want here
+          type: string
+        Accept:
+          description: You must specificy accept type for response
+          type: string
+        x-request-id:
+          description: Request id for tracing errors
+          type: string
   securitySchemes:
     user-password:
       type: userPassword
