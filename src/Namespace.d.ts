@@ -122,6 +122,7 @@ interface ApiContract {
   templateVariable: string;
   mapping: string;
   operationId: string;
+  headerSchema: string;
 }
 
 interface Shapes {

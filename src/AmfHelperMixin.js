@@ -331,10 +331,24 @@ export const AmfHelperMixin = (base) => class extends base {
   /**
    * Computes a list of headers
    * @param {Object} shape
-   * @return {Array<Object>|undefined}
+   * @return {Array<Object>|Object|undefined}
    */
   _computeHeaders(shape) {
-    return (this._computePropertyArray(shape, this.ns.aml.vocabularies.apiContract.header));
+    return this._computePropertyArray(shape, this.ns.aml.vocabularies.apiContract.header) || this._computeHeaderSchema(shape);
+  }
+
+  /**
+   * 
+   * @param {Object} shape 
+   * @return {Object|undefined}
+   */
+  _computeHeaderSchema(shape) {
+    let headerSchema = this._computePropertyArray(shape, this.ns.aml.vocabularies.apiContract.headerSchema);
+    if (Array.isArray(headerSchema)) {
+      /* eslint-disable-next-line prefer-destructuring */
+      headerSchema = headerSchema[0];
+    }
+    return headerSchema;
   }
 
   /**

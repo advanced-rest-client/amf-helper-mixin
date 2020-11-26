@@ -174,7 +174,7 @@ interface AmfHelperMixin {
   /**
    * Computes a list of headers
    */
-  _computeHeaders(shape: object): object[]|undefined;
+  _computeHeaders(shape: object): object[]|undefined|object;
   /**
    * Computes a list of query parameters
    */
@@ -500,4 +500,5 @@ interface AmfHelperMixin {
   _isWebAPI(model: object): boolean;
   _isAsyncAPI(model: object): boolean;
   _isAPI(model: object): boolean;
+  _computeHeaderSchema(shape: object): object | undefined
 }
