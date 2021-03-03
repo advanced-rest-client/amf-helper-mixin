@@ -558,7 +558,7 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!enc) {
       return undefined;
     }
-    if (this._hasType(enc, this.ns.aml.vocabularies.apiContract.API)) {
+    if (this._isAPI(model) || this._isWebAPI(model) || this._isAsyncAPI(model)) {
       return enc;
     }
     return undefined;
