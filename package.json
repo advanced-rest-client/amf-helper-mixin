@@ -1,7 +1,7 @@
 {
   "name": "@api-components/amf-helper-mixin",
   "description": "A mixin with common functions user by most AMF components to compute AMF values",
-  "version": "4.3.4",
+  "version": "4.3.5",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
@@ -25,7 +25,6 @@
     "url": "https://github.com/advanced-rest-client/amf-helper-mixin/issues",
     "email": "arc@mulesoft.com"
   },
-  "dependencies": {},
   "devDependencies": {
     "@api-components/api-model-generator": "^0.2.8",
     "@open-wc/eslint-config": "^4.2.0",
