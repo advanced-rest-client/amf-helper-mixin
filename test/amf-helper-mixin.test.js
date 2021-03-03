@@ -1241,6 +1241,16 @@ describe('AmfHelperMixin', () => {
             const result = element._computeApi(asyncModel);
             assert.typeOf(result, 'object');
           });
+
+          it('should return encodes if API type is missing but WebAPI type is present', () => {
+            const key = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+            const webApiKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.WebAPI);
+            const amfModel = {};
+            amfModel[key] = {
+              '@type': [webApiKey]
+            };
+            assert.typeOf(element._computeApi(amfModel), 'object');
+          });
         });
 
         describe('AsyncAPI', () => {
@@ -1251,6 +1261,16 @@ describe('AmfHelperMixin', () => {
           it('should return encodes node from AMF model', () => {
             const result = element._computeApi(asyncModel);
             assert.typeOf(result, 'object');
+          });
+
+          it('should return encodes if API type is missing but WebAPI type is present', () => {
+            const key = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+            const asyncApiKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.AsyncAPI);
+            const amfModel = {};
+            amfModel[key] = {
+              '@type': [asyncApiKey]
+            };
+            assert.typeOf(element._computeApi(amfModel), 'object');
           });
         });
       });
@@ -1680,9 +1700,7 @@ describe('AmfHelperMixin', () => {
 
         it('Returns type in references (library)', () => {
           const dKey = element._getAmfKey(element.ns.aml.vocabularies.document.declares);
-          const library = references.find((unit) => {
-            return unit['@type'].find((t) => t.indexOf('Module') !== -1);
-          });
+          const library = references.find((unit) => unit['@type'].find((t) => t.indexOf('Module') !== -1));
           // let ref = references[4][dKey][0];
           let ref = library[dKey][0];
           if (ref instanceof Array) {
@@ -1698,9 +1716,7 @@ describe('AmfHelperMixin', () => {
 
         it('Returns type in references (library) when no declarations', () => {
           const dKey = element._getAmfKey(element.ns.aml.vocabularies.document.declares);
-          const library = references.find((unit) => {
-            return unit['@type'].find((t) => t.indexOf('Module') !== -1);
-          });
+          const library = references.find((unit) => unit['@type'].find((t) => t.indexOf('Module') !== -1));
           let ref = library[dKey][0];
           if (ref instanceof Array) {
             // eslint-disable-next-line prefer-destructuring
@@ -1756,9 +1772,7 @@ describe('AmfHelperMixin', () => {
         before(async () => {
           element = await modelFixture(model);
           const refs = element._computeReferences(model);
-          const ref = refs.find((unit) => {
-            return (unit['@type'] || []).find((t) => t.indexOf('ExternalFragment') !== -1);
-          });
+          const ref = refs.find((unit) => (unit['@type'] || []).find((t) => t.indexOf('ExternalFragment') !== -1));
           const enc = element._computeEncodes(ref);
           refId = enc['@id'];
         });
