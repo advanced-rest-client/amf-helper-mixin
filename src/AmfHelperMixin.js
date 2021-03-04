@@ -1234,6 +1234,9 @@ export const AmfHelperMixin = (base) => class extends base {
    * @return {Object | undefined} Resolved shape for given reference, undefined otherwise
    */
   _obtainShapeFromReferences(references, id) {
+    if (!Array.isArray(references) || !references.length) {
+      return undefined;
+    }
     let target;
     for (let i = 0; i < references.length; i++) {
       const _ref = references[i];
