@@ -1,11 +1,11 @@
-[![Published on NPM](https://img.shields.io/npm/v/@api-components/amf-helper-mixin.svg)](https://www.npmjs.com/package/@api-components/amf-helper-mixin)
-
-[![Build Status](https://travis-ci.com/advanced-rest-client/amf-helper-mixin.svg)](https://travis-ci.com/advanced-rest-client/amf-helper-mixin)
-
 # amf-helper-mixin
 
 Common functions used by AMF components to compute AMF values.
 This mixin is safe to use in both Polymer and LitElement projects as well as pure web components.
+
+[![Published on NPM](https://img.shields.io/npm/v/@api-components/amf-helper-mixin.svg)](https://www.npmjs.com/package/@api-components/amf-helper-mixin)
+
+[![Tests and publishing](https://github.com/advanced-rest-client/amf-helper-mixin/actions/workflows/deployment.yml/badge.svg)](https://github.com/advanced-rest-client/amf-helper-mixin/actions/workflows/deployment.yml)
 
 ## Version compatibility
 
@@ -25,8 +25,9 @@ paths instead of URIs) or when you want to manage different environments.
 To update base URI value update the `baseUri` property.
 
 When the component constructs the final URI for the endpoint it does the following:
--   if `baseUri` is set it uses this value as a base URI for the endpoint
--   else if `amf` is set then it computes base URI value from main model document
+
+- if the `baseUri` is set it uses this value as a base URI for the endpoint
+- else if `amf` is set then it computes base URI value from main model document
 Then it concatenates computed base URI with `endpoint`'s path property.
 
 ## Using AMF keys
@@ -37,12 +38,14 @@ AMF keys may change over time. This way it allows to manage the keys change easi
 as the components don't have to change, just this mixin.
 
 **don't do this**
+
 ```javascript
 const key = this._getAmfKey(this.ns.aml.vocabularies.document + 'encodes');
 const key = shape[this.ns.aml.vocabularies.document + 'encodes'];
 ```
 
 **do this**
+
 ```javascript
 const key = this._getAmfKey(this.ns.aml.vocabularies.document.encodes);
 const value = model[key];
@@ -71,20 +74,20 @@ class AmfHelperImpl extends AmfHelperMixin(LitElement) {
 }
 ```
 
-## Testing
+## Development
 
-```bash
-npm run test
+```sh
+git clone https://github.com/@advanced-rest-client/amf-helper-mixin
+cd amf-helper-mixin
+npm install
 ```
 
-## Testing with Sauce Labs
+### Running the tests
 
-```bash
-npm run test:sl
+```sh
+npm test
 ```
 
-## Demo
+## Deployment
 
-```bash
-npm start
-```
+Create a PR to the master branch. Once the master branch has a new commit the `.github/workflows/deployment.yaml` script runs which will publish the release to GitHub and to NPM. Note, you need to manually set a new version of the package.
