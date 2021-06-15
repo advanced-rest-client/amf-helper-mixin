@@ -169,6 +169,7 @@ interface Shapes {
   xmlAttribute: string;
   xmlWrapped: string;
   readOnly: string;
+  deprecated: string;
 }
 
 interface Data {

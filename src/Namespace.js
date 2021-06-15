@@ -185,6 +185,7 @@ ns.aml.vocabularies.shapes.xmlName = `${shapesKey}xmlName`;
 ns.aml.vocabularies.shapes.xmlAttribute = `${shapesKey}xmlAttribute`;
 ns.aml.vocabularies.shapes.xmlWrapped = `${shapesKey}xmlWrapped`;
 ns.aml.vocabularies.shapes.readOnly = `${shapesKey}readOnly`;
+ns.aml.vocabularies.shapes.deprecated = `${shapesKey}deprecated`;
 ns.aml.vocabularies.data = {};
 ns.aml.vocabularies.data.key = `${ns.aml.vocabularies.key}data#`;
 const dataKey = ns.aml.vocabularies.data.key;

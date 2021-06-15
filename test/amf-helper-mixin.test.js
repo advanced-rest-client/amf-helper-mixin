@@ -518,6 +518,7 @@ describe('AmfHelperMixin', () => {
           ['xmlAttribute', `${key}xmlAttribute`],
           ['xmlWrapped', `${key}xmlWrapped`],
           ['readOnly', `${key}readOnly`],
+          ['deprecated', `${key}deprecated`],
         ].forEach(([property, value]) => {
           it(`has value for ${property}`, () => {
             const result = element.ns.aml.vocabularies.shapes[property];
