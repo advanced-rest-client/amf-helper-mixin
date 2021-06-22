@@ -29,7 +29,7 @@
     "email": "arc@mulesoft.com"
   },
   "devDependencies": {
-    "@api-components/api-model-generator": "^0.2.11",
+    "@api-components/api-model-generator": "^0.2.12",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "^2.5.33",
     "@web/dev-server": "^0.1.17",
