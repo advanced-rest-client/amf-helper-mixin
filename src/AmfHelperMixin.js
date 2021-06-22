@@ -11,6 +11,8 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
+// @ts-ignore
+import { AmfModelExpander } from 'amf-json-ld-lib'
 import { ns } from './Namespace.js';
 
 /** @typedef {import('./Namespace').ns} Namespace */
@@ -78,11 +80,17 @@ export const AmfHelperMixin = (base) => class extends base {
     if (old === value) {
       return;
     }
+    let expanded;
+    if (!value || AmfModelExpander.isInExpandedForm(value)) {
+      expanded = value;
+    } else {
+      expanded = AmfModelExpander.expand(value);
+    }
     // Cached keys cannot be static as this element can be using in the sane
     // document with different AMF models
     this.__cachedKeys = {};
-    this._amf = value;
-    this.__amfChanged(value);
+    this._amf = expanded;
+    this.__amfChanged(expanded);
     if (this.requestUpdate) {
       this.requestUpdate('amf', old);
     }
