@@ -2496,7 +2496,6 @@ describe('AmfHelperMixin', () => {
           const expandedElement = await modelFixture(expandedModel);
           element.amf = flattenedModel;
           await nextFrame();
-          debugger
           assert.deepEqual(element.amf, expandedElement.amf)
         });
       });
