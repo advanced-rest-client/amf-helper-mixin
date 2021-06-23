@@ -2468,7 +2468,6 @@ describe('AmfHelperMixin', () => {
       });
 
       describe('Expander', async () => {
-        console.log('Expander')
         const flattenedApi = 'flattened-api'
         const expandedApi = 'expanded-api'
         let flattenedModel;
