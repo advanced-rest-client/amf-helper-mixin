@@ -77,8 +77,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
   set amf(value) {
     const old = this._amf;
-    const oldFlattened = this._flattenedAmf;
-    if (old === value || oldFlattened === value) {
+    if (old === value) {
       return;
     }
     let expanded;
@@ -86,6 +85,10 @@ export const AmfHelperMixin = (base) => class extends base {
       this._flattenedAmf = undefined;
       expanded = value;
     } else {
+      const oldFlattened = this._flattenedAmf;
+      if (oldFlattened === value) {
+        return;
+      }
       this._flattenedAmf = value;
       expanded = this._expand(value);
     }
