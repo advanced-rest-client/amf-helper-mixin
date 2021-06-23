@@ -2470,10 +2470,13 @@ describe('AmfHelperMixin', () => {
       describe('Expander', async () => {
         console.log('Expander')
         const flattenedApi = 'flattened-api'
+        const expandedApi = 'expanded-api'
         let flattenedModel;
+        let expandedModel;
 
         before(async () => {
-          flattenedModel = AmfLoader.load(compact, flattenedApi)
+          flattenedModel = await AmfLoader.load(compact, flattenedApi);
+          expandedModel = await AmfLoader.load(compact, expandedApi);
         });
 
         beforeEach(async () => {
@@ -2487,6 +2490,14 @@ describe('AmfHelperMixin', () => {
           element.amf = flattenedModel;
           await nextFrame();
           assert.isTrue(spy.notCalled);
+        });
+
+        it('should create same object for flattened as originial expanded', async () => {
+          const expandedElement = await modelFixture(expandedModel);
+          element.amf = flattenedModel;
+          await nextFrame();
+          debugger
+          assert.deepEqual(element.amf, expandedElement.amf)
         });
       });
     });

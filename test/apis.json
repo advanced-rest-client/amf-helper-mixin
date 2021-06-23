@@ -4,6 +4,7 @@
   "multiple-servers/multiple-servers.yaml": { "type": "OAS 3.0", "mime": "application/yaml" },
   "async-api/async-api.yaml": "ASYNC 2.0",
   "flattened-api/flattened-api.raml": { "type": "RAML 1.0", "mime": "application/yaml", "flattened": true },
+  "expanded-api/expanded-api.raml": { "type": "RAML 1.0", "mime": "application/yaml", "flattened": false },
   "src": "test",
   "dest": "test"
 }
