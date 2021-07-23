@@ -87,6 +87,6 @@
     ]
   },
   "dependencies": {
-    "amf-json-ld-lib": "0.0.13"
+    "amf-json-ld-lib": "0.0.14"
   }
 }
