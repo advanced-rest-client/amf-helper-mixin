@@ -1253,7 +1253,7 @@ export const AmfHelperMixin = (base) => class extends base {
     }
     // In compact model some IDs are presented in long version (in source maps for examples)
     // This must test for this case as well.
-    const compactId = selected.replace('amf://id#', '');
+    const compactId = selected.replace('amf://id', '');
     let result = declare.find((item) => {
       if (Array.isArray(item)) {
         /* eslint-disable-next-line no-param-reassign */
