@@ -384,6 +384,7 @@ describe('Namespace', () => {
       ['discriminatorValue', `${key}discriminatorValue`],
       ['format', `${key}format`],
       ['multipleOf', `${key}multipleOf`],
+      ['uniqueItems', `${key}uniqueItems`],
     ].forEach(([property, value]) => {
       it(`has value for ${property}`, () => {
         const result = ns.aml.vocabularies.shapes[property];

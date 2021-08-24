@@ -191,6 +191,7 @@ interface Shapes {
   discriminatorValue: string;
   format: string;
   multipleOf: string;
+  uniqueItems: string;
 }
 
 interface Data {
