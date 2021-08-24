@@ -206,6 +206,7 @@ ns.aml.vocabularies.shapes.discriminator = `${shapesKey}discriminator`;
 ns.aml.vocabularies.shapes.discriminatorValue = `${shapesKey}discriminatorValue`;
 ns.aml.vocabularies.shapes.format = `${shapesKey}format`;
 ns.aml.vocabularies.shapes.multipleOf = `${shapesKey}multipleOf`;
+ns.aml.vocabularies.shapes.uniqueItems = `${shapesKey}uniqueItems`;
 ns.aml.vocabularies.data = {};
 ns.aml.vocabularies.data.key = `${ns.aml.vocabularies.key}data#`;
 const dataKey = ns.aml.vocabularies.data.key;
