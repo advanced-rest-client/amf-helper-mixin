@@ -17,8 +17,7 @@ describe('AmfSerializer', () => {
     let serializer;
     before(async () => {
       api = await AmfLoader.load(true, 'oas-3-api');
-      serializer = new AmfSerializer();
-      serializer.amf = api;
+      serializer = new AmfSerializer(api);
     });
 
     describe('operation security', () => {

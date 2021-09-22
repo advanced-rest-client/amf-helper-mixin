@@ -8,6 +8,10 @@ import { ApiAnyShape, ApiArrayNode, ApiArrayShape, ApiCallback, ApiCustomDomainP
  */
 export declare class AmfSerializer extends AmfHelperMixin(Object) {
   /**
+   * @param graph Optional AMF generated graph model.
+   */
+  constructor(graph?: DomainElement);
+  /**
    * @param object The AMF Server to serialize.
    * @returns Serialized Server
    */

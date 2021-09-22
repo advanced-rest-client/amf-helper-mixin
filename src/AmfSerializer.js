@@ -100,6 +100,16 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
  */
 export class AmfSerializer extends AmfHelperMixin(Object) {
   /**
+   * @param {DomainElement=} graph Optional AMF generated graph model.
+   */
+  constructor(graph) {
+    super();
+    if (graph) {
+      this.amf = graph;
+    }
+  }
+
+  /**
    * @param {Server} object The AMF Server to serialize.
    * @returns {ApiServer} Serialized Server
    */
