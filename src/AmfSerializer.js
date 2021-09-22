@@ -294,6 +294,11 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const displayName = this._getValue(target, ns.aml.vocabularies.core.displayName);
     if (displayName && typeof displayName === 'string') {
       result.displayName = displayName;
+    } else {
+      const coreName = this._getValue(target, ns.aml.vocabularies.core.name);
+      if (coreName && typeof coreName === 'string') {
+        result.displayName = coreName;
+      }
     }
     const description = this._getValue(target, ns.aml.vocabularies.core.description);
     if (description && typeof description === 'string') {
@@ -834,12 +839,14 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (name && typeof name === 'string') {
       result.name = name;
     }
-    // if (!namespace.isNullOrEmpty) {
-    //   result.namespace = namespace.value();
-    // }
-    // if (!prefix.isNullOrEmpty) {
-    //   result.prefix = prefix.value();
-    // }
+    const xmlNs = this._getValue(object, ns.aml.vocabularies.shapes.xmlNamespace);
+    if (xmlNs && typeof xmlNs === 'string') {
+      result.namespace = xmlNs;
+    }
+    const xmlPrefix = this._getValue(object, ns.aml.vocabularies.shapes.xmlPrefix);
+    if (xmlPrefix && typeof xmlPrefix === 'string') {
+      result.prefix = xmlPrefix;
+    }
     return result;
   }
 
@@ -916,7 +923,8 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
         if (Array.isArray(value)) {
           [value] = value;
         }
-        result.properties[key] = this.unknownDataNode(value);
+        const name = key.replace(prefix, '').replace(prefixCompact, '');
+        result.properties[name] = this.unknownDataNode(value);
       }
     });
     return result;
@@ -929,10 +937,10 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   arrayNode(object) {
     const result = /** @type ApiArrayNode */ (this.dataNode(object));
     result.members = [];
-    // const { members } = object;
-    // if (Array.isArray(members) && members.length) {
-    //   result.members = members.map((item) => this.unknownDataNode(item));
-    // }
+    const members = /** @type DataNode[] */ (this._computePropertyArray(object, this.ns.w3.rdfSchema.member));
+    if (Array.isArray(members) && members.length) {
+      result.members = members.map((item) => this.unknownDataNode(item));
+    }
     return result;
   }
 

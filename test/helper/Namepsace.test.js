@@ -376,6 +376,8 @@ describe('Namespace', () => {
       ['xmlName', `${key}xmlName`],
       ['xmlAttribute', `${key}xmlAttribute`],
       ['xmlWrapped', `${key}xmlWrapped`],
+      ['xmlNamespace', `${key}xmlNamespace`],
+      ['xmlPrefix', `${key}xmlPrefix`],
       ['readOnly', `${key}readOnly`],
       ['writeOnly', `${key}writeOnly`],
       ['deprecated', `${key}deprecated`],

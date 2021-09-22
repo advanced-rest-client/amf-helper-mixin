@@ -183,6 +183,8 @@ interface Shapes {
   xmlName: string;
   xmlAttribute: string;
   xmlWrapped: string;
+  xmlNamespace: string;
+  xmlPrefix: string;
   readOnly: string;
   writeOnly: string;
   deprecated: string;
