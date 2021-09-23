@@ -916,7 +916,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const result = /** @type ApiObjectNode */ (this.dataNode(object));
     result.properties = {};
     const prefix = this.ns.aml.vocabularies.data.toString();
-    const prefixCompact = this._getAmfKey(prefix);
+    const prefixCompact = `${this._getAmfKey(prefix)}:`;
     Object.keys(object).forEach((key) => {
       if (key.startsWith(prefix) || key.startsWith(prefixCompact)) {
         let value = object[key];
@@ -955,7 +955,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (Array.isArray(ids) && ids.length) {
       ids.forEach((id) => {
         const key = `amf://id${id}`;
-        let value = /** @type DomainElement */ (object[key]);
+        let value = /** @type DomainElement */ (object[id] || object[key]);
         if (!value) {
           return;
         }
