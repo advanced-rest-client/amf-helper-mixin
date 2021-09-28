@@ -107,6 +107,9 @@ export interface ApiServer extends ApiDomainProperty {
   description?: string;
   variables: ApiParameter[];
   sourceMaps?: ApiDocumentSourceMaps;
+  protocol?: string;
+  protocolVersion?: string;
+  security?: ApiSecurityRequirement[];
 }
 
 export interface ApiParameter extends ApiDomainProperty {

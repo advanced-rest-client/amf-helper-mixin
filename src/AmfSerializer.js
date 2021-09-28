@@ -127,6 +127,18 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (Array.isArray(variables) && variables.length) {
       result.variables = variables.map((p) => this.parameter(p));
     }
+    const protocol = /** @type string */ (this._getValue(object, this.ns.aml.vocabularies.apiContract.protocol));
+    const protocolVersion = /** @type string */ (this._getValue(object, this.ns.aml.vocabularies.apiContract.protocolVersion));
+    if (protocol) {
+      result.protocol = protocol;
+    }
+    if (protocolVersion) {
+      result.protocolVersion = protocolVersion;
+    }
+    const security = /** @type SecurityRequirement */ (object[this._getAmfKey(this.ns.aml.vocabularies.security.security)]);
+    if (Array.isArray(security) && security.length) {
+      result.security = security.map((p) => this.securityRequirement(p));
+    }
     return result;
   }
 
