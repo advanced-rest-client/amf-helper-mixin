@@ -44,7 +44,7 @@ export interface AmfDocument extends DomainElement {
 }
 
 export interface Api extends DomainElement {
-  'hhttp://a.ml/vocabularies/core#name'?: LdValueString[];
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
   'http://a.ml/vocabularies/apiContract#server'?: Server[];
   'http://a.ml/vocabularies/apiContract#accepts'?: LdValueString[];
   'http://a.ml/vocabularies/apiContract#contentType'?: LdValueString[];
@@ -110,6 +110,7 @@ export declare interface Operation extends DomainElement {
   'http://a.ml/vocabularies/security#security'?: SecurityRequirement[];
   'http://a.ml/vocabularies/apiContract#callback'?: Callback[];
   'http://a.ml/vocabularies/apiContract#server'?: Server[];
+  'http://a.ml/vocabularies/document#extends'?: ParametrizedTrait[];
 }
 
 export interface Payload extends DomainElement {
@@ -402,3 +403,23 @@ export interface SynthesizedField {
   'http://a.ml/vocabularies/document-source-maps#element'?: LdValueString[];
   'http://a.ml/vocabularies/document-source-maps#value'?: LdValueString[];
 }
+
+export interface ParametrizedDeclaration extends DomainElement {
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
+  'http://a.ml/vocabularies/document#target'?: AbstractDeclaration[];
+  'http://a.ml/vocabularies/document#variable'?: VariableValue[];
+}
+
+export interface VariableValue extends DomainElement {
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
+  'http://a.ml/vocabularies/document#value'?: DataNode[];
+}
+
+export interface AbstractDeclaration extends DomainElement {
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
+  'http://a.ml/vocabularies/core#description'?: LdValueString[];
+  'http://a.ml/vocabularies/document#dataNode'?: DataNode[];
+  'http://a.ml/vocabularies/document#variable'?: LdValueString[];
+}
+
+export interface ParametrizedTrait extends ParametrizedDeclaration {}

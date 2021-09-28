@@ -95,6 +95,7 @@ export interface ApiOperation extends ApiDomainProperty {
   servers: ApiServer[];
   tags: ApiTag[];
   sourceMaps?: ApiDocumentSourceMaps;
+  traits: ApiParametrizedTrait[];
 }
 
 export interface ApiTag extends ApiDomainProperty {
@@ -478,4 +479,25 @@ export interface ApiDocumentSourceMaps {
 export interface ApiSynthesizedField {
   element: string;
   value: string;
+}
+
+export interface ApiParametrizedDeclaration extends ApiDomainProperty {
+  name?: string;
+  target?: ApiAbstractDeclaration;
+  variables: ApiVariableValue[];
+}
+
+export interface ApiVariableValue extends ApiDomainProperty {
+  name: string;
+  value?: ApiDataNode;
+}
+
+export interface ApiAbstractDeclaration extends ApiDomainProperty {
+  name: string;
+  description?: string;
+  dataNode?: ApiDataNode;
+  variables: string[];
+}
+
+export interface ApiParametrizedTrait extends ApiParametrizedDeclaration {
 }

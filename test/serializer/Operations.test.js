@@ -190,96 +190,142 @@ describe('AmfSerializer', () => {
     let api;
     /** @type AmfSerializer */
     let serializer;
-    before(async () => {
-      api = await AmfLoader.load(true, 'demo-api');
-      serializer = new AmfSerializer();
-      serializer.amf = api;
-    });
 
-    it('returns an operation', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files', 'get');
-      const result = serializer.operation(shape);
-      assert.typeOf(result, 'object', 'has the result');
-      assert.equal(result.id, shape['@id'], 'has the id');
-      assert.include(result.types, serializer.ns.aml.vocabularies.apiContract.Operation, 'has the type');
-      assert.equal(result.method, 'get', 'has the method');
-      assert.equal(result.name, 'list', 'has the name');
-      assert.typeOf(result.description, 'string', 'has the description');
-      assert.isFalse(result.deprecated, 'is not deprecated');
-      assert.deepEqual(result.customDomainProperties, [], 'has no customDomainProperties');
-      assert.deepEqual(result.callbacks, [], 'has no callbacks');
-      assert.deepEqual(result.responses, [], 'has no responses');
-      assert.deepEqual(result.servers, [], 'has no servers');
-      assert.deepEqual(result.accepts, [], 'has no accepts');
-      assert.deepEqual(result.schemes, [], 'has no schemes');
-      assert.deepEqual(result.contentType, [], 'has no contentType');
-      assert.typeOf(result.sourceMaps, 'object', 'has source maps');
+    describe('base tests', () => {
+      before(async () => {
+        api = await AmfLoader.load(true, 'demo-api');
+        serializer = new AmfSerializer();
+        serializer.amf = api;
+      });
+  
+      it('returns an operation', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files', 'get');
+        const result = serializer.operation(shape);
+        assert.typeOf(result, 'object', 'has the result');
+        assert.equal(result.id, shape['@id'], 'has the id');
+        assert.include(result.types, serializer.ns.aml.vocabularies.apiContract.Operation, 'has the type');
+        assert.equal(result.method, 'get', 'has the method');
+        assert.equal(result.name, 'list', 'has the name');
+        assert.typeOf(result.description, 'string', 'has the description');
+        assert.isFalse(result.deprecated, 'is not deprecated');
+        assert.deepEqual(result.customDomainProperties, [], 'has no customDomainProperties');
+        assert.deepEqual(result.callbacks, [], 'has no callbacks');
+        assert.deepEqual(result.responses, [], 'has no responses');
+        assert.deepEqual(result.servers, [], 'has no servers');
+        assert.deepEqual(result.accepts, [], 'has no accepts');
+        assert.deepEqual(result.schemes, [], 'has no schemes');
+        assert.deepEqual(result.contentType, [], 'has no contentType');
+        assert.typeOf(result.sourceMaps, 'object', 'has source maps');
+      });
+  
+      it('adds the security info', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files', 'get');
+        const result = serializer.operation(shape);
+        const { security } = result;
+        assert.typeOf(security, 'array', 'has the security');
+        assert.lengthOf(security, 1, 'has the defined security');
+        assert.include(security[0].types, serializer.ns.aml.vocabularies.security.securityRequirement, 'has the type');
+        assert.typeOf(security[0].schemes, 'array', 'has the schemes');
+        assert.typeOf(security[0].schemes[0], 'object', 'has the security scheme');
+        assert.deepEqual(security[0].customDomainProperties, [], 'has no customDomainProperties');
+      });
+  
+      it('adds the annotations info', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files', 'post');
+        const result = serializer.operation(shape);
+        const { customDomainProperties } = result;
+        assert.typeOf(customDomainProperties, 'array', 'has the security');
+        assert.lengthOf(customDomainProperties, 1, 'has the defined security');
+        const [cdp] = customDomainProperties;
+        assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
+        assert.equal(cdp.name, 'scalar_1', 'has the name');
+        assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
+        const typed = /** @type ApiScalarNode */ (cdp);
+        assert.equal(typed.value, 'This operation is deprecated and will be removed.', 'has the value');
+        assert.equal(typed.dataType, serializer.ns.w3.xmlSchema.string, 'has the dataType');
+      });
+  
+      it('adds the request with payloads', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'post');
+        const result = serializer.operation(shape);
+        const { request } = result;
+        assert.typeOf(request, 'object', 'has the request');
+        assert.include(request.types, serializer.ns.aml.vocabularies.apiContract.Request, 'has the type');
+        assert.typeOf(request.payloads, 'array', 'has the payloads');
+        assert.isNotEmpty(request.payloads, 'the payloads is set');
+      });
+  
+      it('adds the request with query parameters', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'get');
+        const result = serializer.operation(shape);
+        const { request } = result;
+        assert.typeOf(request, 'object', 'has the request');
+        assert.include(request.types, serializer.ns.aml.vocabularies.apiContract.Request, 'has the type');
+        assert.typeOf(request.queryParameters, 'array', 'has the queryParameters');
+        assert.isNotEmpty(request.queryParameters, 'the queryParameters is set');
+      });
+  
+      it('adds the annotations', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files', 'post');
+        const result = serializer.operation(shape);
+        const { customDomainProperties } = result;
+        assert.typeOf(customDomainProperties, 'array', 'has the customDomainProperties');
+        const [cdp] = customDomainProperties;
+        assert.typeOf(cdp, 'object', 'has the property');
+        assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
+        assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
+      });
+  
+      it('adds query parameters from a trait', () => {
+        const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'get');
+        const result = serializer.operation(shape);
+        const { request } = result;
+        const mr = request.queryParameters.find((p) => p.name === 'maxResults');
+        assert.typeOf(mr, 'object', 'has a queryParameters');
+      });
     });
+    
+    describe('Traits', () => {
+      before(async () => {
+        api = await AmfLoader.load(true, 'arc-demo-api');
+        serializer = new AmfSerializer();
+        serializer.amf = api;
+      });
+  
+      it('adds the traits into the operation', () => {
+        const shape = AmfLoader.lookupOperation(api, '/people', 'get');
+        const result = serializer.operation(shape);
+        assert.typeOf(result, 'object', 'has the result');
+        const { traits } = result;
+        assert.typeOf(traits, 'array', 'has traits array');
+        assert.lengthOf(traits, 1, 'has the defined trait');
+        const [trait] = traits;
+        assert.equal(trait.name, 'Paginated', 'has the trait name');
+      });
 
-    it('adds the security info', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files', 'get');
-      const result = serializer.operation(shape);
-      const { security } = result;
-      assert.typeOf(security, 'array', 'has the security');
-      assert.lengthOf(security, 1, 'has the defined security');
-      assert.include(security[0].types, serializer.ns.aml.vocabularies.security.securityRequirement, 'has the type');
-      assert.typeOf(security[0].schemes, 'array', 'has the schemes');
-      assert.typeOf(security[0].schemes[0], 'object', 'has the security scheme');
-      assert.deepEqual(security[0].customDomainProperties, [], 'has no customDomainProperties');
-    });
+      it('serializes the variables', () => {
+        const shape = AmfLoader.lookupOperation(api, '/people', 'get');
+        const result = serializer.operation(shape);
+        const { traits } = result;
+        const [trait] = traits;
+        const { variables } = trait;
+        assert.typeOf(variables, 'array', 'has traits array');
+        assert.lengthOf(variables, 1, 'has all variables');
+      });
 
-    it('adds the annotations info', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files', 'post');
-      const result = serializer.operation(shape);
-      const { customDomainProperties } = result;
-      assert.typeOf(customDomainProperties, 'array', 'has the security');
-      assert.lengthOf(customDomainProperties, 1, 'has the defined security');
-      const [cdp] = customDomainProperties;
-      assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
-      assert.equal(cdp.name, 'scalar_1', 'has the name');
-      assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
-      const typed = /** @type ApiScalarNode */ (cdp);
-      assert.equal(typed.value, 'This operation is deprecated and will be removed.', 'has the value');
-      assert.equal(typed.dataType, serializer.ns.w3.xmlSchema.string, 'has the dataType');
-    });
-
-    it('adds the request with payloads', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'post');
-      const result = serializer.operation(shape);
-      const { request } = result;
-      assert.typeOf(request, 'object', 'has the request');
-      assert.include(request.types, serializer.ns.aml.vocabularies.apiContract.Request, 'has the type');
-      assert.typeOf(request.payloads, 'array', 'has the payloads');
-      assert.isNotEmpty(request.payloads, 'the payloads is set');
-    });
-
-    it('adds the request with query parameters', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'get');
-      const result = serializer.operation(shape);
-      const { request } = result;
-      assert.typeOf(request, 'object', 'has the request');
-      assert.include(request.types, serializer.ns.aml.vocabularies.apiContract.Request, 'has the type');
-      assert.typeOf(request.queryParameters, 'array', 'has the queryParameters');
-      assert.isNotEmpty(request.queryParameters, 'the queryParameters is set');
-    });
-
-    it('adds the annotations', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files', 'post');
-      const result = serializer.operation(shape);
-      const { customDomainProperties } = result;
-      assert.typeOf(customDomainProperties, 'array', 'has the customDomainProperties');
-      const [cdp] = customDomainProperties;
-      assert.typeOf(cdp, 'object', 'has the property');
-      assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
-      assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
-    });
-
-    it('adds query parameters from a trait', () => {
-      const shape = AmfLoader.lookupOperation(api, '/files/{fileId}/comments', 'get');
-      const result = serializer.operation(shape);
-      const { request } = result;
-      const mr = request.queryParameters.find((p) => p.name === 'maxResults');
-      assert.typeOf(mr, 'object', 'has a queryParameters');
+      it('serializes the target', () => {
+        const shape = AmfLoader.lookupOperation(api, '/people', 'get');
+        const result = serializer.operation(shape);
+        const { traits } = result;
+        const [trait] = traits;
+        const { target } = trait;
+        assert.typeOf(target, 'object', 'has the target');
+        const { name, variables, dataNode } = target;
+        assert.equal(name, 'Paginated', 'has the trait name');
+        assert.typeOf(variables, 'array', 'has traits array');
+        assert.lengthOf(variables, 2, 'has all variables');
+        assert.typeOf(dataNode, 'object', 'has the dataNode');
+      });
     });
   });
 });

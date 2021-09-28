@@ -1,5 +1,6 @@
 {
   "demo-api/demo-api.raml": "RAML 1.0",
+  "arc-demo-api/arc-demo-api.raml": "RAML 1.0",
   "SE-12957/SE-12957.json": "OAS 2.0",
   "multiple-servers/multiple-servers.yaml": { "type": "OAS 3.0", "mime": "application/yaml" },
   "async-api/async-api.yaml": "ASYNC 2.0",

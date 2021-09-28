@@ -50,6 +50,9 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./types').ApiDataNodeUnion} ApiDataNodeUnion */
 /** @typedef {import('./types').ApiDocumentSourceMaps} ApiDocumentSourceMaps */
 /** @typedef {import('./types').ApiSynthesizedField} ApiSynthesizedField */
+/** @typedef {import('./types').ApiParametrizedTrait} ApiParametrizedTrait */
+/** @typedef {import('./types').ApiVariableValue} ApiVariableValue */
+/** @typedef {import('./types').ApiAbstractDeclaration} ApiAbstractDeclaration */
 /** @typedef {import('./amf').Server} Server */
 /** @typedef {import('./amf').Parameter} Parameter */
 /** @typedef {import('./amf').Shape} Shape */
@@ -94,6 +97,9 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./amf').Tag} Tag */
 /** @typedef {import('./amf').DocumentSourceMaps} DocumentSourceMaps */
 /** @typedef {import('./amf').SynthesizedField} SynthesizedField */
+/** @typedef {import('./amf').ParametrizedTrait} ParametrizedTrait */
+/** @typedef {import('./amf').VariableValue} VariableValue */
+/** @typedef {import('./amf').AbstractDeclaration} AbstractDeclaration */
 
 /**
  * A class that takes AMF's ld+json model and outputs JavaScript interface of it.
@@ -1062,6 +1068,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       schemes: [],
       contentType: [],
       tags: [],
+      traits: [],
     });
     const { ns } = this;
     const method = this._getValue(object, ns.aml.vocabularies.apiContract.method);
@@ -1134,6 +1141,10 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const tags = object[this._getAmfKey(ns.aml.vocabularies.apiContract.tag)];
     if (Array.isArray(tags) && tags.length) {
       result.tags = tags.map(s => this.tag(s));
+    }
+    const traits = object[this._getAmfKey(ns.aml.vocabularies.document.extends)];
+    if (Array.isArray(traits) && traits.length) {
+      result.traits = traits.map(t => this.parametrizedTrait(t));
     }
     return result;
   }
@@ -1777,6 +1788,90 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
         [value] = value;
       }
       result.value = value['@value'] || value;
+    }
+    return result;
+  }
+
+  /**
+   * @param {ParametrizedTrait} object 
+   * @returns {ApiParametrizedTrait}
+   */
+  parametrizedTrait(object) {
+    const result = /** @type ApiParametrizedTrait */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      variables: [],
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+    });
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    if (name && typeof name === 'string') {
+      result.name = name;
+    }
+    const variables = object[this._getAmfKey(ns.aml.vocabularies.document.variable)];
+    if (Array.isArray(variables)) {
+      variables.forEach((item) => {
+        result.variables.push(this.variableValue(item));
+      });
+    }
+    const targets = object[this._getAmfKey(ns.aml.vocabularies.document.target)];
+    if (Array.isArray(targets) && targets.length) {
+      const [target] = targets;
+      result.target = this.abstractDeclaration(target);
+    }
+    return result;
+  }
+
+  /**
+   * @param {VariableValue} object 
+   * @returns {ApiVariableValue}
+   */
+  variableValue(object) {
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    const result = /** @type ApiVariableValue */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+      name,
+    });
+    const values = object[this._getAmfKey(ns.aml.vocabularies.document.value)];
+    if (Array.isArray(values)) {
+      const [item] = values;
+      result.value = this.unknownDataNode(item);
+    }
+    return result;
+  }
+
+  /**
+   * @param {AbstractDeclaration} object 
+   * @returns {ApiAbstractDeclaration}
+   */
+  abstractDeclaration(object) {
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    const result = /** @type ApiAbstractDeclaration */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+      name,
+      variables: [],
+    });
+    const variables = /** @type string[] */ (this._getValueArray(object, ns.aml.vocabularies.document.variable));
+    if (Array.isArray(variables)) {
+      result.variables = variables;
+    }
+    const description = this._getValue(object, ns.aml.vocabularies.core.description);
+    if (description && typeof description === 'string') {
+      result.description = description;
+    }
+    const dataNode = object[this._getAmfKey(ns.aml.vocabularies.document.dataNode)];
+    if (Array.isArray(dataNode)) {
+      const [item] = dataNode;
+      result.dataNode = this.unknownDataNode(item);
     }
     return result;
   }

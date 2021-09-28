@@ -26,6 +26,9 @@ interface Document {
   strict: string;
   deprecated: string;
   location: string;
+  variable: string;
+  target: string;
+  dataNode: string;
 }
 
 interface Core {
