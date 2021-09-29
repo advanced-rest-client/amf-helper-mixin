@@ -243,11 +243,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (types.includes(ns.aml.vocabularies.shapes.SchemaShape)) {
       return this.schemaShape(/** @type SchemaShape */ (object));
     }
-    if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
-      return this.arrayShape(/** @type ArrayShape */ (object));
-    }
+    // this must be before the ArrayShape
     if (types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
       return this.tupleShape(/** @type TupleShape */ (object));
+    }
+    if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
+      return this.arrayShape(/** @type ArrayShape */ (object));
     }
     if (types.includes(ns.aml.vocabularies.shapes.RecursiveShape)) {
       return this.recursiveShape(/** @type RecursiveShape */ (object));
@@ -746,15 +747,26 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       }
     }
     const items = target[this._getAmfKey(this.ns.aml.vocabularies.shapes.items)];
+    const prefix = this._getAmfKey(this.ns.w3.rdfSchema.key);
     if (Array.isArray(items) && items.length) {
-      result.items = items.map((shape) => this.unknownShape(shape));
+      result.items = [];
+      items.forEach((item) => {
+        if (Array.isArray(item)) {
+          // eslint-disable-next-line no-param-reassign
+          [item] = item;
+        }
+        Object.keys(item).filter(k => k.startsWith(prefix)).forEach((key) => {
+          let shape = item[key];
+          if (Array.isArray(shape)) {
+            [shape] = shape;
+          }
+          const value = this.unknownShape(shape);
+          result.items.push(value);
+        });
+      });
     } else {
       result.items = [];
     }
-    // const { items, additionalItems } = target;
-    // if (!additionalItems.isNull) {
-    //   result.additionalItems = additionalItems.value();
-    // }
     return result;
   }
 
