@@ -59,10 +59,8 @@ describe('AmfSerializer', () => {
       assert.typeOf(result.customDomainProperties, 'array', 'has the array');
       assert.lengthOf(result.customDomainProperties, 1, 'has the annotation');
       const [item] = result.customDomainProperties;
-      assert.include(item.types, serializer.ns.aml.vocabularies.data.Object, 'has the Object type');
-      assert.equal(item.name, 'object_1', 'has the name');
-      assert.equal(item.extensionName, 'clearanceLevel', 'has the extensionName');
-      const typed = /** @type ApiObjectNode */ (/** @type unknown */(item));
+      assert.equal(item.name, 'clearanceLevel', 'has the name');
+      const typed = /** @type ApiObjectNode */ (item.extension);
       assert.typeOf(typed.properties, 'object', 'has the properties');
       assert.lengthOf(Object.keys(typed.properties), 2, 'has all properties');
     });

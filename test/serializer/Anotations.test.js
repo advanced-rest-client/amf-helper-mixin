@@ -7,7 +7,7 @@ import { AmfSerializer } from "../../index.js";
 
 describe("AmfSerializer", () => {
   describe("Annotations", () => {
-    [true, ].forEach((compact) => {
+    [true, false].forEach((compact) => {
       describe(compact ? "Compact model" : "Full model", () => {
         let api;
         /** @type AmfSerializer */
@@ -26,8 +26,9 @@ describe("AmfSerializer", () => {
           assert.typeOf(customDomainProperties, 'array', 'has the customDomainProperties');
           assert.lengthOf(customDomainProperties, 1, 'has a single annotation');
           const [annotation] = customDomainProperties;
-          assert.equal(annotation.extensionName, 'clearanceLevel', 'has the extensionName');
-          const { properties } = /** @type ApiObjectNode */ (/** @type unknown */ (annotation));
+          assert.equal(annotation.name, 'clearanceLevel', 'has the extensionName');
+          assert.typeOf(annotation.extension, 'object', 'has the extension');
+          const { properties } = /** @type ApiObjectNode */ (annotation.extension);
           assert.typeOf(properties, 'object', 'has properties');
           const { level, signature } = properties;
           assert.typeOf(level, 'object', 'has the level property');
@@ -42,8 +43,10 @@ describe("AmfSerializer", () => {
           assert.typeOf(customDomainProperties, 'array', 'has the customDomainProperties');
           assert.lengthOf(customDomainProperties, 1, 'has a single annotation');
           const [annotation] = customDomainProperties;
-          assert.equal(annotation.extensionName, 'deprecated', 'has the extensionName');
-          const { value, dataType, } = /** @type ApiScalarNode */ (/** @type unknown */ (annotation));
+          assert.equal(annotation.name, 'deprecated', 'has the extensionName');
+          assert.typeOf(annotation.extension, 'object', 'has the extension');
+
+          const { value, dataType, } = /** @type ApiScalarNode */ (annotation.extension);
           assert.equal(dataType, 'http://www.w3.org/2001/XMLSchema#string', 'has the dataType');
           assert.equal(value, 'This operation is deprecated and will be removed.', 'has the value');
         });

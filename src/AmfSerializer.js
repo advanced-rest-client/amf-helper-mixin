@@ -992,11 +992,16 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
         if (Array.isArray(value)) {
           [value] = value;
         }
-        const cdp = /** @type ApiCustomDomainProperty */ (this.unknownDataNode(value));
-        const extensionName = this._getValue(value, this.ns.aml.vocabularies.core.extensionName);
-        if (extensionName && typeof extensionName === 'string') {
-          cdp.extensionName = extensionName;
+        const extension = this.unknownDataNode(value);
+        const name = this._getValue(value, this.ns.aml.vocabularies.core.extensionName);
+        if (!name || !extension) {
+          return;
         }
+        const cdp = /** @type ApiCustomDomainProperty */ ({
+          id: key,
+          name,
+          extension,
+        });
         result.push(cdp);
       });
     }
@@ -1762,8 +1767,8 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       [sm] = sm;
     }
     const result = /** @type ApiDocumentSourceMaps */ ({
-      id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      id: sm['@id'],
+      types: sm['@type'].map(this[expandKey].bind(this)),
     });
     const sf = sm[this._getAmfKey(ns.aml.vocabularies.docSourceMaps.synthesizedField)];
     if (Array.isArray(sf) && sf.length) {

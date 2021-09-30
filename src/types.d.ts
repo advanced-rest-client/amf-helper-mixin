@@ -58,8 +58,10 @@ export interface ApiDomainProperty {
   customDomainProperties: ApiCustomDomainProperty[];
 }
 
-export interface ApiCustomDomainProperty extends ApiDataNode {
-  extensionName: string;
+export interface ApiCustomDomainProperty {
+  id: string;
+  name: string;
+  extension: ApiDataNodeUnion;
 }
 
 export type ScalarDataTypes = 'string' | 'base64Binary' | 'boolean' | 'date' | 'dateTime' | 'double' | 'float' | 'integer' | 'long' | 'number' | 'time';

@@ -238,10 +238,9 @@ describe('AmfSerializer', () => {
         assert.typeOf(customDomainProperties, 'array', 'has the security');
         assert.lengthOf(customDomainProperties, 1, 'has the defined security');
         const [cdp] = customDomainProperties;
-        assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
-        assert.equal(cdp.name, 'scalar_1', 'has the name');
-        assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
-        const typed = /** @type ApiScalarNode */ (cdp);
+        assert.equal(cdp.name, 'deprecated', 'has the name');
+        const typed = /** @type ApiScalarNode */ (cdp.extension);
+        assert.include(typed.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
         assert.equal(typed.value, 'This operation is deprecated and will be removed.', 'has the value');
         assert.equal(typed.dataType, serializer.ns.w3.xmlSchema.string, 'has the dataType');
       });
@@ -273,8 +272,8 @@ describe('AmfSerializer', () => {
         assert.typeOf(customDomainProperties, 'array', 'has the customDomainProperties');
         const [cdp] = customDomainProperties;
         assert.typeOf(cdp, 'object', 'has the property');
-        assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
-        assert.equal(cdp.extensionName, 'deprecated', 'has the extensionName');
+        assert.include(cdp.extension.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the type');
+        assert.equal(cdp.name, 'deprecated', 'has the extensionName');
       });
   
       it('adds query parameters from a trait', () => {

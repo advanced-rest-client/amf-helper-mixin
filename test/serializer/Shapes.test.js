@@ -171,12 +171,10 @@ describe('AmfSerializer', () => {
       assert.lengthOf(cdp, 1, 'has a single property');
       const [item] = cdp;
       assert.typeOf(item.id, 'string', 'has the id');
-      assert.include(item.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the Scalar type');
-      assert.equal(item.name, 'scalar_1', 'has the name');
-      assert.equal(item.extensionName, 'deprecated', 'has the extensionName');
+      assert.include(item.extension.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the Scalar type');
+      assert.equal(item.name, 'deprecated', 'has the extensionName');
       // @ts-ignore
-      assert.typeOf(item.value, 'string', 'has the value');
-      assert.deepEqual(item.customDomainProperties, [], 'has empty customDomainProperties');
+      assert.typeOf(item.extension.value, 'string', 'has the value');
     });
 
     it('processes a SchemaShape', () => {
@@ -279,11 +277,10 @@ describe('AmfSerializer', () => {
       const result = /** @type ApiNodeShape */ (serializer.unknownShape(shape));
       assert.lengthOf(result.customDomainProperties, 1, 'has the customDomainProperties');
       const [cdp] = result.customDomainProperties;
-      assert.include(cdp.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the Scalar type');
-      assert.deepEqual(cdp.customDomainProperties, [], 'has empty customDomainProperties');
-      assert.equal(cdp.name, 'scalar_1', 'has the name');
-      assert.equal(cdp.extensionName, 'swagger-router-model', 'has the extensionName');
-      const typed = /** @type ApiScalarNode */ (cdp);
+      assert.equal(cdp.name, 'swagger-router-model', 'has the name');
+      const typed = /** @type ApiScalarNode */ (cdp.extension);
+      assert.include(typed.types, serializer.ns.aml.vocabularies.data.Scalar, 'has the Scalar type');
+      assert.deepEqual(typed.customDomainProperties, [], 'has empty customDomainProperties');
       assert.equal(typed.dataType, serializer.ns.w3.xmlSchema.string, 'has the dataType');
       assert.equal(typed.value, 'io.swagger.petstore.model.Pet', 'has the value');
     });
