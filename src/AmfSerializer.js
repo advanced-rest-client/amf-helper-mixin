@@ -1363,6 +1363,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       types: object['@type'].map(this[expandKey].bind(this)),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
+      mapping: [],
     });
     const { ns } = this;
     const name = this._getValue(object, ns.aml.vocabularies.core.name);
@@ -1384,12 +1385,14 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       }
       result.server = this.server(server);
     }
-    let mapping = object[this._getAmfKey(ns.aml.vocabularies.apiContract.mapping)];
+    let mapping = /** @type IriTemplateMapping[] */ (object[this._getAmfKey(ns.aml.vocabularies.apiContract.mapping)]);
     if (mapping) {
-      if (Array.isArray(mapping)) {
-        [mapping] = mapping;
+      if (mapping && !Array.isArray(mapping)) {
+        mapping = [mapping];
       }
-      result.mapping = this.iriTemplateMapping(mapping);
+      if (mapping) {
+        result.mapping = mapping.map(item => this.iriTemplateMapping(item));
+      }
     }
     // if (!template.isNullOrEmpty) {
     //   result.template = template.value();

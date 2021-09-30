@@ -168,7 +168,7 @@ export interface ApiTemplatedLink extends ApiDomainProperty {
   template?: string;
   operationId?: string;
   requestBody?: string;
-  mapping?: ApiIriTemplateMapping;
+  mapping: ApiIriTemplateMapping[];
   server?: ApiServer;
   sourceMaps?: ApiDocumentSourceMaps;
 }

@@ -123,12 +123,13 @@ describe('AmfSerializer', () => {
       assert.equal(l1.operationId, 'getUserByName', 'l1 has the name');
       assert.typeOf(l1.description, 'string', 'l1 has the description');
       assert.typeOf(l2.description, 'string', 'l2 has the description');
-      assert.typeOf(l1.mapping, 'object', 'l1 has the mapping');
-      assert.typeOf(l2.mapping, 'object', 'l2 has the mapping');
+      assert.typeOf(l1.mapping, 'array', 'l1 has the mapping');
+      assert.typeOf(l2.mapping, 'array', 'l2 has the mapping');
       const { mapping } = l1;
-      assert.include(mapping.types, serializer.ns.aml.vocabularies.apiContract.IriTemplateMapping, 'mapping has the type');
-      assert.equal(mapping.templateVariable, 'username', 'mapping has the templateVariable');
-      assert.equal(mapping.linkExpression, '$request.body#/username', 'mapping has the linkExpression');
+      const [mappingItem] = mapping;
+      assert.include(mappingItem.types, serializer.ns.aml.vocabularies.apiContract.IriTemplateMapping, 'mapping has the type');
+      assert.equal(mappingItem.templateVariable, 'username', 'mapping has the templateVariable');
+      assert.equal(mappingItem.linkExpression, '$request.body#/username', 'mapping has the linkExpression');
     });
 
     
