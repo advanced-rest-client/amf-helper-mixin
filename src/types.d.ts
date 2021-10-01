@@ -510,7 +510,7 @@ export interface ApiParametrizedTrait extends ApiParametrizedDeclaration {
 
 export interface ShapeProcessingOptions {
   /**
-   * This is set when serializing a payload.
+   * This is set when serializing a shape / parameter.
    * It is used to determine which example of the schema to include.
    * 
    * When an example has the `tracked-element` in the source maps then this
@@ -518,5 +518,5 @@ export interface ShapeProcessingOptions {
    * 
    * Note, the value of the tracked-element can be a list of IDs separated by coma.
    */
-  payloadId?: string;
+  trackedId?: string;
 }

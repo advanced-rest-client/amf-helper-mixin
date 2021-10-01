@@ -206,7 +206,9 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const schemas = object[this._getAmfKey(ns.aml.vocabularies.shapes.schema)];
     if (Array.isArray(schemas) && schemas.length) {
       const [schema] = schemas;
-      result.schema = this.unknownShape(schema);
+      result.schema = this.unknownShape(schema, {
+        trackedId: object['@id'],
+      });
     }
     const payloads = object[this._getAmfKey(ns.aml.vocabularies.apiContract.payload)];
     if (Array.isArray(payloads) && payloads.length) {
@@ -247,10 +249,10 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     }
     // this must be before the ArrayShape
     if (types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
-      return this.tupleShape(/** @type TupleShape */ (object));
+      return this.tupleShape(/** @type TupleShape */ (object), options);
     }
     if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
-      return this.arrayShape(/** @type ArrayShape */ (object));
+      return this.arrayShape(/** @type ArrayShape */ (object), options);
     }
     if (types.includes(ns.aml.vocabularies.shapes.RecursiveShape)) {
       return this.recursiveShape(/** @type RecursiveShape */ (object));
@@ -410,8 +412,8 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const { ns } = this;
     const examples = target[this._getAmfKey(ns.aml.vocabularies.apiContract.examples)];
     if (Array.isArray(examples) && examples.length) {
-      if (options.payloadId) {
-        const filtered = this.filterTrackedExamples(examples, options.payloadId);
+      if (options.trackedId) {
+        const filtered = this.filterTrackedExamples(examples, options.trackedId);
         result.examples = filtered.map((item) => this.example(item));
       } else {
         const filtered = this.filterNonTrackedExamples(examples);
@@ -431,19 +433,19 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   }
 
   /**
-   * Filters examples that should be rendered for a payload identified by `payloadId`.
+   * Filters examples that should be rendered for a payload identified by `trackedId`.
    * 
    * This function is copied from old `api-example-generator/ExampleGenerator`.
    * 
    * @param {Example[]} examples 
-   * @param {string} payloadId 
+   * @param {string} trackedId 
    * @returns {Example[]}
    */
-  filterTrackedExamples(examples, payloadId) {
+  filterTrackedExamples(examples, trackedId) {
     const { docSourceMaps } = this.ns.raml.vocabularies;
     const sourceKey = this._getAmfKey(docSourceMaps.sources);
     const trackedKey = this._getAmfKey(docSourceMaps.trackedElement);
-    const longId = payloadId.indexOf('amf') === -1 ? `amf://id${payloadId}` : payloadId;
+    const longId = trackedId.indexOf('amf') === -1 ? `amf://id${trackedId}` : trackedId;
     return examples.filter((item) => {
       let example = item;
       if (Array.isArray(example)) {
@@ -468,7 +470,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
         return true;
       }
       const ids = value.split(',');
-      if (ids.indexOf(longId) !== -1 || ids.indexOf(payloadId) !== -1) {
+      if (ids.indexOf(longId) !== -1 || ids.indexOf(trackedId) !== -1) {
         return true;
       }
       return false;
@@ -675,7 +677,8 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const anyOf = /** @type Shape[] */ (object[this._getAmfKey(this.ns.aml.vocabularies.shapes.anyOf)]);
     const result = /** @type ApiUnionShape */ (this.anyShape(object, options));
     if (Array.isArray(anyOf) && anyOf.length) {
-      result.anyOf = anyOf.map((shape) => this.unknownShape(shape));
+      const opt = { ...options, trackedId: undefined };
+      result.anyOf = anyOf.map((shape) => this.unknownShape(shape, opt));
     } else {
       result.anyOf = [];
     }
@@ -811,11 +814,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {ArrayShape} object
+   * @param {ShapeProcessingOptions=} options
    * @returns {ApiArrayShape}
    */
-  arrayShape(object) {
+  arrayShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiArrayShape */ (this.dataArrangeShape(target));
+    const result = /** @type ApiArrayShape */ (this.dataArrangeShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type ArrayShape */ (this.getLinkTarget(target));
       if (value) {
@@ -833,11 +837,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {TupleShape} object
+   * @param {ShapeProcessingOptions=} options
    * @returns {ApiTupleShape}
    */
-  tupleShape(object) {
+  tupleShape(object, options) {
     let target = object;
-    const result = /** @type ApiTupleShape */ (this.dataArrangeShape(target));
+    const result = /** @type ApiTupleShape */ (this.dataArrangeShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type TupleShape */ (this.getLinkTarget(target));
       if (value) {
@@ -1445,7 +1450,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
         [schema] = schema;
       }
       result.schema = this.unknownShape(schema, {
-        payloadId: result.id,
+        trackedId: result.id,
       });
     }
     const examples = object[this._getAmfKey(ns.aml.vocabularies.apiContract.examples)];
