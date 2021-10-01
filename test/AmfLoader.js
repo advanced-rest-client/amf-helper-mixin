@@ -7,6 +7,7 @@ import { AmfHelperMixin } from '../amf-helper-mixin.js';
 /** @typedef {import('../src/amf').Shape} Shape */
 /** @typedef {import('../src/amf').Request} Request */
 /** @typedef {import('../src/amf').Response} Response */
+/** @typedef {import('../src/amf').Payload} Payload */
 /** @typedef {import('../src/amf').SecurityRequirement} SecurityRequirement */
 
 export class AmfHelper extends AmfHelperMixin(Object) {
@@ -40,23 +41,23 @@ export class AmfHelper extends AmfHelperMixin(Object) {
 
   /**
    * @param {any} model
-   * @param {string} endpoint
+   * @param {string} path
    * @return {EndPoint}
    */
-  lookupEndpoint(model, endpoint) {
+  lookupEndpoint(model, path) {
     this.amf = model;
     const webApi = this._computeApi(model);
-    return this._computeEndpointByPath(webApi, endpoint);
+    return this._computeEndpointByPath(webApi, path);
   }
 
   /**
    * @param {Object} model
-   * @param {string} endpoint
+   * @param {string} path
    * @param {string} operation
    * @return {Operation}
    */
-  lookupOperation(model, endpoint, operation) {
-    const endPoint = this.lookupEndpoint(model, endpoint);
+  lookupOperation(model, path, operation) {
+    const endPoint = this.lookupEndpoint(model, path);
     const opKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
     const ops = this._ensureArray(endPoint[opKey]);
     return ops.find((item) => this._getValue(item, this.ns.aml.vocabularies.apiContract.method) === operation);
@@ -64,14 +65,14 @@ export class AmfHelper extends AmfHelperMixin(Object) {
 
   /**
    * @param {Object} model
-   * @param {string} endpoint
+   * @param {string} path
    * @param {string} operation
    * @return {Request}
    */
-  lookupExpects(model, endpoint, operation) {
-    const op = this.lookupOperation(model, endpoint, operation);
+  lookupExpects(model, path, operation) {
+    const op = this.lookupOperation(model, path, operation);
     if (!op) {
-      throw new Error(`Unknown operation for path ${endpoint} and method ${operation}`);
+      throw new Error(`Unknown operation for path ${path} and method ${operation}`);
     }
     let expects = op[this._getAmfKey(this.ns.aml.vocabularies.apiContract.expects)];
     if (!expects) {
@@ -85,14 +86,14 @@ export class AmfHelper extends AmfHelperMixin(Object) {
 
   /**
    * @param {Object} model
-   * @param {string} endpoint
+   * @param {string} path
    * @param {string} operation
    * @return {Response[]}
    */
-  lookupReturns(model, endpoint, operation) {
-    const op = this.lookupOperation(model, endpoint, operation);
+  lookupReturns(model, path, operation) {
+    const op = this.lookupOperation(model, path, operation);
     if (!op) {
-      throw new Error(`Unknown operation for path ${endpoint} and method ${operation}`);
+      throw new Error(`Unknown operation for path ${path} and method ${operation}`);
     }
     let returns = op[this._getAmfKey(this.ns.aml.vocabularies.apiContract.returns)];
     if (!returns) {
@@ -122,14 +123,14 @@ export class AmfHelper extends AmfHelperMixin(Object) {
 
   /**
    * @param {Object} model
-   * @param {string} endpoint
+   * @param {string} path
    * @param {string} operation
    * @return {SecurityRequirement[]}
    */
-  lookupOperationSecurity(model, endpoint, operation) {
-    const op = this.lookupOperation(model, endpoint, operation);
+  lookupOperationSecurity(model, path, operation) {
+    const op = this.lookupOperation(model, path, operation);
     if (!op) {
-      throw new Error(`Unknown operation for path ${endpoint} and method ${operation}`);
+      throw new Error(`Unknown operation for path ${path} and method ${operation}`);
     }
     let security = op[this._getAmfKey(this.ns.aml.vocabularies.security.security)];
     if (!security) {
@@ -139,6 +140,37 @@ export class AmfHelper extends AmfHelperMixin(Object) {
       security = [security];
     }
     return security;
+  }
+
+  /**
+   * @param {Object} model
+   * @param {string} path
+   * @param {string} operation
+   * @return {Payload[]}
+   */
+  lookupRequestPayloads(model, path, operation) {
+    const request = this.lookupExpects(model, path, operation);
+    const payload = this._computePayload(request);
+    if (!payload || !payload.length) {
+      throw new Error(`Operation ${operation} of endpoint ${payload} has no request payload.`);
+    }
+    return payload;
+  }
+
+  /**
+   * @param {Object} model
+   * @param {string} path
+   * @param {string} operation
+   * @param {string} mime
+   * @return {Payload}
+   */
+  lookupRequestPayload(model, path, operation, mime) {
+    const payloads = this.lookupRequestPayloads(model, path, operation);
+    const payload = payloads.find(i => this._getValue(i, this.ns.aml.vocabularies.core.mediaType) === mime);
+    if (!payload) {
+      throw new Error(`Operation ${operation} of endpoint ${payload} has no request payload for ${mime}.`);
+    }
+    return payload;
   }
 }
 

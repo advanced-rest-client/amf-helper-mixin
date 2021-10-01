@@ -26,6 +26,18 @@ export declare class AmfSerializer extends AmfHelperMixin(Object) {
   isLink(object: DomainElement): boolean;
   shape(object: Shape): ApiShape;
   anyShape(object: AnyShape): ApiAnyShape;
+  /**
+   * Filters examples that should be rendered for a payload identified by `payloadId`.
+   * 
+   * This function is copied from old `api-example-generator/ExampleGenerator`.
+   */
+  filterTrackedExamples(examples: Example[], payloadId: string): Example[];
+  /**
+   * Kind of the opposite of the `filterTrackedExamples`. It gathers examples that only have been 
+   * defined for the parent Shape (ed in the type declaration). It filters out all examples
+   * defined in a payload.
+   */
+  filterNonTrackedExamples(examples: Example[]): Example[];
   scalarShape(object: ScalarShape): ApiScalarShape;
   /**
    * @param object The NodeShape to serialize

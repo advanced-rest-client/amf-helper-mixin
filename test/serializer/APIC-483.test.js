@@ -32,7 +32,9 @@ describe('AmfSerializer', () => {
       const shape = payload[serializer._getAmfKey(serializer.ns.aml.vocabularies.shapes.schema)][0];
       const result = /** @type ApiNodeShape */ (serializer.unknownShape(shape));
       const { examples, properties } = result;
-      assert.lengthOf(examples, 1, 'has the examples');
+
+      // serializer recognizes that the this example is referenced to a payload and not to a type.
+      assert.lengthOf(examples, 0, 'has the examples');
       assert.lengthOf(properties, 1, 'has the properties');
       const array = /** @type ApiTupleShape  */ (properties[0].range);
       const { types, items } = array;

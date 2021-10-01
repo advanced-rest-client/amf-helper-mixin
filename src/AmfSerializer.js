@@ -53,6 +53,7 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./types').ApiParametrizedTrait} ApiParametrizedTrait */
 /** @typedef {import('./types').ApiVariableValue} ApiVariableValue */
 /** @typedef {import('./types').ApiAbstractDeclaration} ApiAbstractDeclaration */
+/** @typedef {import('./types').ShapeProcessingOptions} ShapeProcessingOptions */
 /** @typedef {import('./amf').Server} Server */
 /** @typedef {import('./amf').Parameter} Parameter */
 /** @typedef {import('./amf').Shape} Shape */
@@ -220,28 +221,29 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {Shape} object 
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiShapeUnion}
    */
-  unknownShape(object) {
+  unknownShape(object, options) {
     let types = object['@type'];
     if (Array.isArray(types)) {
       types = types.map(this[expandKey].bind(this));
     }
     const { ns } = this;
     if (types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
-      return this.scalarShape(/** @type ScalarShape */ (object));
+      return this.scalarShape(/** @type ScalarShape */ (object), options);
     }
     if (types.includes(ns.w3.shacl.NodeShape)) {
-      return this.nodeShape(/** @type NodeShape */ (object));
+      return this.nodeShape(/** @type NodeShape */ (object), options);
     }
     if (types.includes(ns.aml.vocabularies.shapes.UnionShape)) {
-      return this.unionShape(/** @type UnionShape */ (object));
+      return this.unionShape(/** @type UnionShape */ (object), options);
     }
     if (types.includes(ns.aml.vocabularies.shapes.FileShape)) {
-      return this.fileShape(/** @type FileShape */ (object));
+      return this.fileShape(/** @type FileShape */ (object), options);
     }
     if (types.includes(ns.aml.vocabularies.shapes.SchemaShape)) {
-      return this.schemaShape(/** @type SchemaShape */ (object));
+      return this.schemaShape(/** @type SchemaShape */ (object), options);
     }
     // this must be before the ArrayShape
     if (types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
@@ -254,7 +256,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       return this.recursiveShape(/** @type RecursiveShape */ (object));
     }
     // recursiveShape
-    return this.anyShape(/** @type AnyShape */ (object));
+    return this.anyShape(/** @type AnyShape */ (object), options);
   }
 
   /**
@@ -327,7 +329,6 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (defaultValueStr && typeof defaultValueStr === 'string') {
       result.defaultValueStr = defaultValueStr;
     }
-
     const deprecated = this._getValue(target, ns.aml.vocabularies.shapes.deprecated);
     if (typeof deprecated === 'boolean') {
       result.deprecated = deprecated;
@@ -392,9 +393,10 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {AnyShape} object
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiAnyShape}
    */
-  anyShape(object) {
+  anyShape(object, options={}) {
     let target = object;
     const result = /** @type ApiAnyShape */ (this.shape(target));
     if (this.isLink(target)) {
@@ -408,7 +410,13 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const { ns } = this;
     const examples = target[this._getAmfKey(ns.aml.vocabularies.apiContract.examples)];
     if (Array.isArray(examples) && examples.length) {
-      result.examples = examples.map((item) => this.example(item));
+      if (options.payloadId) {
+        const filtered = this.filterTrackedExamples(examples, options.payloadId);
+        result.examples = filtered.map((item) => this.example(item));
+      } else {
+        const filtered = this.filterNonTrackedExamples(examples);
+        result.examples = filtered.map((item) => this.example(item));
+      }
     }
     const docs = target[this._getAmfKey(ns.aml.vocabularies.core.documentation)];
     if (Array.isArray(docs) && docs.length) {
@@ -423,12 +431,97 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   }
 
   /**
+   * Filters examples that should be rendered for a payload identified by `payloadId`.
+   * 
+   * This function is copied from old `api-example-generator/ExampleGenerator`.
+   * 
+   * @param {Example[]} examples 
+   * @param {string} payloadId 
+   * @returns {Example[]}
+   */
+  filterTrackedExamples(examples, payloadId) {
+    const { docSourceMaps } = this.ns.raml.vocabularies;
+    const sourceKey = this._getAmfKey(docSourceMaps.sources);
+    const trackedKey = this._getAmfKey(docSourceMaps.trackedElement);
+    const longId = payloadId.indexOf('amf') === -1 ? `amf://id${payloadId}` : payloadId;
+    return examples.filter((item) => {
+      let example = item;
+      if (Array.isArray(example)) {
+        [example] = example;
+      }
+      let sm = example[sourceKey];
+      if (!sm) {
+        return true
+      }
+      if (Array.isArray(sm)) {
+        [sm] = sm;
+      }
+      let tracked = sm[trackedKey];
+      if (!tracked) {
+        return true;
+      }
+      if (Array.isArray(tracked)) {
+        [tracked] = tracked;
+      }
+      const { value } = this.synthesizedField(tracked);
+      if (!value) {
+        return true;
+      }
+      const ids = value.split(',');
+      if (ids.indexOf(longId) !== -1 || ids.indexOf(payloadId) !== -1) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  /**
+   * Kind of the opposite of the `filterTrackedExamples`. It gathers examples that only have been 
+   * defined for the parent Shape (ed in the type declaration). It filters out all examples
+   * defined in a payload.
+   * 
+   * @param {Example[]} examples 
+   * @returns {Example[]}
+   */
+  filterNonTrackedExamples(examples) {
+    const { docSourceMaps } = this.ns.raml.vocabularies;
+    const sourceKey = this._getAmfKey(docSourceMaps.sources);
+    const trackedKey = this._getAmfKey(docSourceMaps.trackedElement);
+    return examples.filter((item) => {
+      let example = item;
+      if (Array.isArray(example)) {
+        [example] = example;
+      }
+      let sm = example[sourceKey];
+      if (!sm) {
+        return true
+      }
+      if (Array.isArray(sm)) {
+        [sm] = sm;
+      }
+      let tracked = sm[trackedKey];
+      if (!tracked) {
+        return true;
+      }
+      if (Array.isArray(tracked)) {
+        [tracked] = tracked;
+      }
+      const { value } = this.synthesizedField(tracked);
+      if (!value) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  /**
    * @param {ScalarShape} object
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiScalarShape}
    */
-  scalarShape(object) {
+  scalarShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiScalarShape */ (this.anyShape(target));
+    const result = /** @type ApiScalarShape */ (this.anyShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type ScalarShape */ (this.getLinkTarget(target));
       if (value) {
@@ -475,11 +568,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {NodeShape} object The NodeShape to serialize
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiNodeShape}
    */
-  nodeShape(object) {
+  nodeShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiNodeShape */ (this.anyShape(target));
+    const result = /** @type ApiNodeShape */ (this.anyShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type NodeShape */ (this.getLinkTarget(target));
       if (value) {
@@ -574,11 +668,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {UnionShape} object
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiUnionShape}
    */
-  unionShape(object) {
+  unionShape(object, options={}) {
     const anyOf = /** @type Shape[] */ (object[this._getAmfKey(this.ns.aml.vocabularies.shapes.anyOf)]);
-    const result = /** @type ApiUnionShape */ (this.anyShape(object));
+    const result = /** @type ApiUnionShape */ (this.anyShape(object, options));
     if (Array.isArray(anyOf) && anyOf.length) {
       result.anyOf = anyOf.map((shape) => this.unknownShape(shape));
     } else {
@@ -589,11 +684,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {FileShape} object
+   * @param {ShapeProcessingOptions=} options 
    * @returns {ApiFileShape}
    */
-  fileShape(object) {
+  fileShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiFileShape */ (this.anyShape(target));
+    const result = /** @type ApiFileShape */ (this.anyShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type FileShape */ (this.getLinkTarget(target));
       if (value) {
@@ -640,11 +736,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {SchemaShape} object
+   * @param {ShapeProcessingOptions=} options
    * @returns {ApiSchemaShape}
    */
-  schemaShape(object) {
+  schemaShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiSchemaShape */ (this.anyShape(target));
+    const result = /** @type ApiSchemaShape */ (this.anyShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type SchemaShape */ (this.getLinkTarget(target));
       if (value) {
@@ -686,11 +783,12 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
 
   /**
    * @param {DataArrangeShape} object
+   * @param {ShapeProcessingOptions=} options
    * @returns {ApiDataArrangeShape}
    */
-  dataArrangeShape(object) {
+  dataArrangeShape(object, options={}) {
     let target = object;
-    const result = /** @type ApiDataArrangeShape */ (this.anyShape(target));
+    const result = /** @type ApiDataArrangeShape */ (this.anyShape(target, options));
     if (this.isLink(target)) {
       const value = /** @type DataArrangeShape */ (this.getLinkTarget(target));
       if (value) {
@@ -1346,7 +1444,9 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       if (Array.isArray(schema)) {
         [schema] = schema;
       }
-      result.schema = this.unknownShape(schema);
+      result.schema = this.unknownShape(schema, {
+        payloadId: result.id,
+      });
     }
     const examples = object[this._getAmfKey(ns.aml.vocabularies.apiContract.examples)];
     if (Array.isArray(examples) && examples.length) {
@@ -1807,19 +1907,15 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       element: undefined,
       value: undefined,
     });
-    let element = object[this._getAmfKey(this.ns.aml.vocabularies.docSourceMaps.element)];
-    if (element) {
-      if (Array.isArray(element)) {
-        [element] = element;
-      }
-      result.element = element['@value'] || element;
+    // @ts-ignore
+    const element = this._getValue(object, this.ns.aml.vocabularies.docSourceMaps.element);
+    if (typeof element === 'string') {
+      result.element = element;
     }
-    let value = object[this._getAmfKey(this.ns.aml.vocabularies.docSourceMaps.value)];
-    if (value) {
-      if (Array.isArray(value)) {
-        [value] = value;
-      }
-      result.value = value['@value'] || value;
+    // @ts-ignore
+    const value = this._getValue(object, this.ns.aml.vocabularies.docSourceMaps.value);
+    if (typeof value === 'string') {
+      result.value = value
     }
     return result;
   }

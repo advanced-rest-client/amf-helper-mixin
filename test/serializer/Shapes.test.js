@@ -185,11 +185,9 @@ describe('AmfSerializer', () => {
       assert.equal(result.mediaType, 'application/xml', 'has media type');
       assert.typeOf(result.raw, 'string', 'has raw');
       assert.typeOf(result.examples, 'array', 'has examples');
-      assert.lengthOf(result.examples, 1, 'has single examples');
-      const [ example ] = result.examples;
-      assert.isTrue(example.strict, 'example.strict is set')
-      assert.typeOf(example.value, 'string', 'example.value is set')
-      assert.typeOf(example.location, 'string', 'example.location is set')
+
+      // serializer recognizes that the this example is referenced to a payload and not to a type.
+      assert.lengthOf(result.examples, 0, 'has no examples');
     });
 
     it('resolves links', () => {
@@ -200,7 +198,9 @@ describe('AmfSerializer', () => {
       const result = /** @type ApiNodeShape */ (serializer.unknownShape(shape));
       assert.equal(result.linkLabel, 'CommentWritable', 'has linkLabel');
       assert.typeOf(result.examples, 'array', 'has examples');
-      assert.lengthOf(result.examples, 1, 'has single examples');
+
+      // serializer recognizes that the this example is referenced to a payload and not to a type.
+      assert.lengthOf(result.examples, 0, 'has single examples');
     });
   });
 

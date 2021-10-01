@@ -945,6 +945,12 @@ types:
       application/xml:
         type: !include schemas/person.xsd
         example: !include examples/person.xml
+/json:
+  post:
+    body: 
+      application/json:
+        type: !include schemas/person.json
+        example: !include examples/person.json
 /examples:
   get:
     displayName: Included example
@@ -954,3 +960,65 @@ types:
           application/json:
             type: object
             example: !include examples/person.raml
+/body-tracking:
+  get:
+    displayName: Common RAML example
+    description: |
+      The payload has the same example for both mime types coming from RAML 
+      declaration.
+    body: 
+      application/json:
+        type: AppPerson
+        example: !include examples/person.raml
+      application/xml:
+        type: AppPerson
+        example: !include examples/person.raml
+  put:
+    displayName: Different examples
+    description: |
+      The payload has different examples for both mime types. Both comming for the corresponding 
+      schema.
+    body: 
+      application/json:
+        type: AppPerson
+        example: !include examples/person.json
+      application/xml:
+        type: AppPerson
+        example: !include examples/person.xml
+  post:
+    displayName: Reused examples
+    description: |
+      This payload is exactly the same as `put` payload.
+      This should render how the examples behave when reused.
+    body: 
+      application/json:
+        type: AppPerson
+        example: !include examples/person.json
+      application/xml:
+        type: AppPerson
+        example: !include examples/person.xml
+  delete:
+    description: |
+      This payload has only one mime.
+    body: 
+      application/json:
+        type: AppPerson
+        example: !include examples/person.json
+  patch:
+    displayName: No example
+    description: |
+      This payload has no example at all.
+    body: 
+      application/json:
+        type: AppPerson
+/not-shared:
+  post:
+    body: 
+      application/json:
+        type: object
+        properties: 
+          id: number
+          name: string
+        example:
+          id: 1234567890
+          name: Pawel Uchida-Psztyc

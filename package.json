@@ -1,7 +1,7 @@
 {
   "name": "@api-components/amf-helper-mixin",
   "description": "A mixin with common functions user by most AMF components to compute AMF values",
-  "version": "4.5.10",
+  "version": "4.5.11",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
@@ -52,7 +52,7 @@
     "lint": "npm run lint:eslint",
     "format": "npm run format:eslint",
     "test": "web-test-runner test/**/*.test.js --coverage --node-resolve --playwright --browsers chromium firefox webkit",
-    "test:watch": "web-test-runner test/**/*.test.js --node-resolve --watch",
+    "test:watch": "web-test-runner --node-resolve --watch",
     "prepare": "node apis/model.js"
   },
   "eslintConfig": {

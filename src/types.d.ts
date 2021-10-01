@@ -482,6 +482,7 @@ export interface ApiDocumentSourceMaps {
 }
 
 export interface ApiSynthesizedField {
+  id: string;
   element: string;
   value: string;
 }
@@ -505,4 +506,17 @@ export interface ApiAbstractDeclaration extends ApiDomainProperty {
 }
 
 export interface ApiParametrizedTrait extends ApiParametrizedDeclaration {
+}
+
+export interface ShapeProcessingOptions {
+  /**
+   * This is set when serializing a payload.
+   * It is used to determine which example of the schema to include.
+   * 
+   * When an example has the `tracked-element` in the source maps then this
+   * is used to determine the only examples included to the schema.
+   * 
+   * Note, the value of the tracked-element can be a list of IDs separated by coma.
+   */
+  payloadId?: string;
 }
