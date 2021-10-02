@@ -292,7 +292,8 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
    * @returns {ApiServer} Serialized Server
    */
   server(object) {
-    const url = this._getValue(object, this.ns.aml.vocabularies.core.urlTemplate) || '';
+    const { ns } = this;
+    const url = this._getValue(object, ns.aml.vocabularies.core.urlTemplate) || '';
     const result = /** @type ApiServer */ ({
       id: object['@id'],
       types: object['@type'].map(this[expandKey].bind(this)),
@@ -301,19 +302,23 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
-    const variables = /** @type Parameter[] */ (object[this._getAmfKey(this.ns.aml.vocabularies.apiContract.variable)]);
+    const description = this._getValue(object, ns.aml.vocabularies.core.description);
+    if (description && typeof description === 'string') {
+      result.description = description;
+    }
+    const variables = /** @type Parameter[] */ (object[this._getAmfKey(ns.aml.vocabularies.apiContract.variable)]);
     if (Array.isArray(variables) && variables.length) {
       result.variables = variables.map((p) => this.parameter(p));
     }
-    const protocol = /** @type string */ (this._getValue(object, this.ns.aml.vocabularies.apiContract.protocol));
-    const protocolVersion = /** @type string */ (this._getValue(object, this.ns.aml.vocabularies.apiContract.protocolVersion));
+    const protocol = /** @type string */ (this._getValue(object, ns.aml.vocabularies.apiContract.protocol));
+    const protocolVersion = /** @type string */ (this._getValue(object, ns.aml.vocabularies.apiContract.protocolVersion));
     if (protocol) {
       result.protocol = protocol;
     }
     if (protocolVersion) {
       result.protocolVersion = protocolVersion;
     }
-    const security = /** @type SecurityRequirement */ (object[this._getAmfKey(this.ns.aml.vocabularies.security.security)]);
+    const security = /** @type SecurityRequirement */ (object[this._getAmfKey(ns.aml.vocabularies.security.security)]);
     if (Array.isArray(security) && security.length) {
       result.security = security.map((p) => this.securityRequirement(p));
     }

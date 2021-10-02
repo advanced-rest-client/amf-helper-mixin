@@ -46,6 +46,11 @@ describe('AmfSerializer', () => {
             assert.typeOf(v1, 'object', 'the variable is an object');
             assert.include(v1.types, serializer.ns.aml.vocabularies.apiContract.Parameter, 'has the Parameter type');
           });
+
+          it('has the description', () => {
+            const result = serializer.server(servers[1]);
+            assert.equal(result.description, 'Staging server');
+          });
         });
         
         describe('Async API', () => {
