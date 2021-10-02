@@ -1,4 +1,7 @@
-import { AmfDocument, AsyncApi, DomainElement, Endpoint, Operation, Parameter, Payload, Request, Response, SecurityRequirement, SecurityScheme, Server, Shape, WebApi } from './amf';
+import { 
+  AmfDocument, AsyncApi, DomainElement, EndPoint, Operation, Parameter, Payload, Request, Response, 
+  SecurityRequirement, SecurityScheme, Server, Shape, WebApi, Api
+} from './amf';
 import { Namespace } from './Namespace';
 import { ComputeUriOptions, ServerQueryOptions, ServersQueryOptions } from './types';
 
@@ -281,7 +284,7 @@ interface AmfHelperMixin {
    * @param model AMF data model
    * @returns List of encodes
    */
-  _computeEncodes(model: AmfDocument): DomainElement[]|undefined;
+  _computeEncodes(model: AmfDocument): Api|undefined;
 
   /**
    * Computes list of declarations in the AMF api model.
@@ -376,7 +379,7 @@ interface AmfHelperMixin {
    * @returns Endpoint's URI
    * @deprecated Use `_computeUri()` instead
    */
-  _computeEndpointUri(server: Server, endpoint: Endpoint, baseUri?: string, version?: string): string|undefined;
+  _computeEndpointUri(server: Server, endpoint: EndPoint, baseUri?: string, version?: string): string|undefined;
 
   /**
    * Computes endpoint's URI based on `endpoint` model.
@@ -384,12 +387,12 @@ interface AmfHelperMixin {
    * @param endpoint Model for the endpoint
    * @param opts Configuration options
    */
-  _computeUri(endpoint: Endpoint, opts?: ComputeUriOptions): string;
+  _computeUri(endpoint: EndPoint, opts?: ComputeUriOptions): string;
 
   /**
    * Appends endpoint's path to the url
    */
-  _appendPath(url: string, endpoint: Endpoint): string;
+  _appendPath(url: string, endpoint: EndPoint): string;
 
   /**
    * Computes base URI value from either `baseUri`, `iron-meta` with
@@ -453,7 +456,7 @@ interface AmfHelperMixin {
    *
    * @returns Always returns an array of endpoints.
    */
-  _computeEndpoints(webApi: WebApi): Endpoint[]|undefined;
+  _computeEndpoints(webApi: WebApi): EndPoint[]|undefined;
 
   /**
    * Computes model for an endpoint documentation.
@@ -462,7 +465,7 @@ interface AmfHelperMixin {
    * @param id Selected shape ID
    * @returns An endpoint definition
    */
-  _computeEndpointModel(webApi: WebApi, id: string): Endpoint|undefined;
+  _computeEndpointModel(webApi: WebApi, id: string): EndPoint|undefined;
 
   /**
    * Computes model for an endpoint documentation using it's path.
@@ -471,7 +474,7 @@ interface AmfHelperMixin {
    * @param path Endpoint path
    * @returns An endpoint definition
    */
-  _computeEndpointByPath(webApi: WebApi, path: string): Endpoint|undefined;
+  _computeEndpointByPath(webApi: WebApi, path: string): EndPoint|undefined;
 
   /**
    * Computes method for the method documentation.
@@ -498,7 +501,7 @@ interface AmfHelperMixin {
    * @param methodId Method id
    * @returns An endpoint model of undefined.
    */
-  _computeMethodEndpoint(webApi: WebApi, methodId: string): Endpoint|undefined;
+  _computeMethodEndpoint(webApi: WebApi, methodId: string): EndPoint|undefined;
 
   /**
    * Computes a list of methods for an endpoint that contains a method with

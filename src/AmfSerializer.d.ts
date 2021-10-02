@@ -1,7 +1,25 @@
-/* eslint-disable class-methods-use-this */
-import { AnyShape, ApiKeySettings, ArrayNode, ArrayShape, Callback, CreativeWork, DataArrangeShape, DataNode, DocumentSourceMaps, DomainElement, EndPoint, Example, FileShape, HttpSettings, IriTemplateMapping, NodeShape, OAuth1Settings, OAuth2Flow, OAuth2Settings, ObjectNode, OpenIdConnectSettings, Operation, Parameter, ParametrizedSecurityScheme, Payload, PropertyShape, RecursiveShape, Request, Response, ScalarNode, ScalarShape, SchemaShape, Scope, SecurityRequirement, SecurityScheme, Server, Settings, Shape, SynthesizedField, Tag, TemplatedLink, TupleShape, UnionShape } from "./amf.js";
-import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelperMixin.js";
-import { ApiAnyShape, ApiArrayNode, ApiArrayShape, ApiCallback, ApiCustomDomainProperty, ApiDataArrangeShape, ApiDataNode, ApiDataNodeUnion, ApiDocumentation, ApiDocumentSourceMaps, ApiEndPoint, ApiExample, ApiFileShape, ApiIriTemplateMapping, ApiNodeShape, ApiObjectNode, ApiOperation, ApiParameter, ApiParametrizedSecurityScheme, ApiPayload, ApiPropertyShape, ApiRecursiveShape, ApiRequest, ApiResponse, ApiScalarNode, ApiScalarShape, ApiSchemaShape, ApiSecurityApiKeySettings, ApiSecurityHttpSettings, ApiSecurityOAuth1Settings, ApiSecurityOAuth2Flow, ApiSecurityOAuth2Settings, ApiSecurityOpenIdConnectSettings, ApiSecurityRequirement, ApiSecurityScheme, ApiSecurityScope, ApiSecuritySettings, ApiSecuritySettingsUnion, ApiServer, ApiShape, ApiShapeUnion, ApiSynthesizedField, ApiTag, ApiTupleShape, ApiUnionShape, ApiXMLSerializer } from "./types.js";
+import { AmfHelperMixin } from "./AmfHelperMixin.js";
+import {
+  AnyShape, ApiKeySettings, ArrayNode, ArrayShape, Callback, CreativeWork, DataArrangeShape,
+  DataNode, DocumentSourceMaps, DomainElement, EndPoint, Example, FileShape, HttpSettings,
+  IriTemplateMapping, NodeShape, OAuth1Settings, OAuth2Flow, OAuth2Settings, ObjectNode,
+  OpenIdConnectSettings, Operation, Parameter, ParametrizedSecurityScheme, Payload,
+  PropertyShape, RecursiveShape, Request, Response, ScalarNode, ScalarShape, SchemaShape,
+  Scope, SecurityRequirement, SecurityScheme, Server, Settings, Shape, SynthesizedField,
+  Tag, TemplatedLink, TupleShape, UnionShape, Api, WebApi, AsyncApi, Organization, License,
+} from "./amf.js";
+import {
+  ApiAnyShape, ApiArrayNode, ApiArrayShape, ApiCallback, ApiCustomDomainProperty, ApiDataArrangeShape,
+  ApiDataNode, ApiDataNodeUnion, ApiDocumentation, ApiDocumentSourceMaps, ApiEndPoint, ApiExample,
+  ApiFileShape, ApiIriTemplateMapping, ApiNodeShape, ApiObjectNode, ApiOperation, ApiParameter,
+  ApiParametrizedSecurityScheme, ApiPayload, ApiPropertyShape, ApiRecursiveShape, ApiRequest, ApiResponse,
+  ApiScalarNode, ApiScalarShape, ApiSchemaShape, ApiSecurityApiKeySettings, ApiSecurityHttpSettings,
+  ApiSecurityOAuth1Settings, ApiSecurityOAuth2Flow, ApiSecurityOAuth2Settings,
+  ApiSecurityOpenIdConnectSettings, ApiSecurityRequirement, ApiSecurityScheme, ApiSecurityScope,
+  ApiSecuritySettings, ApiSecuritySettingsUnion, ApiServer, ApiShape, ApiShapeUnion, ApiSynthesizedField,
+  ApiTag, ApiTupleShape, ApiUnionShape, ApiXMLSerializer, ApiOrganization, ApiSummary, ApiBase,
+  ApiWeb, ApiAsync, ApiLicense,
+} from "./types.js";
 
 /**
  * A class that takes AMF's ld+json model and outputs JavaScript interface of it.
@@ -11,6 +29,17 @@ export declare class AmfSerializer extends AmfHelperMixin(Object) {
    * @param graph Optional AMF generated graph model.
    */
   constructor(graph?: DomainElement);
+  /**
+   * @param object The API to serialize.
+   * @returns API summary, without complex objects.
+   */
+  apiSummary(object: Api): ApiSummary;
+  api(object: Api): ApiBase;
+  webApi(object: WebApi): ApiWeb;
+  asyncApi(object: AsyncApi): ApiAsync;
+  provider(object: Organization): ApiOrganization;
+  license(object: License): ApiLicense;
+
   /**
    * @param object The AMF Server to serialize.
    * @returns Serialized Server
@@ -143,6 +172,6 @@ export declare class AmfSerializer extends AmfHelperMixin(Object) {
   /**
    * Serializes source maps, when available.
    */
-  sourceMap(object: DocumentSourceMaps): ApiDocumentSourceMaps|undefined;
+  sourceMap(object: DocumentSourceMaps): ApiDocumentSourceMaps | undefined;
   synthesizedField(object: SynthesizedField): ApiSynthesizedField;
 }

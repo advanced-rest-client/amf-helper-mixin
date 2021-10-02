@@ -45,6 +45,7 @@ export interface AmfDocument extends DomainElement {
 
 export interface Api extends DomainElement {
   'http://a.ml/vocabularies/core#name'?: LdValueString[];
+  'http://a.ml/vocabularies/core#description'?: LdValueString[];
   'http://a.ml/vocabularies/apiContract#server'?: Server[];
   'http://a.ml/vocabularies/apiContract#accepts'?: LdValueString[];
   'http://a.ml/vocabularies/apiContract#contentType'?: LdValueString[];
@@ -52,6 +53,9 @@ export interface Api extends DomainElement {
   'http://a.ml/vocabularies/core#version'?: LdValueString[];
   'http://a.ml/vocabularies/core#documentation'?: CreativeWork[];
   'http://a.ml/vocabularies/apiContract#endpoint'?: EndPoint[];
+  'http://a.ml/vocabularies/apiContract#tag'?: Tag[];
+  'http://a.ml/vocabularies/core#provider'?: Organization[];
+  'http://a.ml/vocabularies/core#license'?: License[];
 }
 
 export interface WebApi extends Api {}
@@ -75,6 +79,17 @@ export interface ExternalFragment extends DomainElement {
   'http://a.ml/vocabularies/document#version'?: LdValueString[];
   'http://a.ml/vocabularies/document#root'?: LdValueBoolean[];
   'http://a.ml/vocabularies/document#encodes'?: ExternalDomainElement[];
+}
+
+export interface Organization extends DomainElement {
+  'http://a.ml/vocabularies/core#email'?: LdValueString[];
+  'http://a.ml/vocabularies/core#url'?: LdValueString[];
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
+}
+
+export interface License extends DomainElement {
+  'http://a.ml/vocabularies/core#url'?: LdValueString[];
+  'http://a.ml/vocabularies/core#name'?: LdValueString[];
 }
 
 export declare interface Server extends DomainElement {

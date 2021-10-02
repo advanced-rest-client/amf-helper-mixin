@@ -15,7 +15,7 @@ export class AmfHelper extends AmfHelperMixin(Object) {
    * 
    * @param {boolean} compact 
    * @param {string=} fileName 
-   * @returns 
+   * @returns {Promise<AmfDocument>}
    */
   async load(compact, fileName = 'demo-api') {
     const suffix = compact ? '-compact' : '';

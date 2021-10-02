@@ -66,6 +66,42 @@ export interface ApiCustomDomainProperty {
 
 export type ScalarDataTypes = 'string' | 'base64Binary' | 'boolean' | 'date' | 'dateTime' | 'double' | 'float' | 'integer' | 'long' | 'number' | 'time';
 
+export interface ApiSummary extends ApiDomainProperty {
+  name?: string;
+  description?: string;
+  // identifier?: string; <- not sure what this is.
+  schemes: string[];
+  accepts: string[];
+  contentType: string[];
+  version?: string;
+  termsOfService?: string;
+  provider?: ApiOrganization;
+  license?: ApiLicense;
+  documentations: ApiDocumentation[];
+  tags: ApiTag[];
+  sourceMaps?: ApiDocumentSourceMaps;
+}
+
+export interface ApiBase extends ApiSummary {
+  endPoints: ApiEndPoint[];
+  servers: ApiServer[];
+  security: ApiSecurityRequirement[];
+}
+
+export interface ApiWeb extends ApiBase {}
+export interface ApiAsync extends ApiBase {}
+
+export interface ApiOrganization extends ApiDomainProperty {
+  url?: string;
+  name?: string;
+  email?: string;
+}
+
+export interface ApiLicense extends ApiDomainProperty {
+  url?: string;
+  name?: string;
+}
+
 export interface ApiEndPoint extends ApiDomainProperty {
   description?: string;
   name?: string;
@@ -306,26 +342,6 @@ export interface ApiDocumentation extends ApiDomainProperty {
   url?: string;
   description?: string;
   title?: string;
-  sourceMaps?: ApiDocumentSourceMaps;
-}
-
-export interface SerializedApi extends ApiDomainProperty {
-  isAsyncApi: boolean;
-  isWebApi: boolean;
-  name?: string;
-  description?: string;
-  identifier?: string;
-  schemes: string[];
-  endPoints: string[];
-  accepts: string[];
-  contentType: string[];
-  version?: string;
-  termsOfService?: string;
-  provider?: string;
-  license?: string;
-  documentations: string[];
-  servers: string[];
-  security: string[];
   sourceMaps?: ApiDocumentSourceMaps;
 }
 

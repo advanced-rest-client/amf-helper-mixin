@@ -14,7 +14,6 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./types').ApiEndPoint} ApiEndPoint */
 /** @typedef {import('./types').ApiServer} ApiServer */
 /** @typedef {import('./types').ApiDocumentation} ApiDocumentation */
-/** @typedef {import('./types').SerializedApi} SerializedApi */
 /** @typedef {import('./types').ApiShape} ApiShape */
 /** @typedef {import('./types').ApiPropertyShape} ApiPropertyShape */
 /** @typedef {import('./types').ApiAnyShape} ApiAnyShape */
@@ -54,6 +53,15 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./types').ApiVariableValue} ApiVariableValue */
 /** @typedef {import('./types').ApiAbstractDeclaration} ApiAbstractDeclaration */
 /** @typedef {import('./types').ShapeProcessingOptions} ShapeProcessingOptions */
+/** @typedef {import('./types').ApiSummary} ApiSummary */
+/** @typedef {import('./types').ApiOrganization} ApiOrganization */
+/** @typedef {import('./types').ApiLicense} ApiLicense */
+/** @typedef {import('./types').ApiBase} ApiBase */
+/** @typedef {import('./types').ApiWeb} ApiWeb */
+/** @typedef {import('./types').ApiAsync} ApiAsync */
+/** @typedef {import('./amf').Api} Api */
+/** @typedef {import('./amf').WebApi} WebApi */
+/** @typedef {import('./amf').AsyncApi} AsyncApi */
 /** @typedef {import('./amf').Server} Server */
 /** @typedef {import('./amf').Parameter} Parameter */
 /** @typedef {import('./amf').Shape} Shape */
@@ -101,6 +109,8 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./amf').ParametrizedTrait} ParametrizedTrait */
 /** @typedef {import('./amf').VariableValue} VariableValue */
 /** @typedef {import('./amf').AbstractDeclaration} AbstractDeclaration */
+/** @typedef {import('./amf').Organization} Organization */
+/** @typedef {import('./amf').License} License */
 
 /**
  * A class that takes AMF's ld+json model and outputs JavaScript interface of it.
@@ -114,6 +124,167 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (graph) {
       this.amf = graph;
     }
+  }
+
+  /**
+   * @param {Api} object The API to serialize.
+   * @returns {ApiSummary} API summary, without complex objects.
+   */
+  apiSummary(object) {
+    const result = /** @type ApiSummary */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+      schemes: [],
+      accepts: [],
+      contentType: [],
+      documentations: [],
+      tags: [],
+    });
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    if (name && typeof name === 'string') {
+      result.name = name;
+    }
+    const description = this._getValue(object, ns.aml.vocabularies.core.description);
+    if (description && typeof description === 'string') {
+      result.description = description;
+    }
+    const version = this._getValue(object, ns.aml.vocabularies.core.version);
+    if (version && typeof version === 'string') {
+      result.version = version;
+    }
+    const termsOfService = this._getValue(object, ns.aml.vocabularies.core.termsOfService);
+    if (termsOfService && typeof termsOfService === 'string') {
+      result.termsOfService = termsOfService;
+    }
+    const accepts = object[this._getAmfKey(ns.aml.vocabularies.apiContract.accepts)];
+    if (Array.isArray(accepts) && accepts.length) {
+      result.accepts = /** @type string[] */ (this._getValueArray(object, ns.aml.vocabularies.apiContract.accepts));
+    }
+    const contentType = object[this._getAmfKey(ns.aml.vocabularies.apiContract.contentType)];
+    if (Array.isArray(contentType) && contentType.length) {
+      result.contentType = /** @type string[] */ (this._getValueArray(object, ns.aml.vocabularies.apiContract.contentType));
+    }
+    const schemes = object[this._getAmfKey(ns.aml.vocabularies.apiContract.scheme)];
+    if (Array.isArray(schemes) && schemes.length) {
+      result.schemes = /** @type string[] */ (this._getValueArray(object, ns.aml.vocabularies.apiContract.scheme));
+    }
+    let provider = object[this._getAmfKey(ns.aml.vocabularies.core.provider)];
+    if (Array.isArray(provider)) {
+      [provider] = provider;
+    }
+    if (provider) {
+      result.provider = this.provider(provider);
+    }
+    let license = object[this._getAmfKey(ns.aml.vocabularies.core.license)];
+    if (Array.isArray(license)) {
+      [license] = license;
+    }
+    if (license) {
+      result.license = this.license(license);
+    }
+    const tags = object[this._getAmfKey(ns.aml.vocabularies.apiContract.tag)];
+    if (Array.isArray(tags) && tags.length) {
+      result.tags = tags.map(t => this.tag(t));
+    }
+    const docs = object[this._getAmfKey(ns.aml.vocabularies.core.documentation)];
+    if (Array.isArray(docs) && docs.length) {
+      result.documentations = docs.map(d => this.documentation(d));
+    }
+    return result;
+  }
+
+  /**
+   * @param {Api} object 
+   * @returns {ApiBase}
+   */
+  api(object) {
+    const result = /** @type ApiBase */ (this.apiSummary(object));
+    result.endPoints = [];
+    result.servers = [];
+    result.security = [];
+    const { ns } = this;
+    const endPoints = object[this._getAmfKey(ns.aml.vocabularies.apiContract.endpoint)];
+    if (Array.isArray(endPoints) && endPoints.length) {
+      result.endPoints = endPoints.map(e => this.endPoint(e));
+    }
+    const servers = object[this._getAmfKey(ns.aml.vocabularies.apiContract.server)];
+    if (Array.isArray(servers) && servers.length) {
+      result.servers = servers.map(s => this.server(s));
+    }
+    const security = object[this._getAmfKey(ns.aml.vocabularies.security.security)];
+    if (Array.isArray(security) && security.length) {
+      result.security = security.map(s => this.securityRequirement(s));
+    }
+    return result;
+  }
+
+  /**
+   * @param {WebApi} object 
+   * @returns {ApiWeb}
+   */
+  webApi(object) {
+    return this.api(object);
+  }
+
+  /**
+   * @param {AsyncApi} object 
+   * @returns {ApiAsync}
+   */
+  asyncApi(object) {
+    return this.api(object);
+  }
+
+  /**
+   * @param {Organization} object
+   * @returns {ApiOrganization}
+   */
+  provider(object) {
+    const result = /** @type ApiOrganization */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+    });
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    if (name && typeof name === 'string') {
+      result.name = name;
+    }
+    const url = this._getLinkValue(object, ns.aml.vocabularies.core.url);
+    if (url && typeof url === 'string') {
+      result.url = url;
+    }
+    const email = this._getValue(object, ns.aml.vocabularies.core.email);
+    if (email && typeof email === 'string') {
+      result.email = email;
+    }
+    return result;
+  }
+
+  /**
+   * @param {License} object
+   * @returns {ApiLicense}
+   */
+  license(object) {
+    const result = /** @type ApiLicense */ ({
+      id: object['@id'],
+      types: object['@type'].map(this[expandKey].bind(this)),
+      customDomainProperties: this.customDomainProperties(object),
+      sourceMaps: this.sourceMap(object),
+    });
+    const { ns } = this;
+    const name = this._getValue(object, ns.aml.vocabularies.core.name);
+    if (name && typeof name === 'string') {
+      result.name = name;
+    }
+    const url = this._getLinkValue(object, ns.aml.vocabularies.core.url);
+    if (url && typeof url === 'string') {
+      result.url = url;
+    }
+    return result;
   }
 
   /**
