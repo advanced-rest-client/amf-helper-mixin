@@ -105,6 +105,7 @@ resourceTypes:
 traits:
   Paginated: !include traits/pagination.raml
   Adminable: !include traits/adminable.raml
+  RateLimited: !include traits/rate-limited.raml
 securitySchemes:
   oauth_2_0: !include securitySchemes/oauth_2_0.raml
   x-custom: !include securitySchemes/x-custom.raml
@@ -162,6 +163,8 @@ securedBy: [basic]
       description: To test enum values in the URI parameters for global type declaration.
 /people:
   displayName: People
+  type: RequestErrorResponse
+  is: [RateLimited]
   get:
     (annotationTest):
     displayName: List people
@@ -284,6 +287,7 @@ securedBy: [basic]
 /products:
   displayName: Products
   description: The API is to be used to access data about the products.
+  type: RequestErrorResponse
   post:
     displayName: Create product
     description: |
@@ -328,6 +332,7 @@ securedBy: [basic]
         description: The request has been rejected. Probably the product already exists in the datastore.
 /orgs:
   /{orgId}:
+    is: [RateLimited]
     get:
       displayName: Get organization
       description: Returns an organization info.

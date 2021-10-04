@@ -296,18 +296,18 @@ describe('AmfSerializer', () => {
         const shape = AmfLoader.lookupOperation(api, '/people', 'get');
         const result = serializer.operation(shape);
         assert.typeOf(result, 'object', 'has the result');
-        const { traits } = result;
-        assert.typeOf(traits, 'array', 'has traits array');
-        assert.lengthOf(traits, 1, 'has the defined trait');
-        const [trait] = traits;
+        const { extends: extensions } = result;
+        assert.typeOf(extensions, 'array', 'has traits array');
+        assert.lengthOf(extensions, 1, 'has the defined trait');
+        const [trait] = extensions;
         assert.equal(trait.name, 'Paginated', 'has the trait name');
       });
 
       it('serializes the variables', () => {
         const shape = AmfLoader.lookupOperation(api, '/people', 'get');
         const result = serializer.operation(shape);
-        const { traits } = result;
-        const [trait] = traits;
+        const { extends: extensions } = result;
+        const [trait] = extensions;
         const { variables } = trait;
         assert.typeOf(variables, 'array', 'has traits array');
         assert.lengthOf(variables, 1, 'has all variables');
@@ -316,8 +316,8 @@ describe('AmfSerializer', () => {
       it('serializes the target', () => {
         const shape = AmfLoader.lookupOperation(api, '/people', 'get');
         const result = serializer.operation(shape);
-        const { traits } = result;
-        const [trait] = traits;
+        const { extends: extensions } = result;
+        const [trait] = extensions;
         const { target } = trait;
         assert.typeOf(target, 'object', 'has the target');
         const { name, variables, dataNode } = target;

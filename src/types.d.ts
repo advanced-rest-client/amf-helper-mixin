@@ -113,6 +113,7 @@ export interface ApiEndPoint extends ApiDomainProperty {
   servers: ApiServer[];
   security: ApiSecurityRequirement[];
   sourceMaps?: ApiDocumentSourceMaps;
+  extends: ApiParametrizedDeclaration[];
 }
 
 export interface ApiOperation extends ApiDomainProperty {
@@ -133,7 +134,7 @@ export interface ApiOperation extends ApiDomainProperty {
   servers: ApiServer[];
   tags: ApiTag[];
   sourceMaps?: ApiDocumentSourceMaps;
-  traits: ApiParametrizedTrait[];
+  extends: ApiParametrizedTrait[];
 }
 
 export interface ApiTag extends ApiDomainProperty {
@@ -521,8 +522,8 @@ export interface ApiAbstractDeclaration extends ApiDomainProperty {
   variables: string[];
 }
 
-export interface ApiParametrizedTrait extends ApiParametrizedDeclaration {
-}
+export interface ApiParametrizedTrait extends ApiParametrizedDeclaration {}
+export interface ApiParametrizedResourceType extends ApiParametrizedDeclaration {}
 
 export interface ShapeProcessingOptions {
   /**

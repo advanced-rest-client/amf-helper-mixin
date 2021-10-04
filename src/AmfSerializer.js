@@ -49,7 +49,9 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./types').ApiDataNodeUnion} ApiDataNodeUnion */
 /** @typedef {import('./types').ApiDocumentSourceMaps} ApiDocumentSourceMaps */
 /** @typedef {import('./types').ApiSynthesizedField} ApiSynthesizedField */
+/** @typedef {import('./types').ApiParametrizedDeclaration} ApiParametrizedDeclaration */
 /** @typedef {import('./types').ApiParametrizedTrait} ApiParametrizedTrait */
+/** @typedef {import('./types').ApiParametrizedResourceType} ApiParametrizedResourceType */
 /** @typedef {import('./types').ApiVariableValue} ApiVariableValue */
 /** @typedef {import('./types').ApiAbstractDeclaration} ApiAbstractDeclaration */
 /** @typedef {import('./types').ShapeProcessingOptions} ShapeProcessingOptions */
@@ -106,7 +108,9 @@ import { AmfHelperMixin, expandKey, findAmfType, getArrayItems } from "./AmfHelp
 /** @typedef {import('./amf').Tag} Tag */
 /** @typedef {import('./amf').DocumentSourceMaps} DocumentSourceMaps */
 /** @typedef {import('./amf').SynthesizedField} SynthesizedField */
+/** @typedef {import('./amf').ParametrizedDeclaration} ParametrizedDeclaration */
 /** @typedef {import('./amf').ParametrizedTrait} ParametrizedTrait */
+/** @typedef {import('./amf').ParametrizedResourceType} ParametrizedResourceType */
 /** @typedef {import('./amf').VariableValue} VariableValue */
 /** @typedef {import('./amf').AbstractDeclaration} AbstractDeclaration */
 /** @typedef {import('./amf').Organization} Organization */
@@ -1303,6 +1307,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       payloads: [],
       servers: [],
       security: [],
+      extends: [],
     });
     const { ns } = this;
     const path = this._getValue(object, ns.aml.vocabularies.apiContract.path);
@@ -1341,6 +1346,21 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     if (Array.isArray(security) && security.length) {
       result.security = security.map(i => this.securityRequirement(i));
     }
+    const extensions = this[getArrayItems](object, ns.aml.vocabularies.document.extends);
+    if (Array.isArray(extensions) && extensions.length) {
+      result.extends = [];
+      extensions.forEach((ex) => {
+        let extension = ex;
+        if (Array.isArray(extension)) {
+          [extension] = extension;
+        }
+        if (this._hasType(extension, ns.aml.vocabularies.apiContract.ParametrizedResourceType)) {
+          result.extends.push(this.parametrizedResourceType(extension));
+        } else if (this._hasType(extension, ns.aml.vocabularies.apiContract.ParametrizedTrait)) {
+          result.extends.push(this.parametrizedTrait(extension));
+        }
+      });
+    }
     return result;
   }
 
@@ -1364,7 +1384,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       schemes: [],
       contentType: [],
       tags: [],
-      traits: [],
+      extends: [],
     });
     const { ns } = this;
     const method = this._getValue(object, ns.aml.vocabularies.apiContract.method);
@@ -1440,7 +1460,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     }
     const traits = object[this._getAmfKey(ns.aml.vocabularies.document.extends)];
     if (Array.isArray(traits) && traits.length) {
-      result.traits = traits.map(t => this.parametrizedTrait(t));
+      result.extends = traits.map(t => this.parametrizedTrait(t));
     }
     return result;
   }
@@ -2102,11 +2122,11 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   }
 
   /**
-   * @param {ParametrizedTrait} object 
-   * @returns {ApiParametrizedTrait}
+   * @param {ParametrizedDeclaration} object 
+   * @returns {ApiParametrizedDeclaration}
    */
-  parametrizedTrait(object) {
-    const result = /** @type ApiParametrizedTrait */ ({
+  parametrizedDeclaration(object) {
+    const result = /** @type ApiParametrizedDeclaration */ ({
       id: object['@id'],
       types: object['@type'].map(this[expandKey].bind(this)),
       variables: [],
@@ -2129,6 +2149,24 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
       const [target] = targets;
       result.target = this.abstractDeclaration(target);
     }
+    return result;
+  }
+
+  /**
+   * @param {ParametrizedTrait} object 
+   * @returns {ApiParametrizedTrait}
+   */
+  parametrizedTrait(object) {
+    const result = /** @type ApiParametrizedTrait */ (this.parametrizedDeclaration(object));
+    return result;
+  }
+
+  /**
+   * @param {ParametrizedResourceType} object 
+   * @returns {ApiParametrizedResourceType}
+   */
+  parametrizedResourceType(object) {
+    const result = /** @type ApiParametrizedResourceType */ (this.parametrizedDeclaration(object));
     return result;
   }
 

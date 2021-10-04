@@ -108,6 +108,7 @@ export declare interface EndPoint extends DomainElement {
   'http://a.ml/vocabularies/apiContract#payload'?: Payload[];
   'http://a.ml/vocabularies/apiContract#server'?: Server[];
   'http://a.ml/vocabularies/security#security'?: SecurityRequirement[];
+  'http://a.ml/vocabularies/document#extends'?: ParametrizedDeclaration[];
 }
 
 export declare interface Operation extends DomainElement {
@@ -438,3 +439,4 @@ export interface AbstractDeclaration extends DomainElement {
 }
 
 export interface ParametrizedTrait extends ParametrizedDeclaration {}
+export interface ParametrizedResourceType extends ParametrizedDeclaration {}
