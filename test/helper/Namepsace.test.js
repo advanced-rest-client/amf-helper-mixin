@@ -196,6 +196,9 @@ describe('Namespace', () => {
       ['variable', `${key}variable`],
       ['target', `${key}target`],
       ['dataNode', `${key}dataNode`],
+      ['root', `${key}root`],
+      ['usage', `${key}usage`],
+      ['version', `${key}version`],
     ].forEach(([property, value]) => {
       it(`has value for ${property}`, () => {
         const result = ns.aml.vocabularies.document[property];

@@ -29,6 +29,9 @@ interface Document {
   variable: string;
   target: string;
   dataNode: string;
+  root: string;
+  usage: string;
+  version: string;
 }
 
 interface Core {

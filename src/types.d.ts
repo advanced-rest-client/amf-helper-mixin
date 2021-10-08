@@ -500,7 +500,7 @@ export interface ApiDocumentSourceMaps {
 
 export interface ApiSynthesizedField {
   id: string;
-  element: string;
+  element?: string;
   value: string;
 }
 

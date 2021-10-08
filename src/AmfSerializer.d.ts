@@ -30,6 +30,11 @@ export declare class AmfSerializer extends AmfHelperMixin(Object) {
    */
   constructor(graph?: DomainElement);
   /**
+   * @param types THe list of graph object types. When not defined it returns an empty array.
+   * @returns The expanded types.
+   */
+  readTypes(types: string[]): string[];
+  /**
    * @param object The API to serialize.
    * @returns API summary, without complex objects.
    */

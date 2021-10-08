@@ -131,13 +131,28 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   }
 
   /**
+   * @param {string[]} types The list of graph object types. When not defined it returns an empty array.
+   * @returns {string[]} The expanded types.
+   */
+  readTypes(types) {
+    let target = types;
+    if (typeof target === 'string') {
+      target = [target];
+    }
+    if (!Array.isArray(target)) {
+      return [];
+    }
+    return target.map(this[expandKey].bind(this));
+  }
+
+  /**
    * @param {Api} object The API to serialize.
    * @returns {ApiSummary} API summary, without complex objects.
    */
   apiSummary(object) {
     const result = /** @type ApiSummary */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       schemes: [],
@@ -248,7 +263,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   provider(object) {
     const result = /** @type ApiOrganization */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -275,7 +290,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   license(object) {
     const result = /** @type ApiLicense */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -300,7 +315,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const url = this._getValue(object, ns.aml.vocabularies.core.urlTemplate) || '';
     const result = /** @type ApiServer */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       url,
       variables: [],
       customDomainProperties: this.customDomainProperties(object),
@@ -336,7 +351,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   parameter(object) {
     const result = /** @type ApiParameter */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       payloads: [],
       examples: [],
       customDomainProperties: this.customDomainProperties(object),
@@ -407,10 +422,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
    * @returns {ApiShapeUnion}
    */
   unknownShape(object, options) {
-    let types = object['@type'];
-    if (Array.isArray(types)) {
-      types = types.map(this[expandKey].bind(this));
-    }
+    const types = this.readTypes(object['@type']);
     const { ns } = this;
     if (types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
       return this.scalarShape(/** @type ScalarShape */ (object), options);
@@ -477,7 +489,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     }
     const result = /** @type ApiShape */ ({
       id: target['@id'],
-      types: target['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       values: [],
       inherits: [],
       or: [],
@@ -1060,7 +1072,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   documentation(object) {
     const result = /** @type ApiDocumentation */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1087,7 +1099,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     this._resolve(object);
     const result = /** @type ApiExample */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       strict: false,
@@ -1135,7 +1147,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   xmlSerializer(object) {
     const result = /** @type ApiXMLSerializer */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1168,10 +1180,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
    * @returns {ApiDataNodeUnion}
    */
   unknownDataNode(object) {
-    let types = object['@type'];
-    if (Array.isArray(types)) {
-      types = types.map(this[expandKey].bind(this));
-    }
+    const types = this.readTypes(object['@type']);
     const { ns } = this;
     if (types.includes(ns.aml.vocabularies.data.Scalar)) {
       return this.scalarNode(/** @type ScalarNode */(object));
@@ -1192,7 +1201,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   dataNode(object) {
     const result = /** @type ApiDataNode */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
     });
     const { ns } = this;
@@ -1298,7 +1307,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   endPoint(object) {
     const result = /** @type ApiEndPoint */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       path: '',
@@ -1371,7 +1380,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   operation(object) {
     const result = /** @type ApiOperation */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       method: '',
@@ -1472,7 +1481,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   tag(object) {
     const result = /** @type ApiTag */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       name: '',
@@ -1492,7 +1501,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   callback(object) {
     const result = /** @type ApiCallback */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1522,7 +1531,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   request(object) {
     const result = /** @type ApiRequest */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       required: false,
@@ -1578,7 +1587,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   response(object) {
     const result = /** @type ApiResponse */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       headers: [],
@@ -1625,7 +1634,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   payload(object) {
     const result = /** @type ApiPayload */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       examples: [],
@@ -1666,7 +1675,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   templatedLink(object) {
     const result = /** @type ApiTemplatedLink */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       mapping: [],
@@ -1716,7 +1725,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   iriTemplateMapping(object) {
     const result = /** @type ApiIriTemplateMapping */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1739,7 +1748,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   parametrizedSecurityScheme(object) {
     const result = /** @type ApiParametrizedSecurityScheme */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1772,7 +1781,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   securityScheme(object) {
     const result = /** @type ApiSecurityScheme */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       headers: [],
@@ -1832,7 +1841,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   securityRequirement(object) {
     const result = /** @type ApiSecurityRequirement */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       schemes: [],
@@ -1855,10 +1864,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
    */
   securitySettings(object) {
     const { ns } = this;
-    let types = object['@type'];
-    if (Array.isArray(types)) {
-      types = types.map(this[expandKey].bind(this));
-    }
+    const types = this.readTypes(object['@type']);
     if (types.includes(ns.aml.vocabularies.security.OAuth1Settings)) {
       return this.oAuth1Settings(/** @type OAuth1Settings */ (object));
     }
@@ -1884,7 +1890,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   settings(object) {
     const result = /** @type ApiSecuritySettings */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -1951,7 +1957,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   oAuth2Flow(object) {
     const result = /** @type ApiSecurityOAuth2Flow */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       scopes: [],
       sourceMaps: this.sourceMap(object),
@@ -1987,7 +1993,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   scope(object) {
     const result = /** @type ApiSecurityScope */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
     });
@@ -2069,7 +2075,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     }
     const result = /** @type ApiDocumentSourceMaps */ ({
       id: sm['@id'],
-      types: sm['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(sm['@type']),
     });
     const synthesizedField = sm[this._getAmfKey(ns.aml.vocabularies.docSourceMaps.synthesizedField)];
     if (Array.isArray(synthesizedField) && synthesizedField.length) {
@@ -2103,10 +2109,15 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
    * @returns {ApiSynthesizedField}
    */
   synthesizedField(object) {
+    // compact model
+    if (typeof object === 'string') {
+      return /** @type ApiSynthesizedField */ ({
+        id: 'synthesizedField/generated',
+        value: object,
+      });
+    }
     const result = /** @type ApiSynthesizedField */ ({
       id: object['@id'],
-      element: undefined,
-      value: undefined,
     });
     // @ts-ignore
     const element = this._getValue(object, this.ns.aml.vocabularies.docSourceMaps.element);
@@ -2128,7 +2139,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
   parametrizedDeclaration(object) {
     const result = /** @type ApiParametrizedDeclaration */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       variables: [],
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
@@ -2179,7 +2190,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const name = this._getValue(object, ns.aml.vocabularies.core.name);
     const result = /** @type ApiVariableValue */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       name,
@@ -2201,7 +2212,7 @@ export class AmfSerializer extends AmfHelperMixin(Object) {
     const name = this._getValue(object, ns.aml.vocabularies.core.name);
     const result = /** @type ApiAbstractDeclaration */ ({
       id: object['@id'],
-      types: object['@type'].map(this[expandKey].bind(this)),
+      types: this.readTypes(object['@type']),
       customDomainProperties: this.customDomainProperties(object),
       sourceMaps: this.sourceMap(object),
       name,
