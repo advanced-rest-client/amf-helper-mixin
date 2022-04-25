@@ -1427,6 +1427,20 @@ describe('AmfHelperMixin', () => {
           const result = element._resolve(schema);
           assert.typeOf(result[nameKey], 'array');
         });
+
+        it('sets __apicResolved before calling _resolveRecursive', () => {
+          // Throw error to test property being set before _resolveRecursive is called
+          const stub = sinon.stub(element, '_resolveRecursive').callsFake(() => {
+            throw Error()
+          });
+          const shape = {};
+          assert.throws(() => element._resolve(shape));
+          assert.isTrue(stub.called);
+          assert.isTrue(stub.args[0][0] === shape);
+          // __apicResolved should be set before function was called, not after
+          // eslint-disable-next-line
+          assert.isTrue(stub.args[0][0].__apicResolved);
+        });
       });
 
       describe('_computeSecurityModel()', () => {
