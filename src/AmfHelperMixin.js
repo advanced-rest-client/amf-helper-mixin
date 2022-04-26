@@ -1335,9 +1335,9 @@ export const AmfHelperMixin = (base) => class extends base {
       }
     }
     if (!refData) {
-      this._resolveRecursive(shape);
       /* eslint-disable-next-line no-param-reassign */
       shape.__apicResolved = true;
+      this._resolveRecursive(shape);
       return shape;
     }
     const copy = { ...refData};
