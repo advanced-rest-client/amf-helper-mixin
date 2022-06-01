@@ -524,6 +524,16 @@ export const AmfHelperMixin = (base) => class extends base {
    * @returns {Payload[]|undefined} Payload model if defined.
    */
   _computePayload(expects) {
+    if (Array.isArray(expects)) {
+      let payload = []
+      for (const expect of expects) {
+        const expectPayload = this._computePropertyArray(expect, this.ns.aml.vocabularies.apiContract.payload)
+        if (expectPayload) {
+          payload = payload.concat(expectPayload)
+        }
+      }
+      return payload
+    }
     return this._computePropertyArray(expects, this.ns.aml.vocabularies.apiContract.payload);
   }
 
