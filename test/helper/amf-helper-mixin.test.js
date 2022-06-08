@@ -1793,6 +1793,23 @@ describe('AmfHelperMixin', () => {
           });
           assert.equal(spy.args[0][1], element.ns.raml.vocabularies.apiContract.payload);
         });
+
+        it('Returns payloads of each element in array', () => {
+          const spy = sinon.spy(element, '_computePropertyArray');
+          const pKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.payload)
+          const expect = {
+            '@id': 'amf://1',
+            '@type': ['test'],
+            [pKey]: [
+              {
+                '@id': 'amf://2'
+              }
+            ]
+          }
+          const payloads = element._computePayload([expect, expect])
+          assert.equal(spy.args[0][1], element.ns.raml.vocabularies.apiContract.payload);
+          assert.lengthOf(payloads, 2);
+        });
       });
 
       describe('_computeReturns()', () => {
