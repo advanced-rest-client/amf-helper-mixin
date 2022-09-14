@@ -1,0 +1,51 @@
+asyncapi: '2.0.0'
+info:
+  title: Multiple messages API
+  description: API with multiple messages
+  version: '1.0.0'
+  
+channels:
+  default-channel:
+    description: Default channel
+    publish:
+      description: Publish operation for default channel
+      message:
+          oneOf:
+            - $ref: '#/components/messages/MessageA'
+            - $ref: '#/components/messages/MessageB'
+
+components:
+
+  messages:
+    MessageA:
+      contentType: application/json
+      headers:
+        type: object
+        description: Message header
+        properties:
+          messageId:
+            description: Message ID field
+            type: string
+      payload:
+        type: object
+        description: Message payload
+        properties:
+          data1:
+            description: Data 1 field
+            type: string
+    MessageB:
+      contentType: application/json
+      headers:
+        type: object
+        description: Message header
+        properties:
+          messageId:
+            description: Message ID field
+            type: string
+      payload:
+        type: object
+        description: Message payload
+        properties:
+          data2:
+            description: Data 2 field
+            type: string
