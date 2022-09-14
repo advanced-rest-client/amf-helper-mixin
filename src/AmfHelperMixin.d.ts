@@ -444,6 +444,13 @@ interface AmfHelperMixin {
   _computeExpects(method: Operation): Request|undefined;
 
   /**
+   * Computes all values for the `expects` property.
+   *
+   * @param method AMF `supportedOperation` model
+   */
+  _computeAllExpects(method: Operation): Request[]|undefined;
+
+  /**
    * Tries to find an example value (whether it's default value or from an
    * example) to put it into snippet's values.
    *

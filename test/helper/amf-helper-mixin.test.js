@@ -2154,6 +2154,33 @@ describe('AmfHelperMixin', () => {
           assert.deepEqual(element.amf, expandedElement.amf)
         });
       });
+
+      describe('Multiple messages Async API', () => {
+        const multipleMessagesApi = 'multiple-messages';
+        let multipleMessagesModel;
+        let operation;
+
+        before(async () => {
+          multipleMessagesModel = await AmfLoader.load(compact, multipleMessagesApi);
+          
+        })
+
+        beforeEach(async () => {
+          element = await modelFixture(multipleMessagesModel);
+          const webApi = element._computeApi(multipleMessagesModel);
+          const endpoint = element._computeEndpointByPath(webApi, 'default-channel');
+          const key = element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation);
+          // eslint-disable-next-line prefer-destructuring
+          operation = endpoint[key][0];
+        });
+
+        describe('_computeAllExpects()', () => {
+          it('should return two items', () => {
+            const expects = element._computeAllExpects(operation)
+            assert.lengthOf(expects, 2);
+          });
+        });
+      });
     });
   });
 });

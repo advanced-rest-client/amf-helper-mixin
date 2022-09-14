@@ -10,6 +10,7 @@
   "secured-api/secured-api.raml": { "type": "RAML 1.0", "mime": "application/yaml" },
   "petstore/petstore.yaml":  { "type": "OAS 3.0", "mime": "application/yaml" },
   "APIC-483/APIC-483.raml":  { "type": "RAML 1.0" },
+  "multiple-messages/multiple-messages.yaml":  "ASYNC 2.0",
   "src": "apis",
   "dest": "apis"
 }
