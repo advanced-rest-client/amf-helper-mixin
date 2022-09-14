@@ -991,6 +991,25 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Computes all values for the `expects` property.
+   *
+   * @param {Operation} method AMF `supportedOperation` model
+   * @returns {Request[]}
+   */
+  _computeAllExpects(method) {
+    const operationKey = this.ns.aml.vocabularies.apiContract.Operation;
+    const expectsKey = this.ns.aml.vocabularies.apiContract.expects;
+    if (this._hasType(method, operationKey)) {
+      const key = this._getAmfKey(expectsKey);
+      const expects = this._ensureArray(method[key]);
+      if (expects) {
+        return Array.isArray(expects) ? expects : [expects];
+      }
+    }
+    return undefined;
+  }
+
+  /**
    * Finds an example value (whether it's default value or from an
    * example) to put it into snippet's values.
    *
