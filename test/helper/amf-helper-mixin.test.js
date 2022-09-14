@@ -2175,17 +2175,11 @@ describe('AmfHelperMixin', () => {
         });
 
         describe('_computeAllExpects()', () => {
-          
-
           it('should return two items', () => {
             const expects = element._computeAllExpects(operation)
             assert.lengthOf(expects, 2);
           });
         });
-
-        it('should return two items when _compuetAllExpects() is called', () => {
-
-        })
       });
     });
   });
