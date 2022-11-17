@@ -650,6 +650,19 @@ describe('AmfHelperMixin', () => {
           };
           assert.equal(element._computeDescription(shape), 'test');
         });
+
+        it('should get core:description if available', () => {
+          const shape = {
+            '@id': 'amf://1',
+            '@type': ['test'],
+            [element._getAmfKey(element.ns.aml.vocabularies.core.description)]: {
+              '@value': ['test'],
+              '@id': 'amf://1',
+              '@type': ['test'],
+            }
+          };
+          assert.equal(element._computeDescription(shape), 'test');
+        })
       });
 
       describe('_computeEncodes()', () => {

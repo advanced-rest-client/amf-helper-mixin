@@ -432,7 +432,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @returns {string} Description value.
    */
   _computeDescription(shape) {
-    return /** @type string */ (this._getValue(shape, this.ns.schema.desc));
+    return /** @type string */ (this._getValue(shape, this.ns.schema.desc) || this._getValue(shape, this.ns.aml.vocabularies.core.description));
   }
 
   /**
