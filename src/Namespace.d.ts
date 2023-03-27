@@ -156,6 +156,13 @@ interface ApiContract {
   tag: string;
 }
 
+interface ApiBinding {
+  binding: string;
+  bindings: string;
+  messageKey: string;
+  type: string;
+}
+
 interface Shapes {
   toString(): string;
   key: string;
@@ -249,6 +256,7 @@ interface Vocabularies {
   core: Readonly<Core>;
   security: Readonly<Security>;
   apiContract: Readonly<ApiContract>;
+  apiBinding: Readonly<ApiBinding>
   shapes: Readonly<Shapes>;
   data: Readonly<Data>;
   docSourceMaps: Readonly<DocSourceMaps>;
