@@ -109,6 +109,12 @@ ns.aml.vocabularies.apiContract = {};
 ns.aml.vocabularies.http = ns.aml.vocabularies.apiContract;
 ns.aml.vocabularies.apiContract.key = `${ns.aml.vocabularies.key}apiContract#`;
 const contractKey = ns.aml.vocabularies.apiContract.key;
+ns.aml.vocabularies.apiBinding = {}
+ns.aml.vocabularies.apiBinding.key = `${ns.aml.vocabularies.key}apiBinding#`;
+ns.aml.vocabularies.apiBinding.binding = `${ns.aml.vocabularies.apiBinding.key}binding`
+ns.aml.vocabularies.apiBinding.bindings = `${ns.aml.vocabularies.apiBinding.key}bindings`
+ns.aml.vocabularies.apiBinding.messageKey = `${ns.aml.vocabularies.apiBinding.key}messageKey`
+ns.aml.vocabularies.apiBinding.type = `${ns.aml.vocabularies.apiBinding.key}type`
 ns.aml.vocabularies.apiContract.toString = () => contractKey;
 ns.aml.vocabularies.apiContract.Payload = `${contractKey}Payload`;
 ns.aml.vocabularies.apiContract.Request = `${contractKey}Request`;
