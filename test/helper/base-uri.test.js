@@ -112,7 +112,7 @@ describe('Base URI test', () => {
     it('_ensureUrlScheme() adds default scheme', () => {
       element.amf = undefined;
       const result = element._ensureUrlScheme('domain.com', undefined);
-      assert.equal(result, 'http://domain.com');
+      assert.equal(result, 'https://domain.com');
     });
 
     it('_ensureUrlScheme() adds non-http protocol if supplied', () => {
