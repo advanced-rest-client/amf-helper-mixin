@@ -950,7 +950,7 @@ export const AmfHelperMixin = (base) => class extends base {
           }
         } else {
           /* eslint-disable-next-line no-param-reassign */
-          value = `http://${value}`;
+          value = `https://${value}`;
         }
       }
     }
