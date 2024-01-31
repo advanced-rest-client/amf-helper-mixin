@@ -315,6 +315,7 @@ ns.w3.shacl.maxLength = `${n2shaclName}maxLength`;
 ns.w3.shacl.fileType = `${n2shaclName}fileType`;
 ns.w3.shacl.and = `${n2shaclName}and`;
 ns.w3.shacl.property = `${n2shaclName}property`;
+ns.w3.shacl.additionalPropertiesSchema = `${n2shaclName}additionalPropertiesSchema`;
 ns.w3.shacl.name = `${n2shaclName}name`;
 ns.w3.shacl.raw = `${n2shaclName}raw`;
 ns.w3.shacl.datatype = `${n2shaclName}datatype`;

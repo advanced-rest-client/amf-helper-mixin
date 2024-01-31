@@ -324,6 +324,7 @@ interface Shacl {
   fileType: string;
   and: string;
   property: string;
+  additionalPropertiesSchema: string;
   name: string;
   raw: string;
   datatype: string;
