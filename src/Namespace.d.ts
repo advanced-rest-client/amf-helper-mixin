@@ -134,6 +134,7 @@ interface ApiContract {
   expects: string;
   examples: string;
   supportedOperation: string;
+  messageId: string;
   statusCode: string;
   method: string;
   required: string;
@@ -154,6 +155,7 @@ interface ApiContract {
   explode: string;
   allowReserved: string;
   tag: string;
+  tags: string;
 }
 
 interface ApiBinding {
@@ -256,7 +258,7 @@ interface Vocabularies {
   core: Readonly<Core>;
   security: Readonly<Security>;
   apiContract: Readonly<ApiContract>;
-  apiBinding: Readonly<ApiBinding>
+  apiBinding: Readonly<ApiBinding>;
   shapes: Readonly<Shapes>;
   data: Readonly<Data>;
   docSourceMaps: Readonly<DocSourceMaps>;
