@@ -155,6 +155,7 @@ ns.aml.vocabularies.apiContract.response = `${contractKey}response`;
 ns.aml.vocabularies.apiContract.returns = `${contractKey}returns`;
 ns.aml.vocabularies.apiContract.expects = `${contractKey}expects`;
 ns.aml.vocabularies.apiContract.examples = `${contractKey}examples`;
+ns.aml.vocabularies.apiContract.messageId = `${contractKey}messageId`;
 ns.aml.vocabularies.apiContract.supportedOperation = `${contractKey}supportedOperation`;
 ns.aml.vocabularies.apiContract.statusCode = `${contractKey}statusCode`;
 ns.aml.vocabularies.apiContract.method = `${contractKey}method`;
