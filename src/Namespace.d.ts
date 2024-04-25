@@ -154,7 +154,7 @@ interface ApiContract {
   explode: string;
   allowReserved: string;
   tag: string;
-  tags: string[];
+  tags: string;
 }
 
 interface ApiBinding {
