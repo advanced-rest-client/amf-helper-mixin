@@ -209,6 +209,7 @@ interface Shapes {
   format: string;
   multipleOf: string;
   uniqueItems: string;
+  size: string;
 }
 
 interface Data {
@@ -297,6 +298,9 @@ interface XmlSchema {
   string: string;
   number: string;
   integer: string;
+  int: string;
+  fixed: string;
+  bytes: string;
   long: string;
   double: string;
   float: string;
