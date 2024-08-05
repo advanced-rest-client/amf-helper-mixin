@@ -147,6 +147,7 @@ ns.aml.vocabularies.apiContract.url = `${contractKey}url`;
 ns.aml.vocabularies.apiContract.scheme = `${contractKey}scheme`;
 ns.aml.vocabularies.apiContract.endpoint = `${contractKey}endpoint`;
 ns.aml.vocabularies.apiContract.queryString = `${contractKey}queryString`;
+ns.aml.vocabularies.apiContract.schemaMediaType = `${contractKey}schemaMediaType`;
 // ns.aml.vocabularies.apiContract.mediaType = contractKey + 'mediaType';
 ns.aml.vocabularies.apiContract.accepts = `${contractKey}accepts`;
 ns.aml.vocabularies.apiContract.guiSummary = `${contractKey}guiSummary`;
