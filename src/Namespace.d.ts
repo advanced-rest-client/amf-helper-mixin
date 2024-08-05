@@ -156,6 +156,7 @@ interface ApiContract {
   allowReserved: string;
   tag: string;
   tags: string;
+  schemaMediaType: string;
 }
 
 interface ApiBinding {
