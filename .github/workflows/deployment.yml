@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 16
       - name: Install Playwright dependencies
-        run: npx playwright install --with-deps
+        run: sudo npx playwright install-deps
       - uses: actions/cache@v1
         with:
           path: ~/.npm
