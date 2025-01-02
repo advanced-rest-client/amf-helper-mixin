@@ -21,9 +21,9 @@ jobs:
         with:
           node-version: 16
       - name: Install Playwright dependencies
-        run: |
-          npx playwright install --with-deps
-          sudo apt-get install -y libdbus-glib-1-2
+        run: sudo npx playwright install-deps
+      - name: Install aditional dependencies
+        run: sudo apt-get install -y libdbus-glib-1-2
       - uses: actions/cache@v1
         with:
           path: ~/.npm
