@@ -21,7 +21,8 @@ jobs:
         with:
           node-version: 16
       - name: Install Playwright dependencies
-        run: sudo npx playwright install-deps
+        run: npx playwright install --with-deps
+        run: sudo apt-get install libdbus-glib-1-2
       - uses: actions/cache@v1
         with:
           path: ~/.npm
@@ -54,7 +55,7 @@ jobs:
   tag:
     name: "Publishing release"
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs:
+    needs: 
       - test_linux
       - test_win
     runs-on: ubuntu-latest
@@ -65,8 +66,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: "16.x"
-          registry-url: "https://registry.npmjs.org"
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
       - uses: actions/cache@v1
         with:
           path: ~/.npm
