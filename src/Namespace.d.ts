@@ -207,6 +207,8 @@ interface Shapes {
   fixPoint: string;
   discriminator: string;
   discriminatorValue: string;
+  discriminatorValueMapping: string;
+  discriminatorValueTarget: string;
   format: string;
   multipleOf: string;
   uniqueItems: string;
