@@ -21,6 +21,16 @@ jobs:
         with:
           node-version: 16
       - name: Install Playwright dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libdbus-glib-1-2 \
+            libsoup2.4 \
+            libpcre3 \
+            libvpx7 \
+            libicu70 \
+            libopengl0
+      - name: Install Playwright dependencies
         run: sudo npx playwright install-deps
       - name: Install aditional dependencies
         run: sudo apt-get install -y libdbus-glib-1-2
