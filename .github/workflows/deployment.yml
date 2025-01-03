@@ -14,7 +14,7 @@ on:
 jobs:
   test_linux:
     name: Ubuntu
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -53,7 +53,7 @@ jobs:
   tag:
     name: "Publishing release"
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: 
+    needs:
       - test_linux
       - test_win
     runs-on: ubuntu-latest
@@ -64,8 +64,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
       - uses: actions/cache@v1
         with:
           path: ~/.npm

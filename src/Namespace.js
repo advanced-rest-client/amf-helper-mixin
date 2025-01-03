@@ -1,4 +1,3 @@
-
 /**
  * A namespace for AMF properties.
  * @type {Object}
@@ -8,7 +7,7 @@ export const ns = {};
 // RAML namespace
 ns.aml = {};
 ns.raml = ns.aml;
-ns.aml.key = 'http://a.ml/';
+ns.aml.key = "http://a.ml/";
 ns.aml.vocabularies = {};
 ns.aml.vocabularies.key = `${ns.aml.key}vocabularies/`;
 ns.aml.vocabularies.document = {};
@@ -109,12 +108,12 @@ ns.aml.vocabularies.apiContract = {};
 ns.aml.vocabularies.http = ns.aml.vocabularies.apiContract;
 ns.aml.vocabularies.apiContract.key = `${ns.aml.vocabularies.key}apiContract#`;
 const contractKey = ns.aml.vocabularies.apiContract.key;
-ns.aml.vocabularies.apiBinding = {}
+ns.aml.vocabularies.apiBinding = {};
 ns.aml.vocabularies.apiBinding.key = `${ns.aml.vocabularies.key}apiBinding#`;
-ns.aml.vocabularies.apiBinding.binding = `${ns.aml.vocabularies.apiBinding.key}binding`
-ns.aml.vocabularies.apiBinding.bindings = `${ns.aml.vocabularies.apiBinding.key}bindings`
-ns.aml.vocabularies.apiBinding.messageKey = `${ns.aml.vocabularies.apiBinding.key}messageKey`
-ns.aml.vocabularies.apiBinding.type = `${ns.aml.vocabularies.apiBinding.key}type`
+ns.aml.vocabularies.apiBinding.binding = `${ns.aml.vocabularies.apiBinding.key}binding`;
+ns.aml.vocabularies.apiBinding.bindings = `${ns.aml.vocabularies.apiBinding.key}bindings`;
+ns.aml.vocabularies.apiBinding.messageKey = `${ns.aml.vocabularies.apiBinding.key}messageKey`;
+ns.aml.vocabularies.apiBinding.type = `${ns.aml.vocabularies.apiBinding.key}type`;
 ns.aml.vocabularies.apiContract.toString = () => contractKey;
 ns.aml.vocabularies.apiContract.Payload = `${contractKey}Payload`;
 ns.aml.vocabularies.apiContract.Request = `${contractKey}Request`;
@@ -221,6 +220,8 @@ ns.aml.vocabularies.shapes.deprecated = `${shapesKey}deprecated`;
 ns.aml.vocabularies.shapes.fixPoint = `${shapesKey}fixPoint`;
 ns.aml.vocabularies.shapes.discriminator = `${shapesKey}discriminator`;
 ns.aml.vocabularies.shapes.discriminatorValue = `${shapesKey}discriminatorValue`;
+ns.aml.vocabularies.shapes.discriminatorValueMapping = `${shapesKey}discriminatorValueMapping`;
+ns.aml.vocabularies.shapes.discriminatorValueTarget = `${shapesKey}discriminatorValueTarget`;
 ns.aml.vocabularies.shapes.format = `${shapesKey}format`;
 ns.aml.vocabularies.shapes.multipleOf = `${shapesKey}multipleOf`;
 ns.aml.vocabularies.shapes.uniqueItems = `${shapesKey}uniqueItems`;
@@ -268,7 +269,7 @@ ns.aml.vocabularies.docSourceMaps.avroSchema = `${dsmKey}avro-schema`;
 
 // W3 namespace
 ns.w3 = {};
-ns.w3.key = 'http://www.w3.org/';
+ns.w3.key = "http://www.w3.org/";
 ns.w3.rdfSyntax = {};
 ns.w3.rdfSyntax.key = `${ns.w3.key}1999/02/22-rdf-syntax-ns#`;
 ns.w3.rdfSyntax.toString = () => ns.w3.rdfSyntax.key;
