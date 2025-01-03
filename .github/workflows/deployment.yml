@@ -14,26 +14,13 @@ on:
 jobs:
   test_linux:
     name: Ubuntu
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16
-      - name: Install Playwright dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libdbus-glib-1-2 \
-            libsoup2.4-1 \
-            libpcre3 \
-            libvpx6 \
-            libicu-dev \
-            libopengl0
-      - name: Install Playwright dependencies
-        run: sudo npx playwright install-deps
-      - name: Install aditional dependencies
-        run: sudo apt-get install -y libdbus-glib-1-2
+      - uses: microsoft/playwright-github-action@v1
       - uses: actions/cache@v1
         with:
           path: ~/.npm
