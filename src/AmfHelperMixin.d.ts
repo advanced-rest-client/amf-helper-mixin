@@ -1,5 +1,5 @@
-import { 
-  AmfDocument, AsyncApi, DomainElement, EndPoint, Operation, Parameter, Payload, Request, Response, 
+import {
+  AmfDocument, AsyncApi, DomainElement, EndPoint, Operation, Parameter, Payload, Request, Response,
   SecurityRequirement, SecurityScheme, Server, Shape, WebApi, Api
 } from './amf';
 import { Namespace } from './Namespace';
@@ -124,7 +124,7 @@ interface AmfHelperMixin {
 
   /**
    * Reads an array from the model.
-   * 
+   *
    * @param model Amf model to extract the value from.
    * @param key Model key to search for the value
    * @returns Value for the key
@@ -207,7 +207,7 @@ interface AmfHelperMixin {
   _computeHeaders(shape: DomainElement): Parameter[]|undefined|Parameter;
 
   _computeHeaderSchema(shape: DomainElement): Parameter|undefined;
-  
+
   /**
    * Computes a list of query parameters
    */
@@ -287,6 +287,22 @@ interface AmfHelperMixin {
   _computeEncodes(model: AmfDocument): Api|undefined;
 
   /**
+   * Computes model's `agent` property.
+   *
+   * @param model AMF data model
+   * @returns List of encodes
+   */
+  _computeAgents(node: AmfDocument): Object[]|undefined;
+
+  /**
+   * Computes model's `topic` property.
+   *
+   * @param model AMF data model
+   * @returns List of encodes
+   */
+  _computeTopics(node: AmfDocument): Object[]|undefined;
+
+  /**
    * Computes list of declarations in the AMF api model.
    *
    * @param model AMF json/ld model for an API
@@ -320,21 +336,21 @@ interface AmfHelperMixin {
 
   /**
    * Returns whether an AMF node is a WebAPI node
-   * 
+   *
    * @param model  AMF json/ld model for an API
    */
   _isWebAPI(model: AmfDocument): boolean;
 
   /**
    * Returns whether an AMF node is an AsyncAPI node
-   * 
+   *
    * @param model  AMF json/ld model for an API
    */
   _isAsyncAPI(model: AmfDocument): boolean;
 
   /**
    * Returns whether an AMF node is an API node
-   * 
+   *
    * @param model  AMF json/ld model for an API
    */
   _isAPI(model: AmfDocument): boolean;
@@ -540,7 +556,7 @@ interface AmfHelperMixin {
   /**
    * Searches for an object in model's references list.
    * It does not resolve the object (useful for handling links correctly).
-   * 
+   *
    * @param domainId The domain of the object to find in the references.
    * @returns The domain object or undefined.
    */

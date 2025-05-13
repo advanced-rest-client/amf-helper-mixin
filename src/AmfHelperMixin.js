@@ -132,11 +132,11 @@ export const AmfHelperMixin = (base) => class extends base {
    * @abstract
    */
   /* eslint-disable-next-line no-unused-vars */
-  __amfChanged(amf) {}
+  __amfChanged(amf) { }
 
   /**
    * Expands flattened AMF model
-   * @param {Object} amf 
+   * @param {Object} amf
    */
   _expand(amf) {
     AmfModelExpander.preprocessLegacyRootNodeId(amf)
@@ -160,7 +160,7 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!property) {
       return undefined;
     }
-    let {amf} = this;
+    let { amf } = this;
     if (!amf) {
       return property;
     }
@@ -189,11 +189,11 @@ export const AmfHelperMixin = (base) => class extends base {
         cache[property] = k;
         return k;
       } if (hashIndex === -1 && property.indexOf(ctx[k]) === 0) {
-        const result = property.replace(ctx[k], `${k  }:`);
+        const result = property.replace(ctx[k], `${k}:`);
         cache[property] = result;
         return result;
       } if (ctx[k] === hashProperty) {
-        const result = `${k  }:${  property.substr(hashIndex + 1)}`;
+        const result = `${k}:${property.substr(hashIndex + 1)}`;
         cache[property] = result;
         return result;
       }
@@ -286,7 +286,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
   /**
    * Reads an array from the model.
-   * 
+   *
    * @param {DomainElement} model Amf model to extract the value from.
    * @param {string} key Model key to search for the value
    * @returns {DomainElement[]|undefined} Value for the key
@@ -445,8 +445,90 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
-   * 
-   * @param {DomainElement} shape 
+   * @returns {Array<string|number|boolean|null|Object>|undefined}
+  */
+  _computeAgents(node) {
+    if (!node) {
+      node = this.amf;
+    }
+    return this._getValueArray(
+      this._computeNodeAgent(node),
+      this._getAmfKey(
+        this.ns.aml.vocabularies.data.agent
+      ))
+  }
+
+  _computeNodeAgent(node) {
+    return node[
+      Object
+        .keys(node)
+        .find(
+          key => key.includes('amf://id#')
+        )
+    ]
+  }
+
+  ensureObject(value) {
+    return Array.isArray(value) ? value[0] : value;
+  }
+
+  _computeTopics(node) {
+    const agents = this._computeAgents(node);
+    if (!agents || !agents.length) return [];
+
+    const nameKey = this._getAmfKey(this.ns.aml.vocabularies.core.name);
+    const topicKey = this._getAmfKey(this.ns.aml.vocabularies.data.topic);
+    const classificationKey = this._getAmfKey(this.ns.aml.vocabularies.data.classificationDescription);
+    const instructionsKey = this._getAmfKey(this.ns.aml.vocabularies.data.instructions);
+    const dataNameKey = this._getAmfKey(this.ns.aml.vocabularies.data.name);
+    const scopeKey = this._getAmfKey(this.ns.aml.vocabularies.data.scope);
+
+    return agents.map(agentRaw => {
+      // Get the agent object
+      const agentObj = this.ensureObject(agentRaw);
+      if (!agentObj || typeof agentObj !== 'object') return null;
+
+      // Extract agent name
+      const agentName = this._getValue(agentObj, nameKey);
+
+      // Get topics
+      const topics = agentObj[topicKey];
+      if (!topics) return { agentName };
+
+      const topicsArray = Array.isArray(topics) ? topics : [topics];
+
+      // Process each topic
+      const processedTopics = topicsArray.map(topicRaw => {
+        const topicObj = this.ensureObject(topicRaw);
+        if (!topicObj || typeof topicObj !== 'object') return null;
+
+        return {
+          name: this._getValue(topicObj, nameKey),
+          classificationDescription: this._getValueArray(topicObj, classificationKey),
+          instructions: this._getValueArray(topicObj, instructionsKey),
+          dataName: this._getValueArray(topicObj, dataNameKey),
+          scope: this._getValueArray(topicObj, scopeKey)
+        };
+      }).filter(Boolean); // Remove null entries
+
+      return {
+        agentName,
+        topics: processedTopics
+      };
+    }).filter(Boolean); // Remove null entries
+  }
+
+  _computeTopicValue(topicObj, key  ) {
+    const data = this._ensureArray(topicObj && topicObj[key]);
+    if (!data || !Array.isArray(data)) {
+      return undefined;
+    }
+    return data;
+  }
+
+  /**
+   *
+   * @param {DomainElement} shape
    * @returns {Parameter|undefined}
    */
   _computeHeaderSchema(shape) {
@@ -683,7 +765,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
   /**
    * Returns whether an AMF node is a WebAPI node
-   * 
+   *
    * @param {AmfDocument} model  AMF json/ld model for an API
    * @returns {boolean}
    */
@@ -697,7 +779,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
   /**
    * Returns whether an AMF node is an AsyncAPI node
-   * 
+   *
    * @param {AmfDocument} model  AMF json/ld model for an API
    * @returns {boolean}
    */
@@ -711,7 +793,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
   /**
    * Returns whether an AMF node is an API node
-   * 
+   *
    * @param {AmfDocument} model  AMF json/ld model for an API
    * @returns {boolean}
    */
@@ -793,7 +875,7 @@ export const AmfHelperMixin = (base) => class extends base {
 
     const serverKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.server);
 
-    const getRootServers = () => /** @type Server[] */ (this[getArrayItems](api, serverKey));
+    const getRootServers = () => /** @type Server[] */(this[getArrayItems](api, serverKey));
     const getEndpointServers = () => {
       const endpoint = this._computeEndpointModel(api, endpointId);
       const servers = /** @type Server[] */ (this[getArrayItems](endpoint, serverKey));
@@ -863,7 +945,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @returns {string} The base uri for the endpoint.
    */
   _computeUri(endpoint, options = {}) {
-    const { server, baseUri, version, ignoreBase=false, protocols, ignorePath = false } = options;
+    const { server, baseUri, version, ignoreBase = false, protocols, ignorePath = false } = options;
     let baseValue = '';
     if (ignoreBase === false) {
       baseValue = this._getBaseUri(baseUri, server, protocols) || '';
@@ -1233,7 +1315,7 @@ export const AmfHelperMixin = (base) => class extends base {
   /**
    * Searches for an object in model's references list.
    * It does not resolve the object (useful for handling links correctly).
-   * 
+   *
    * @param {string} domainId The domain of the object to find in the references.
    * @returns {DomainElement|undefined} The domain object or undefined.
    */
@@ -1333,7 +1415,7 @@ export const AmfHelperMixin = (base) => class extends base {
    * @returns {any} Resolved shape.
    */
   _resolve(shape) {
-    const {amf} = this;
+    const { amf } = this;
     if (typeof shape !== 'object' || shape instanceof Array || !amf || shape.__apicResolved) {
       return shape;
     }
@@ -1369,7 +1451,7 @@ export const AmfHelperMixin = (base) => class extends base {
       this._resolveRecursive(shape);
       return shape;
     }
-    const copy = { ...refData};
+    const copy = { ...refData };
     delete copy['@id'];
     const types = copy['@type'];
     if (types) {

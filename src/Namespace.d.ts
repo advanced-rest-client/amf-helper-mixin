@@ -238,6 +238,12 @@ interface Data {
   format: string;
   example: string;
   examples: string;
+  agent: string;
+  topic: string;
+  classificationDescription: string;
+  instructions: string;
+  name: string;
+  scope: string;
 }
 
 interface DocSourceMaps {
