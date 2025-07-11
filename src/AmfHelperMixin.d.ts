@@ -301,6 +301,14 @@ interface AmfHelperMixin {
    * @returns List of encodes
    */
   _computeTopics(node: AmfDocument): Object[]|undefined;
+  
+  /**
+   * Computes model's `topic` property.
+   *
+   * @param model AMF data model
+   * @returns List of encodes
+   */
+  _computeTopicValue(node: AmfDocument, key: string): Object[]|undefined;
 
   /**
    * Computes list of declarations in the AMF api model.

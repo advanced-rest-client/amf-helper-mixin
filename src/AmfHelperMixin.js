@@ -518,7 +518,7 @@ export const AmfHelperMixin = (base) => class extends base {
     }).filter(Boolean); // Remove null entries
   }
 
-  _computeTopicValue(topicObj, key  ) {
+  _computeTopicValue(topicObj, key) {
     const data = this._ensureArray(topicObj && topicObj[key]);
     if (!data || !Array.isArray(data)) {
       return undefined;
