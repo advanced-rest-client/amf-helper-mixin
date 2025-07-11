@@ -20,11 +20,10 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: microsoft/playwright-github-action@v1
       - uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -33,17 +32,18 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Run tests
         run: npm test
   test_win:
     name: "Windows"
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: microsoft/playwright-github-action@v1
       - uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -52,6 +52,8 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Run tests
         run: npm test
   tag:
