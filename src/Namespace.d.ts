@@ -239,6 +239,8 @@ interface Data {
   example: string;
   examples: string;
   agent: string;
+  action: string;
+  isUserInput: string;
   topic: string;
   classificationDescription: string;
   instructions: string;
