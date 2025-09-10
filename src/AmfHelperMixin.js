@@ -458,6 +458,20 @@ export const AmfHelperMixin = (base) => class extends base {
       ))
   }
 
+  /**
+   * @returns {Array<string|number|boolean|null|Object>|undefined}
+  */
+  _computeAgentPrivacy(node) {
+    if (!node) {
+      node = this.amf;
+    }
+    return this._getValueArray(
+      this._computeNodeAgent(node),
+      this._getAmfKey(
+        this.ns.aml.vocabularies.data.privacy
+      ))
+  }
+
   _computeNodeAgent(node) {
     return node[
       Object
