@@ -239,8 +239,10 @@ interface Data {
   example: string;
   examples: string;
   agent: string;
+  privacy: string;
   action: string;
   isUserInput: string;
+  isPii: string;
   topic: string;
   classificationDescription: string;
   instructions: string;
