@@ -295,6 +295,14 @@ interface AmfHelperMixin {
   _computeAgents(node: AmfDocument): Object[]|undefined;
 
   /**
+   * Computes model's `agentPrivacy` property.
+   *
+   * @param model AMF data model
+   * @returns List of encodes
+   */
+  _computeAgentPrivacy(node: AmfDocument): Object[]|undefined;
+  
+  /**
    * Computes model's `topic` property.
    *
    * @param model AMF data model
