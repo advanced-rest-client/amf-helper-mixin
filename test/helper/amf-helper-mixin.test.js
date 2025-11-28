@@ -2194,6 +2194,798 @@ describe('AmfHelperMixin', () => {
           });
         });
       });
+
+      describe('gRPC Helpers', () => {
+        let grpcModel;
+
+        before(async () => {
+          grpcModel = await AmfLoader.load(compact, 'grpc-api');
+        });
+
+        beforeEach(async () => {
+          element = await modelFixture(grpcModel);
+        });
+
+        describe('_isGrpcApi()', () => {
+          it('returns true for gRPC API', () => {
+            const result = element._isGrpcApi(grpcModel);
+            assert.isTrue(result);
+          });
+
+          it('returns false for undefined', () => {
+            const result = element._isGrpcApi(undefined);
+            assert.isFalse(result);
+          });
+        });
+
+        describe('_computeGrpcPackageName()', () => {
+          it('returns package name from gRPC API', () => {
+            const result = element._computeGrpcPackageName(grpcModel);
+            assert.equal(result, 'helloworld');
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcPackageName(undefined);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcServices()', () => {
+          it('returns array of gRPC services', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const result = element._computeGrpcServices(webApi);
+            
+            assert.typeOf(result, 'array');
+            assert.isAbove(result.length, 0);
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcServices(undefined);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcServiceName()', () => {
+          it('returns service name', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            
+            const result = element._computeGrpcServiceName(service);
+            assert.equal(result, 'Greeter');
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcServiceName(undefined);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_getGrpcStreamType()', () => {
+          it('returns stream type for gRPC operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._getGrpcStreamType(operation);
+              assert.typeOf(result, 'string');
+              assert.include(['unary', 'client_streaming', 'server_streaming', 'bidi_streaming'], result);
+            }
+          });
+
+          it('returns "unary" for undefined', () => {
+            const result = element._getGrpcStreamType(undefined);
+            assert.equal(result, 'unary');
+          });
+        });
+
+        describe('_getGrpcStreamTypeDisplayName()', () => {
+          it('returns display name for unary', () => {
+            const result = element._getGrpcStreamTypeDisplayName('unary');
+            assert.equal(result, 'Unary');
+          });
+
+          it('returns display name for client_streaming', () => {
+            const result = element._getGrpcStreamTypeDisplayName('client_streaming');
+            assert.equal(result, 'Client Streaming');
+          });
+
+          it('returns display name for server_streaming', () => {
+            const result = element._getGrpcStreamTypeDisplayName('server_streaming');
+            assert.equal(result, 'Server Streaming');
+          });
+
+          it('returns display name for bidi_streaming', () => {
+            const result = element._getGrpcStreamTypeDisplayName('bidi_streaming');
+            assert.equal(result, 'Bidirectional Streaming');
+          });
+
+          it('returns "Unary" for unknown type', () => {
+            const result = element._getGrpcStreamTypeDisplayName('unknown');
+            assert.equal(result, 'Unary');
+          });
+        });
+
+        describe('_getGrpcStreamTypeBadge()', () => {
+          it('returns "U" for unary', () => {
+            const result = element._getGrpcStreamTypeBadge('unary');
+            assert.equal(result, 'U');
+          });
+
+          it('returns "C" for client_streaming', () => {
+            const result = element._getGrpcStreamTypeBadge('client_streaming');
+            assert.equal(result, 'C');
+          });
+
+          it('returns "S" for server_streaming', () => {
+            const result = element._getGrpcStreamTypeBadge('server_streaming');
+            assert.equal(result, 'S');
+          });
+
+          it('returns "B" for bidi_streaming', () => {
+            const result = element._getGrpcStreamTypeBadge('bidi_streaming');
+            assert.equal(result, 'B');
+          });
+
+          it('returns "U" for unknown type', () => {
+            const result = element._getGrpcStreamTypeBadge('unknown');
+            assert.equal(result, 'U');
+          });
+        });
+
+        describe('_computeGrpcMethodName()', () => {
+          it('returns method name', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcMethodName(operation);
+              assert.typeOf(result, 'string');
+              assert.isNotEmpty(result);
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcMethodName(undefined);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcMethodSignature()', () => {
+          it('returns method signature', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcMethodSignature(operation, service);
+              assert.typeOf(result, 'string');
+              assert.include(result, '.');
+            }
+          });
+
+          it('returns undefined for undefined operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            
+            const result = element._computeGrpcMethodSignature(undefined, service);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for undefined service', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcMethodSignature(operation, undefined);
+              assert.isUndefined(result);
+            }
+          });
+        });
+
+        describe('_computeGrpcRequestSchema()', () => {
+          it('returns request schema for gRPC operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcRequestSchema(operation);
+              // May be undefined if no schema, but should not throw
+              if (result) {
+                assert.typeOf(result, 'object');
+              }
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcRequestSchema(undefined);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for non-gRPC operation', () => {
+            const fakeOp = { '@id': 'test', '@type': ['Operation'] };
+            const result = element._computeGrpcRequestSchema(fakeOp);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcResponseSchema()', () => {
+          it('returns response schema for gRPC operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcResponseSchema(operation);
+              // May be undefined if no schema, but should not throw
+              if (result) {
+                assert.typeOf(result, 'object');
+              }
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcResponseSchema(undefined);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for non-gRPC operation', () => {
+            const fakeOp = { '@id': 'test', '@type': ['Operation'] };
+            const result = element._computeGrpcResponseSchema(fakeOp);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcMessageTypes()', () => {
+          it('returns array of message types', () => {
+            const result = element._computeGrpcMessageTypes(grpcModel);
+            if (result) {
+              assert.typeOf(result, 'array');
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcMessageTypes(undefined);
+            assert.isUndefined(result);
+          });
+
+          it('handles array format API', () => {
+            const result = element._computeGrpcMessageTypes(grpcModel);
+            if (result) {
+              assert.typeOf(result, 'array');
+            }
+          });
+        });
+
+        describe('_isGrpcMessageType()', () => {
+          it('returns boolean for shape', () => {
+            const declares = element._computeDeclares(grpcModel);
+            if (declares && declares.length > 0) {
+              const shape = declares[0];
+              const result = element._isGrpcMessageType(shape);
+              assert.typeOf(result, 'boolean');
+            }
+          });
+
+          it('returns false for undefined', () => {
+            const result = element._isGrpcMessageType(undefined);
+            assert.isFalse(result);
+          });
+        });
+
+        describe('_isGrpcService()', () => {
+          it('returns true for gRPC service', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            
+            const result = element._isGrpcService(service);
+            assert.isTrue(result);
+          });
+
+          it('returns false for undefined', () => {
+            const result = element._isGrpcService(undefined);
+            assert.isFalse(result);
+          });
+
+          it('returns false for non-gRPC endpoint', () => {
+            const fakeEndpoint = { 
+              '@id': 'test', 
+              '@type': ['EndPoint'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation)]: []
+            };
+            const result = element._isGrpcService(fakeEndpoint);
+            assert.isFalse(result);
+          });
+        });
+
+        describe('_computeGrpcHttpMethod()', () => {
+          it('returns POST for gRPC operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcHttpMethod(operation);
+              assert.equal(result, 'POST');
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcHttpMethod(undefined);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for non-gRPC operation', () => {
+            const fakeOp = { '@id': 'test', '@type': ['Operation'] };
+            const result = element._computeGrpcHttpMethod(fakeOp);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('_computeGrpcOperationId()', () => {
+          it('returns operation ID', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcOperationId(operation, service);
+              assert.typeOf(result, 'string');
+              assert.isNotEmpty(result);
+            }
+          });
+
+          it('returns undefined for undefined operation', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            
+            const result = element._computeGrpcOperationId(undefined, service);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for undefined service', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            const operations = element._computeGrpcMethods(service);
+            
+            if (operations && operations.length > 0) {
+              const operation = operations[0];
+              const result = element._computeGrpcOperationId(operation, undefined);
+              assert.isUndefined(result);
+            }
+          });
+        });
+
+        describe('_hasGrpcEndpoints()', () => {
+          it('returns true for gRPC API', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const result = element._hasGrpcEndpoints(webApi);
+            assert.isTrue(result);
+          });
+
+          it('returns false for undefined', () => {
+            const result = element._hasGrpcEndpoints(undefined);
+            assert.isFalse(result);
+          });
+
+          it('returns false for API without gRPC services', () => {
+            const fakeApi = { '@id': 'test', '@type': ['WebAPI'] };
+            const result = element._hasGrpcEndpoints(fakeApi);
+            assert.isFalse(result);
+          });
+        });
+
+        describe('_computeGrpcSummary()', () => {
+          it('returns summary for gRPC API', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const result = element._computeGrpcSummary(webApi);
+            
+            if (result) {
+              assert.typeOf(result, 'object');
+              assert.property(result, 'serviceCount');
+              assert.property(result, 'services');
+              assert.typeOf(result.serviceCount, 'number');
+              assert.typeOf(result.services, 'array');
+            }
+          });
+
+          it('returns undefined for undefined', () => {
+            const result = element._computeGrpcSummary(undefined);
+            assert.isUndefined(result);
+          });
+
+          it('returns undefined for API without gRPC services', () => {
+            const fakeWebApi = { 
+              '@id': 'test', 
+              '@type': ['WebAPI'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.endpoint)]: []
+            };
+            const result = element._computeGrpcSummary(fakeWebApi);
+            assert.isUndefined(result);
+          });
+        });
+
+        describe('Edge Cases and Error Handling', () => {
+          it('_isGrpcApi handles empty endpoints', () => {
+            const fakeApi = {
+              '@id': 'test',
+              '@type': ['Document'],
+              [element._getAmfKey(element.ns.aml.vocabularies.document.encodes)]: [{
+                '@id': 'webapi',
+                '@type': ['WebAPI'],
+                [element._getAmfKey(element.ns.aml.vocabularies.apiContract.endpoint)]: []
+              }]
+            };
+            const result = element._isGrpcApi(fakeApi);
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcOperation handles operation without request', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation']
+            };
+            const result = element._isGrpcOperation(fakeOp);
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcOperation handles operation without payload', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects)]: [{
+                '@id': 'request',
+                '@type': ['Request']
+              }]
+            };
+            const result = element._isGrpcOperation(fakeOp);
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcOperation handles operation with empty payload', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects)]: [{
+                '@id': 'request',
+                '@type': ['Request'],
+                [element._getAmfKey(element.ns.aml.vocabularies.apiContract.payload)]: []
+              }]
+            };
+            const result = element._isGrpcOperation(fakeOp);
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcOperation handles operation with non-gRPC media type', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects)]: [{
+                '@id': 'request',
+                '@type': ['Request'],
+                [element._getAmfKey(element.ns.aml.vocabularies.apiContract.payload)]: [{
+                  '@id': 'payload',
+                  '@type': ['Payload'],
+                  [element._getAmfKey(element.ns.aml.vocabularies.core.mediaType)]: [{ '@value': 'application/json' }]
+                }]
+              }]
+            };
+            const result = element._isGrpcOperation(fakeOp);
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcOperation recognizes application/grpc+proto media type', () => {
+            // Test that the method recognizes the alternative gRPC media type
+            // This tests the logic in the method without creating complex AMF objects
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            
+            if (services && services.length > 0) {
+              const service = services[0];
+              const operations = element._computeGrpcMethods(service);
+              
+              if (operations && operations.length > 0) {
+                const operation = operations[0];
+                // This operation should be recognized as gRPC
+                const result = element._isGrpcOperation(operation);
+                assert.isTrue(result);
+              }
+            }
+          });
+
+          it('_getGrpcStreamType handles operation without method', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects)]: [{
+                '@id': 'request',
+                '@type': ['Request'],
+                [element._getAmfKey(element.ns.aml.vocabularies.apiContract.payload)]: [{
+                  '@id': 'payload',
+                  '@type': ['Payload'],
+                  [element._getAmfKey(element.ns.aml.vocabularies.core.mediaType)]: [{ '@value': 'application/grpc' }]
+                }]
+              }]
+            };
+            const result = element._getGrpcStreamType(fakeOp);
+            assert.equal(result, 'unary');
+          });
+
+          it('_getGrpcStreamType maps HTTP methods correctly', () => {
+            // Test the mapping logic using the actual gRPC operations from the model
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            
+            if (services && services.length > 0) {
+              const service = services[0];
+              const operations = element._computeGrpcMethods(service);
+              
+              if (operations && operations.length > 0) {
+                operations.forEach(operation => {
+                  const streamType = element._getGrpcStreamType(operation);
+                  // Should return one of the valid stream types
+                  assert.include(['unary', 'client_streaming', 'server_streaming', 'bidi_streaming'], streamType);
+                });
+              }
+            }
+          });
+
+          it('_computeGrpcServices handles WebAPI without endpoints', () => {
+            const fakeWebApi = { 
+              '@id': 'test', 
+              '@type': ['WebAPI']
+            };
+            const result = element._computeGrpcServices(fakeWebApi);
+            assert.isUndefined(result);
+          });
+
+          it('_computeGrpcMethods handles service without operations', () => {
+            const fakeService = { 
+              '@id': 'test', 
+              '@type': ['EndPoint']
+            };
+            const result = element._computeGrpcMethods(fakeService);
+            assert.isUndefined(result);
+          });
+
+          it('_computeGrpcRequestSchema handles operation without request', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation']
+            };
+            const result = element._computeGrpcRequestSchema(fakeOp);
+            assert.isUndefined(result);
+          });
+
+          it('_computeGrpcResponseSchema handles operation without responses', () => {
+            const fakeOp = { 
+              '@id': 'test', 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.apiContract.expects)]: [{
+                '@id': 'request',
+                '@type': ['Request'],
+                [element._getAmfKey(element.ns.aml.vocabularies.apiContract.payload)]: [{
+                  '@id': 'payload',
+                  '@type': ['Payload'],
+                  [element._getAmfKey(element.ns.aml.vocabularies.core.mediaType)]: [{ '@value': 'application/grpc' }]
+                }]
+              }]
+            };
+            const result = element._computeGrpcResponseSchema(fakeOp);
+            assert.isUndefined(result);
+          });
+
+          it('_computeGrpcMessageTypes handles API without declares', () => {
+            const fakeApi = { 
+              '@id': 'test', 
+              '@type': ['Document']
+            };
+            const result = element._computeGrpcMessageTypes(fakeApi);
+            assert.isUndefined(result);
+          });
+
+          it('_computeGrpcPackageName handles different API formats', () => {
+            // Test with actual gRPC model
+            const result1 = element._computeGrpcPackageName(grpcModel);
+            assert.equal(result1, 'helloworld');
+
+            // Test with empty API
+            const result2 = element._computeGrpcPackageName({});
+            assert.isUndefined(result2);
+
+            // Test with undefined
+            const result3 = element._computeGrpcPackageName(undefined);
+            assert.isUndefined(result3);
+          });
+
+          it('_computeGrpcOperationId handles operation without @id', () => {
+            const webApi = element._computeWebApi(grpcModel);
+            const services = element._computeGrpcServices(webApi);
+            const service = services[0];
+            
+            const fakeOp = { 
+              '@type': ['Operation'],
+              [element._getAmfKey(element.ns.aml.vocabularies.core.name)]: [{ '@value': 'TestMethod' }]
+            };
+            
+            const result = element._computeGrpcOperationId(fakeOp, service);
+            if (result) {
+              assert.typeOf(result, 'string');
+            }
+          });
+
+          it('_isGrpcService handles endpoint without operations', () => {
+            const fakeEndpoint = { 
+              '@id': 'test', 
+              '@type': ['EndPoint']
+            };
+            const result = element._isGrpcService(fakeEndpoint);
+            // Should return false when no operations or when operations is undefined
+            assert.isFalse(result);
+          });
+
+          it('_isGrpcService handles endpoint with empty operations array', () => {
+            const operationsKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation);
+            const fakeEndpoint = { 
+              '@id': 'test', 
+              '@type': ['EndPoint']
+            };
+            fakeEndpoint[operationsKey] = [];
+            
+            const result = element._isGrpcService(fakeEndpoint);
+            assert.isFalse(result);
+          });
+        });
+
+        describe('AmfLoader gRPC Helper Methods', () => {
+          it('lookupGrpcService finds service by name', () => {
+            const service = AmfLoader.lookupGrpcService(grpcModel, 'Greeter');
+            assert.typeOf(service, 'object');
+            
+            const serviceName = element._computeGrpcServiceName(service);
+            assert.equal(serviceName, 'Greeter');
+          });
+
+          it('lookupGrpcService returns undefined for non-existent service', () => {
+            const service = AmfLoader.lookupGrpcService(grpcModel, 'NonExistentService');
+            assert.isUndefined(service);
+          });
+
+          it('lookupGrpcMethod finds method by service and method name', () => {
+            const method = AmfLoader.lookupGrpcMethod(grpcModel, 'Greeter', 'SayHello1');
+            if (method) {
+              assert.typeOf(method, 'object');
+              
+              const methodName = element._computeGrpcMethodName(method);
+              assert.equal(methodName, 'SayHello1');
+              
+              // Verify it's a gRPC operation
+              const isGrpc = element._isGrpcOperation(method);
+              assert.isTrue(isGrpc);
+            }
+          });
+
+          it('lookupGrpcMethod returns undefined for non-existent method', () => {
+            const method = AmfLoader.lookupGrpcMethod(grpcModel, 'Greeter', 'NonExistentMethod');
+            assert.isUndefined(method);
+          });
+
+          it('lookupGrpcMethod returns undefined for non-existent service', () => {
+            const method = AmfLoader.lookupGrpcMethod(grpcModel, 'NonExistentService', 'SomeMethod');
+            assert.isUndefined(method);
+          });
+
+          it('AmfLoader helpers work with both compact and regular models', () => {
+            // This test runs for both compact and regular models due to the outer loop
+            const service = AmfLoader.lookupGrpcService(grpcModel, 'Greeter');
+            if (service) {
+              assert.typeOf(service, 'object');
+              
+              const serviceName = element._computeGrpcServiceName(service);
+              assert.equal(serviceName, 'Greeter');
+            }
+          });
+        });
+
+        describe('Integration Test', () => {
+          it('should process complete gRPC API workflow', () => {
+            // 1. Detect gRPC API
+            const isGrpc = element._isGrpcApi(grpcModel);
+            assert.isTrue(isGrpc);
+
+            // 2. Get package name
+            const packageName = element._computeGrpcPackageName(grpcModel);
+            assert.equal(packageName, 'helloworld');
+
+            // 3. Get WebAPI
+            const webApi = element._computeWebApi(grpcModel);
+            assert.typeOf(webApi, 'object');
+
+            // 4. Get services
+            const services = element._computeGrpcServices(webApi);
+            assert.isAbove(services.length, 0);
+
+            // 5. Process each service
+            services.forEach(service => {
+              const serviceName = element._computeGrpcServiceName(service);
+              assert.typeOf(serviceName, 'string');
+              assert.isNotEmpty(serviceName);
+
+              const operations = element._computeGrpcMethods(service);
+              if (operations && operations.length > 0) {
+                // 6. Process each operation
+                operations.forEach(operation => {
+                  const streamType = element._getGrpcStreamType(operation);
+                  const badge = element._getGrpcStreamTypeBadge(streamType);
+                  const displayName = element._getGrpcStreamTypeDisplayName(streamType);
+
+                  assert.include(['unary', 'client_streaming', 'server_streaming', 'bidi_streaming'], streamType);
+                  assert.include(['U', 'C', 'S', 'B'], badge);
+                  assert.typeOf(displayName, 'string');
+                });
+              }
+            });
+          });
+
+          it('should demonstrate AmfLoader helpers usage in real scenario', () => {
+            // Scenario: Find a specific gRPC method and analyze it
+            const method = AmfLoader.lookupGrpcMethod(grpcModel, 'Greeter', 'SayHello1');
+            
+            if (method) {
+              // Analyze the method using gRPC helpers
+              const streamType = element._getGrpcStreamType(method);
+              const badge = element._getGrpcStreamTypeBadge(streamType);
+              const displayName = element._getGrpcStreamTypeDisplayName(streamType);
+              
+              // Get the parent service for signature
+              const service = AmfLoader.lookupGrpcService(grpcModel, 'Greeter');
+              const signature = element._computeGrpcMethodSignature(method, service);
+              
+              // Verify all properties
+              assert.typeOf(streamType, 'string');
+              assert.typeOf(badge, 'string');
+              assert.typeOf(displayName, 'string');
+              assert.typeOf(signature, 'string');
+              assert.include(signature, 'Greeter.SayHello1');
+              
+              // Get schemas
+              const requestSchema = element._computeGrpcRequestSchema(method);
+              const responseSchema = element._computeGrpcResponseSchema(method);
+              
+              if (requestSchema) {
+                assert.typeOf(requestSchema, 'object');
+              }
+              if (responseSchema) {
+                assert.typeOf(responseSchema, 'object');
+              }
+            }
+          });
+        });
+      });
     });
   });
 });

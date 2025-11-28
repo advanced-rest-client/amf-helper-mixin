@@ -172,6 +172,47 @@ export class AmfHelper extends AmfHelperMixin(Object) {
     }
     return payload;
   }
+
+  /**
+   * Looks up a gRPC service by name
+   * @param {any} model
+   * @param {string} serviceName
+   * @return {EndPoint}
+   */
+  lookupGrpcService(model, serviceName) {
+    this.amf = model;
+    const webApi = this._computeWebApi(model);
+    if (!webApi) return undefined;
+    
+    const services = this._computeGrpcServices(webApi);
+    if (!services) return undefined;
+    
+    return services.find(service => {
+      const name = this._computeGrpcServiceName(service);
+      return name === serviceName;
+    });
+  }
+
+  /**
+   * Looks up a gRPC method by service and method name
+   * @param {any} model
+   * @param {string} serviceName
+   * @param {string} methodName
+   * @return {Operation}
+   */
+  lookupGrpcMethod(model, serviceName, methodName) {
+    this.amf = model;
+    const service = this.lookupGrpcService(model, serviceName);
+    if (!service) return undefined;
+    
+    const operations = this._computeGrpcMethods(service);
+    if (!operations) return undefined;
+    
+    return operations.find(operation => {
+      const name = this._computeGrpcMethodName(operation);
+      return name === methodName;
+    });
+  }
 }
 
 export const AmfLoader = new AmfHelper();
