@@ -54,6 +54,7 @@ interface Core {
   mediaType: string;
   extensionName: string;
   deprecated: string;
+  grpcStreamType: string;
 }
 
 interface Security {

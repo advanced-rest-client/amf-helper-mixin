@@ -526,6 +526,453 @@ export const AmfHelperMixin = (base) => class extends base {
     return data;
   }
 
+  // ============================================================================
+  // gRPC Helper Methods
+  // ============================================================================
+
+  /**
+   * Determines if the current API is a gRPC API by checking media types
+   * @param {WebApi|AmfDocument} api The API model to check
+   * @returns {boolean} True if the API contains gRPC operations
+   */
+  _isGrpcApi(api) {
+    if (!api) {
+      return false;
+    }
+    const webApi = this._computeWebApi(api) || this._computeApi(api);
+    if (!webApi) {
+      return false;
+    }
+    const endpoints = this._computeEndpoints(webApi);
+    if (!endpoints || !endpoints.length) {
+      return false;
+    }
+    
+    return endpoints.some(endpoint => {
+      const operations = this._computePropertyArray(endpoint, this.ns.aml.vocabularies.apiContract.supportedOperation);
+      if (!operations) {
+        return false;
+      }
+      return operations.some(operation => this._isGrpcOperation(operation));
+    });
+  }
+
+  /**
+   * Determines if a specific operation is a gRPC operation
+   * @param {Operation} operation The operation to check
+   * @returns {boolean} True if the operation is gRPC
+   */
+  _isGrpcOperation(operation) {
+    if (!operation) {
+      return false;
+    }
+    const request = this._computeExpects(operation);
+    if (!request) {
+      return false;
+    }
+    const payload = this._computePayload(request);
+    if (!payload || !payload.length) {
+      return false;
+    }
+    
+    return payload.some(p => {
+      const mediaType = this._getValue(p, this.ns.aml.vocabularies.core.mediaType);
+      return mediaType === 'application/grpc' || mediaType === 'application/grpc+proto';
+    });
+  }
+
+  /**
+   * Gets the gRPC stream type for an operation
+   * @param {Operation} operation The gRPC operation
+   * @returns {string} The stream type: 'unary', 'client_streaming', 'server_streaming', 'bidi_streaming'
+   */
+  _getGrpcStreamType(operation) {
+    if (!operation || !this._isGrpcOperation(operation)) {
+      return 'unary'; // Default fallback
+    }
+    
+    // Try to get from AMF model first (when available)
+    const streamType = this._getValue(operation, this.ns.aml.vocabularies.core.grpcStreamType);
+    if (streamType && typeof streamType === 'string') {
+      return streamType;
+    }
+    
+    // Map HTTP methods to gRPC stream types (based on AMF gRPC mapping)
+    const httpMethod = this._getValue(operation, this.ns.aml.vocabularies.apiContract.method);
+    if (httpMethod && typeof httpMethod === 'string') {
+      switch (httpMethod.toLowerCase()) {
+        case 'post':
+          return 'unary';
+        case 'publish':
+          return 'client_streaming';
+        case 'subscribe':
+          return 'server_streaming';
+        case 'pubsub':
+          return 'bidi_streaming';
+        default:
+          return 'unary';
+      }
+    }
+    
+    // Fallback to unary
+    return 'unary';
+  }
+
+  /**
+   * Gets the display name for a gRPC stream type
+   * @param {string} streamType The stream type
+   * @returns {string} Human-readable stream type name
+   */
+  _getGrpcStreamTypeDisplayName(streamType) {
+    const streamTypeMap = {
+      'unary': 'Unary',
+      'client_streaming': 'Client Streaming',
+      'server_streaming': 'Server Streaming', 
+      'bidi_streaming': 'Bidirectional Streaming'
+    };
+    return streamTypeMap[streamType] || 'Unary';
+  }
+
+  /**
+   * Gets the badge/icon identifier for a gRPC stream type
+   * @param {string} streamType The stream type
+   * @returns {string} Badge identifier for UI display
+   */
+  _getGrpcStreamTypeBadge(streamType) {
+    const badgeMap = {
+      'unary': 'U',
+      'client_streaming': 'C',
+      'server_streaming': 'S',
+      'bidi_streaming': 'B'
+    };
+    return badgeMap[streamType] || 'U';
+  }
+
+  /**
+   * Computes gRPC service name from an endpoint
+   * @param {EndPoint} endpoint The gRPC endpoint
+   * @returns {string|undefined} The service name
+   */
+  _computeGrpcServiceName(endpoint) {
+    if (!endpoint) {
+      return undefined;
+    }
+    const name = this._getValue(endpoint, this.ns.aml.vocabularies.core.name);
+    return typeof name === 'string' ? name : undefined;
+  }
+
+  /**
+   * Computes gRPC method name from an operation
+   * @param {Operation} operation The gRPC operation
+   * @returns {string|undefined} The method name
+   */
+  _computeGrpcMethodName(operation) {
+    if (!operation) {
+      return undefined;
+    }
+    const name = this._getValue(operation, this.ns.aml.vocabularies.core.name);
+    return typeof name === 'string' ? name : undefined;
+  }
+
+  /**
+   * 
+   * Gets all gRPC services from a WebAPI
+   * @param {WebApi} webApi The WebAPI model
+   * @returns {EndPoint[]|undefined} Array of gRPC service endpoints
+   */
+  _computeGrpcServices(webApi) {
+    if (!webApi) {
+      return undefined;
+    }
+    const endpoints = this._computeEndpoints(webApi);
+    if (!endpoints) {
+      return undefined;
+    }
+    
+    return endpoints.filter(endpoint => {
+      const operations = this._computePropertyArray(endpoint, this.ns.aml.vocabularies.apiContract.supportedOperation);
+      return operations && operations.some(op => this._isGrpcOperation(op));
+    });
+  }
+
+  /**
+   * Gets all gRPC methods for a service
+   * @param {EndPoint} service The gRPC service endpoint
+   * @returns {Operation[]|undefined} Array of gRPC operations
+   */
+  _computeGrpcMethods(service) {
+    if (!service) {
+      return undefined;
+    }
+    const operations = this._computePropertyArray(service, this.ns.aml.vocabularies.apiContract.supportedOperation);
+    if (!operations) {
+      return undefined;
+    }
+    
+    return operations.filter(op => this._isGrpcOperation(op));
+  }
+
+  /**
+   * Computes gRPC request message schema from an operation
+   * @param {Operation} operation The gRPC operation
+   * @returns {Shape|undefined} The request message shape
+   */
+  _computeGrpcRequestSchema(operation) {
+    if (!operation || !this._isGrpcOperation(operation)) {
+      return undefined;
+    }
+    
+    const request = this._computeExpects(operation);
+    if (!request) {
+      return undefined;
+    }
+    
+    const payload = this._computePayload(request);
+    if (!payload || !payload.length) {
+      return undefined;
+    }
+    
+    // Find the gRPC payload
+    const grpcPayload = payload.find(p => {
+      const mediaType = this._getValue(p, this.ns.aml.vocabularies.core.mediaType);
+      return mediaType === 'application/grpc' || mediaType === 'application/grpc+proto';
+    });
+    
+    if (!grpcPayload) {
+      return undefined;
+    }
+    
+    return this._computePropertyObject(grpcPayload, this.ns.aml.vocabularies.shapes.schema);
+  }
+
+  /**
+   * Computes gRPC response message schema from an operation
+   * @param {Operation} operation The gRPC operation
+   * @returns {Shape|undefined} The response message shape
+   */
+  _computeGrpcResponseSchema(operation) {
+    if (!operation || !this._isGrpcOperation(operation)) {
+      return undefined;
+    }
+    
+    const responses = this._computeReturns(operation);
+    if (!responses || !responses.length) {
+      return undefined;
+    }
+    
+    // Get the success response (typically first one for gRPC)
+    const response = responses[0];
+    if (!response) {
+      return undefined;
+    }
+    
+    const payload = this._computePayload(response);
+    if (!payload || !payload.length) {
+      return undefined;
+    }
+    
+    // Find the gRPC payload
+    const grpcPayload = payload.find(p => {
+      const mediaType = this._getValue(p, this.ns.aml.vocabularies.core.mediaType);
+      return mediaType === 'application/grpc' || mediaType === 'application/grpc+proto' || 
+             mediaType === 'application/protobuf';
+    });
+    
+    if (!grpcPayload) {
+      return undefined;
+    }
+    
+    return this._computePropertyObject(grpcPayload, this.ns.aml.vocabularies.shapes.schema);
+  }
+
+  /**
+   * Extracts all message types (schemas) from a gRPC API for the Types section
+   * @param {WebApi|AmfDocument} api The API model
+   * @returns {Shape[]|undefined} Array of message type shapes
+   */
+  _computeGrpcMessageTypes(api) {
+    if (!api) {
+      return undefined;
+    }
+    
+    let model = api;
+    if (Array.isArray(api)) {
+      [model] = api;
+    }
+    
+    const declares = this._computeDeclares(model);
+    if (!declares) {
+      return undefined;
+    }
+    
+    // Filter for shapes that are likely gRPC message types
+    return declares.filter(shape => {
+      return this._hasType(shape, this.ns.w3.shacl.NodeShape) ||
+             this._hasType(shape, this.ns.aml.vocabularies.shapes.ScalarShape);
+    });
+  }
+
+  /**
+   * Checks if a shape represents a gRPC message type
+   * @param {Shape} shape The shape to check
+   * @returns {boolean} True if it's a gRPC message type
+   */
+  _isGrpcMessageType(shape) {
+    if (!shape) {
+      return false;
+    }
+    
+    // Check if it's a NodeShape (complex message) or ScalarShape (enum)
+    return this._hasType(shape, this.ns.w3.shacl.NodeShape) ||
+           this._hasType(shape, this.ns.aml.vocabularies.shapes.ScalarShape);
+  }
+
+  /**
+   * Gets the gRPC package name from the API
+   * @param {WebApi|AmfDocument} api The API model
+   * @returns {string|undefined} The gRPC package name
+   */
+  _computeGrpcPackageName(api) {
+    if (!api) {
+      return undefined;
+    }
+    
+    // Handle array format (like grpc-test.json)
+    if (Array.isArray(api)) {
+      const document = api[0];
+      if (document && document['http://a.ml/vocabularies/document#package']) {
+        const packageName = document['http://a.ml/vocabularies/document#package'][0]['@value'];
+        if (packageName) {
+          return packageName;
+        }
+      }
+    }
+    
+    const webApi = this._computeWebApi(api) || this._computeApi(api);
+    if (!webApi) {
+      return undefined;
+    }
+    
+    // Try to get package name from API name or title
+    const name = this._getValue(webApi, this.ns.aml.vocabularies.core.name);
+    const title = this._getValue(webApi, this.ns.aml.vocabularies.core.title);
+    return (typeof name === 'string' ? name : undefined) ||
+           (typeof title === 'string' ? title : undefined);
+  }
+
+  /**
+   * Builds a gRPC method signature for display
+   * @param {Operation} operation The gRPC operation
+   * @param {EndPoint} service The parent service
+   * @returns {string|undefined} The method signature (e.g., "Greeter.SayHello")
+   */
+  _computeGrpcMethodSignature(operation, service) {
+    if (!operation || !service) {
+      return undefined;
+    }
+    
+    const serviceName = this._computeGrpcServiceName(service);
+    const methodName = this._computeGrpcMethodName(operation);
+    
+    if (!serviceName || !methodName) {
+      return undefined;
+    }
+    
+    return `${serviceName}.${methodName}`;
+  }
+
+  /**
+   * Checks if an endpoint represents a gRPC service
+   * @param {EndPoint} endpoint The endpoint to check
+   * @returns {boolean} True if the endpoint is a gRPC service
+   */
+  _isGrpcService(endpoint) {
+    if (!endpoint) {
+      return false;
+    }
+    const operations = this._computePropertyArray(endpoint, this.ns.aml.vocabularies.apiContract.supportedOperation);
+    return !!(operations && operations.some(op => this._isGrpcOperation(op)));
+  }
+
+  /**
+   * Gets the HTTP method equivalent for gRPC operations (typically POST)
+   * @param {Operation} operation The gRPC operation
+   * @returns {string} The HTTP method (usually 'POST' for gRPC)
+   */
+  _computeGrpcHttpMethod(operation) {
+    if (!operation || !this._isGrpcOperation(operation)) {
+      return undefined;
+    }
+    // gRPC operations are typically mapped to POST in HTTP/2
+    return 'POST';
+  }
+
+  /**
+   * Computes a display-friendly operation ID for gRPC methods
+   * @param {Operation} operation The gRPC operation
+   * @param {EndPoint} service The parent service
+   * @returns {string|undefined} A unique identifier for the operation
+   */
+  _computeGrpcOperationId(operation, service) {
+    if (!operation || !service) {
+      return undefined;
+    }
+    
+    const operationId = this._getValue(operation, '@id');
+    if (operationId && typeof operationId === 'string') {
+      return operationId;
+    }
+    
+    // Fallback: create ID from service and method names
+    const signature = this._computeGrpcMethodSignature(operation, service);
+    return signature ? signature.replace('.', '_') : undefined;
+  }
+
+  /**
+   * Determines if the API has any gRPC endpoints
+   * @param {WebApi|AmfDocument} api The API model to check
+   * @returns {boolean} True if the API contains any gRPC services
+   */
+  _hasGrpcEndpoints(api) {
+    const services = this._computeGrpcServices(api);
+    return !!(services && services.length > 0);
+  }
+
+  /**
+   * Gets a summary of gRPC services and method counts
+   * @param {WebApi} webApi The WebAPI model
+   * @returns {Object|undefined} Summary object with service info
+   */
+  _computeGrpcSummary(webApi) {
+    if (!webApi) {
+      return undefined;
+    }
+    
+    const services = this._computeGrpcServices(webApi);
+    if (!services || !services.length) {
+      return undefined;
+    }
+    
+    return {
+      serviceCount: services.length,
+      services: services.map(service => {
+        const methods = this._computeGrpcMethods(service);
+        return {
+          name: this._computeGrpcServiceName(service),
+          id: this._getValue(service, '@id'),
+          methodCount: methods ? methods.length : 0,
+          methods: methods ? methods.map(method => ({
+            name: this._computeGrpcMethodName(method),
+            id: this._getValue(method, '@id'),
+            streamType: this._getGrpcStreamType(method)
+          })) : []
+        };
+      })
+    };
+  }
+
+  // GRPC helpers END //
+
   /**
    *
    * @param {DomainElement} shape

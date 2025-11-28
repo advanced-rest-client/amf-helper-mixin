@@ -70,6 +70,8 @@ ns.aml.vocabularies.core.mediaType = `${coreKey}mediaType`;
 ns.aml.vocabularies.core.extensionName = `${coreKey}extensionName`;
 ns.aml.vocabularies.core.extensionName = `${coreKey}extensionName`;
 ns.aml.vocabularies.core.deprecated = `${coreKey}deprecated`;
+// gRPC specific properties
+ns.aml.vocabularies.core.grpcStreamType = `${coreKey}grpcStreamType`;
 ns.aml.vocabularies.security = {};
 ns.aml.vocabularies.security.key = `${ns.aml.vocabularies.key}security#`;
 const secKey = ns.aml.vocabularies.security.key;
