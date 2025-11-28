@@ -659,4 +659,162 @@ interface AmfHelperMixin {
    * @returns The expanded value.
    */
   [expandKey](value: string): string;
+
+  // ============================================================================
+  // gRPC Helper Methods
+  // ============================================================================
+
+  /**
+   * Determines if the current API is a gRPC API by checking media types and source spec
+   * @param api The API model to check (supports both WebApi and array format)
+   * @returns True if the API contains gRPC operations
+   */
+  _isGrpcApi(api: WebApi|AmfDocument|any[]): boolean;
+
+  /**
+   * Determines if a specific operation is a gRPC operation
+   * @param operation The operation to check
+   * @returns True if the operation is gRPC
+   */
+  _isGrpcOperation(operation: Operation): boolean;
+
+  /**
+   * Gets the gRPC stream type for an operation
+   * @param operation The gRPC operation
+   * @returns The stream type: 'unary', 'client_streaming', 'server_streaming', 'bidi_streaming'
+   */
+  _getGrpcStreamType(operation: Operation): string;
+
+  /**
+   * Gets the display name for a gRPC stream type
+   * @param streamType The stream type
+   * @returns Human-readable stream type name
+   */
+  _getGrpcStreamTypeDisplayName(streamType: string): string;
+
+  /**
+   * Gets the badge/icon identifier for a gRPC stream type
+   * @param streamType The stream type
+   * @returns Badge identifier for UI display
+   */
+  _getGrpcStreamTypeBadge(streamType: string): string;
+
+  /**
+   * Computes gRPC service name from an endpoint
+   * @param endpoint The gRPC endpoint
+   * @returns The service name
+   */
+  _computeGrpcServiceName(endpoint: EndPoint): string|undefined;
+
+  /**
+   * Computes gRPC method name from an operation
+   * @param operation The gRPC operation
+   * @returns The method name
+   */
+  _computeGrpcMethodName(operation: Operation): string|undefined;
+
+  /**
+   * Gets all gRPC services from a WebAPI
+   * @param webApi The WebAPI model
+   * @returns Array of gRPC service endpoints
+   */
+  _computeGrpcServices(webApi: WebApi): EndPoint[]|undefined;
+
+  /**
+   * Gets all gRPC methods for a service
+   * @param service The gRPC service endpoint
+   * @returns Array of gRPC operations
+   */
+  _computeGrpcMethods(service: EndPoint): Operation[]|undefined;
+
+  /**
+   * Computes gRPC request message schema from an operation
+   * @param operation The gRPC operation
+   * @returns The request message shape
+   */
+  _computeGrpcRequestSchema(operation: Operation): Shape|undefined;
+
+  /**
+   * Computes gRPC response message schema from an operation
+   * @param operation The gRPC operation
+   * @returns The response message shape
+   */
+  _computeGrpcResponseSchema(operation: Operation): Shape|undefined;
+
+  /**
+   * Extracts all message types (schemas) from a gRPC API for the Types section
+   * @param api The API model
+   * @returns Array of message type shapes
+   */
+  _computeGrpcMessageTypes(api: WebApi|AmfDocument): Shape[]|undefined;
+
+  /**
+   * Checks if a shape represents a gRPC message type
+   * @param shape The shape to check
+   * @returns True if it's a gRPC message type
+   */
+  _isGrpcMessageType(shape: Shape): boolean;
+
+  /**
+   * Gets the gRPC package name from the API
+   * @param api The API model (supports both WebApi and array format)
+   * @returns The gRPC package name (e.g., "helloworld")
+   */
+  _computeGrpcPackageName(api: WebApi|AmfDocument|any[]): string|undefined;
+
+  /**
+   * Builds a gRPC method signature for display
+   * @param operation The gRPC operation
+   * @param service The parent service
+   * @returns The method signature (e.g., "Greeter.SayHello")
+   */
+  _computeGrpcMethodSignature(operation: Operation, service: EndPoint): string|undefined;
+
+  /**
+   * Checks if an endpoint represents a gRPC service
+   * @param endpoint The endpoint to check
+   * @returns True if the endpoint is a gRPC service
+   */
+  _isGrpcService(endpoint: EndPoint): boolean;
+
+  /**
+   * Gets the HTTP method equivalent for gRPC operations (typically POST)
+   * @param operation The gRPC operation
+   * @returns The HTTP method (usually 'POST' for gRPC)
+   */
+  _computeGrpcHttpMethod(operation: Operation): string|undefined;
+
+  /**
+   * Computes a display-friendly operation ID for gRPC methods
+   * @param operation The gRPC operation
+   * @param service The parent service
+   * @returns A unique identifier for the operation
+   */
+  _computeGrpcOperationId(operation: Operation, service: EndPoint): string|undefined;
+
+  /**
+   * Determines if the API has any gRPC endpoints
+   * @param api The API model to check
+   * @returns True if the API contains any gRPC services
+   */
+  _hasGrpcEndpoints(api: WebApi|AmfDocument): boolean;
+
+  /**
+   * Gets a summary of gRPC services and method counts
+   * @param webApi The WebAPI model
+   * @returns Summary object with service info
+   */
+  _computeGrpcSummary(webApi: WebApi): {
+    serviceCount: number;
+    services: Array<{
+      name: string|undefined;
+      id: string|undefined;
+      methodCount: number;
+      methods: Array<{
+        name: string|undefined;
+        id: string|undefined;
+        streamType: string;
+      }>;
+    }>;
+  }|undefined;
 }
