@@ -60,6 +60,8 @@ coverage
 # AMF models
 /apis/*.json
 !apis/apis.json
+!apis/grpc-api.json
+!apis/grpc-api-compact.json
 
 .idea/
 .codegenie/
