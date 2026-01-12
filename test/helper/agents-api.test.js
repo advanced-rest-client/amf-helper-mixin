@@ -96,6 +96,114 @@ describe('agents-api', () => {
           assert.include(firstValue, 'Always check the customer');
         }
       });
+
+      describe('Helper functions for custom domain properties', () => {
+        it('_resolveCustomDomainProperty resolves ID with # format', () => {
+          const webApi = element._computeEncodes(model);
+          const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
+          const customProps = element._ensureArray(webApi[customPropsKey]);
+          
+          if (customProps && customProps.length > 0) {
+            const propId = customProps[0]['@id']; // e.g., "#106"
+            const resolved = element._resolveCustomDomainProperty(webApi, propId);
+            
+            assert.isDefined(resolved, 'should resolve the property');
+            assert.isObject(resolved, 'should return an object');
+          }
+        });
+
+        it('_resolveCustomDomainProperty handles both ID formats transparently', () => {
+          const webApi = element._computeEncodes(model);
+          const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
+          const customProps = element._ensureArray(webApi[customPropsKey]);
+          
+          if (customProps && customProps.length > 0) {
+            const propId = customProps[0]['@id']; // e.g., "#106"
+            
+            // Test with short format (as it comes from customDomainProperties)
+            const resolved1 = element._resolveCustomDomainProperty(webApi, propId);
+            assert.isDefined(resolved1, 'should resolve with short ID format');
+            assert.isObject(resolved1, 'should return an object');
+            
+            // Verify it handles the internal amf://id# keys properly
+            const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+            assert.isDefined(resolved1[agentKey], 'resolved object should contain agent data');
+          }
+        });
+
+        it('_resolveCustomDomainProperty returns undefined for invalid ID', () => {
+          const webApi = element._computeEncodes(model);
+          const resolved = element._resolveCustomDomainProperty(webApi, '#999999');
+          
+          assert.isUndefined(resolved, 'should return undefined for non-existent ID');
+        });
+
+        it('_resolveCustomDomainProperty unwraps arrays', () => {
+          const webApi = element._computeEncodes(model);
+          const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
+          const customProps = element._ensureArray(webApi[customPropsKey]);
+          
+          if (customProps && customProps.length > 0) {
+            const propId = customProps[0]['@id'];
+            const resolved = element._resolveCustomDomainProperty(webApi, propId);
+            
+            // Should always return object, not array
+            assert.isNotArray(resolved, 'should unwrap arrays');
+            assert.isObject(resolved, 'should return unwrapped object');
+          }
+        });
+
+        it('_findCustomDomainPropertyByKey finds property by agent key', () => {
+          const webApi = element._computeEncodes(model);
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          const agentNode = element._findCustomDomainPropertyByKey(webApi, agentKey);
+          
+          assert.isDefined(agentNode, 'should find agent property');
+          assert.isObject(agentNode, 'should return an object');
+          assert.isDefined(agentNode[agentKey], 'should contain the agent key');
+        });
+
+        it('_findCustomDomainPropertyByKey uses fallback for direct keys', () => {
+          const webApi = element._computeEncodes(model);
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          
+          // This should work even if customDomainProperties references fail
+          const agentNode = element._findCustomDomainPropertyByKey(webApi, agentKey);
+          
+          assert.isDefined(agentNode, 'fallback should find the property');
+          assert.property(agentNode, agentKey, 'should have agent key');
+        });
+
+        it('_findCustomDomainPropertyByKey returns undefined for non-existent key', () => {
+          const webApi = element._computeEncodes(model);
+          const fakeKey = 'http://fake.domain/nonexistent#key';
+          const result = element._findCustomDomainPropertyByKey(webApi, fakeKey);
+          
+          assert.isUndefined(result, 'should return undefined for non-existent key');
+        });
+
+        it('_computeNodeAgent uses _findCustomDomainPropertyByKey internally', () => {
+          const webApi = element._computeEncodes(model);
+          const agentNode = element._computeNodeAgent(webApi);
+          
+          assert.isDefined(agentNode, 'should find agent node');
+          assert.isObject(agentNode, 'should return an object');
+          
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          assert.property(agentNode, agentKey, 'should have agent data');
+        });
+
+        it('handles compact format with multiple ID formats', () => {
+          const webApi = element._computeEncodes(model);
+          
+          // Test that both methods work together
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          const agentNode1 = element._findCustomDomainPropertyByKey(webApi, agentKey);
+          const agentNode2 = element._computeNodeAgent(webApi);
+          
+          assert.deepEqual(agentNode1, agentNode2, 'both methods should return same result');
+        });
+      });
       
     });
   });

@@ -445,50 +445,153 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Computes agent metadata from a node
+   * @param {DomainElement=} node The AMF node to extract agents from
    * @returns {Array<string|number|boolean|null|Object>|undefined}
   */
   _computeAgents(node) {
     if (!node) {
+      /* eslint-disable-next-line no-param-reassign */
       node = this.amf;
     }
-    return this._getValueArray(
-      this._computeNodeAgent(node),
-      this._getAmfKey(
-        this.ns.aml.vocabularies.data.agent
-      ))
+    
+    const agentNode = this._computeNodeAgent(node);
+    if (!agentNode) {
+      return undefined;
+    }
+    
+    const agentKey = this._getAmfKey(this.ns.aml.vocabularies.data.agent);
+    return this._getValueArray(agentNode, agentKey);
   }
 
   /**
+   * Computes agent privacy metadata from a node
+   * @param {DomainElement=} node The AMF node to extract privacy from
    * @returns {Array<string|number|boolean|null|Object>|undefined}
   */
   _computeAgentPrivacy(node) {
     if (!node) {
+      /* eslint-disable-next-line no-param-reassign */
       node = this.amf;
     }
-    return this._getValueArray(
-      this._computeNodeAgent(node),
-      this._getAmfKey(
-        this.ns.aml.vocabularies.data.privacy
-      ))
+    const agentNode = this._computeNodeAgent(node);
+    if (!agentNode) {
+      return undefined;
+    }
+    const privacyKey = this._getAmfKey(this.ns.aml.vocabularies.data.privacy);
+    return this._getValueArray(agentNode, privacyKey);
   }
 
+  /**
+   * Resolves a custom domain property from a node by its ID reference
+   * @param {DomainElement} node The node containing the property
+   * @param {string} propId The property ID to resolve
+   * @returns {DomainElement|undefined} The resolved custom domain property
+   * @private
+   */
+  _resolveCustomDomainProperty(node, propId) {
+    if (!node || !propId) {
+      return undefined;
+    }
+    
+    // Try multiple key formats: direct ID, with amf://id prefix
+    const possibleKeys = [
+      propId,                          // e.g., "#10"
+      `amf://id${propId}`,            // e.g., "amf://id#10"
+    ];
+    
+    for (const key of possibleKeys) {
+      let customPropDef = node[key];
+      if (customPropDef) {
+        // If it's an array, get the first element
+        return Array.isArray(customPropDef) ? customPropDef[0] : customPropDef;
+      }
+    }
+    
+    return undefined;
+  }
+
+  /**
+   * Finds a custom domain property that contains a specific key
+   * @param {DomainElement} node The AMF node to search in
+   * @param {string} searchKey The key to search for in custom properties
+   * @returns {DomainElement|undefined} The custom domain property containing the key
+   * @private
+   */
+  _findCustomDomainPropertyByKey(node, searchKey) {
+    if (!node || !searchKey) {
+      return undefined;
+    }
+    
+    const customPropsKey = this._getAmfKey(this.ns.aml.vocabularies.document.customDomainProperties);
+    const customProps = this._ensureArray(node[customPropsKey]);
+    
+    if (customProps && customProps.length) {
+      // Try to find the custom domain property that contains the search key
+      for (let i = 0; i < customProps.length; i++) {
+        const propId = customProps[i]['@id'];
+        if (propId) {
+          const customPropDef = this._resolveCustomDomainProperty(node, propId);
+          if (customPropDef && customPropDef[searchKey]) {
+            return customPropDef;
+          }
+        }
+      }
+    }
+    
+    // Fallback: Look for any key containing 'amf://id#' that has the search key
+    const keys = Object.keys(node);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key.includes('amf://id#')) {
+        let obj = node[key];
+        if (Array.isArray(obj)) {
+          obj = obj[0];
+        }
+        if (obj && typeof obj === 'object' && obj[searchKey]) {
+          return obj;
+        }
+      }
+    }
+    
+    return undefined;
+  }
+
+  /**
+   * Finds the custom domain property node that contains agent information
+   * @param {DomainElement} node The AMF node to search in
+   * @returns {DomainElement|undefined} The custom domain property with agent data
+   * @private
+   */
   _computeNodeAgent(node) {
-    return node[
-      Object
-        .keys(node)
-        .find(
-          key => key.includes('amf://id#')
-        )
-    ]
+    if (!node) {
+      return undefined;
+    }
+    
+    const agentKey = this._getAmfKey(this.ns.aml.vocabularies.data.agent);
+    return this._findCustomDomainPropertyByKey(node, agentKey);
   }
 
-  ensureObject(value) {
+  /**
+   * Ensures value is a single object (unwraps if array)
+   * @param {any} value The value to process
+   * @returns {Object|undefined}
+   * @private
+   */
+  _ensureObject(value) {
     return Array.isArray(value) ? value[0] : value;
   }
 
+  /**
+   * Computes topic metadata from agents in a node
+   * @param {DomainElement=} node The AMF node to extract topics from
+   * @returns {Array<Object>} Array of agents with their topics
+   */
   _computeTopics(node) {
     const agents = this._computeAgents(node);
-    if (!agents || !agents.length) return [];
+    if (!agents || !agents.length) {
+      return [];
+    }
 
     const nameKey = this._getAmfKey(this.ns.aml.vocabularies.core.name);
     const topicKey = this._getAmfKey(this.ns.aml.vocabularies.data.topic);
@@ -499,22 +602,28 @@ export const AmfHelperMixin = (base) => class extends base {
 
     return agents.map(agentRaw => {
       // Get the agent object
-      const agentObj = this.ensureObject(agentRaw);
-      if (!agentObj || typeof agentObj !== 'object') return null;
+      const agentObj = this._ensureObject(agentRaw);
+      if (!agentObj || typeof agentObj !== 'object') {
+        return null;
+      }
 
       // Extract agent name
       const agentName = this._getValue(agentObj, nameKey);
 
       // Get topics
       const topics = agentObj[topicKey];
-      if (!topics) return { agentName };
+      if (!topics) {
+        return { agentName, topics: [] };
+      }
 
       const topicsArray = Array.isArray(topics) ? topics : [topics];
 
       // Process each topic
       const processedTopics = topicsArray.map(topicRaw => {
-        const topicObj = this.ensureObject(topicRaw);
-        if (!topicObj || typeof topicObj !== 'object') return null;
+        const topicObj = this._ensureObject(topicRaw);
+        if (!topicObj || typeof topicObj !== 'object') {
+          return null;
+        }
 
         return {
           name: this._getValue(topicObj, nameKey),
@@ -532,6 +641,12 @@ export const AmfHelperMixin = (base) => class extends base {
     }).filter(Boolean); // Remove null entries
   }
 
+  /**
+   * Computes topic field values
+   * @param {Object} topicObj The topic object
+   * @param {string} key The key to extract
+   * @returns {Array|undefined} The topic values for the given key
+   */
   _computeTopicValue(topicObj, key) {
     const data = this._ensureArray(topicObj && topicObj[key]);
     if (!data || !Array.isArray(data)) {
