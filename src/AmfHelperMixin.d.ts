@@ -817,4 +817,69 @@ interface AmfHelperMixin {
       }>;
     }>;
   }|undefined;
+
+  // ============================================================================
+  // Agent & Topic Helper Methods
+  // ============================================================================
+
+  /**
+   * Computes agent metadata from a node
+   * @param node The AMF node to extract agents from
+   * @returns Array of agent values
+   */
+  _computeAgents(node?: DomainElement): Array<string|number|boolean|null|Object>|undefined;
+
+  /**
+   * Computes agent privacy metadata from a node
+   * @param node The AMF node to extract privacy from
+   * @returns Array of privacy values
+   */
+  _computeAgentPrivacy(node?: DomainElement): Array<string|number|boolean|null|Object>|undefined;
+
+  /**
+   * Computes topic metadata from agents in a node
+   * @param node The AMF node to extract topics from
+   * @returns Array of agents with their topics
+   */
+  _computeTopics(node?: DomainElement): Array<{
+    agentName: string;
+    topics: Array<{
+      name: string;
+      classificationDescription?: Array<any>;
+      instructions?: Array<any>;
+      dataName?: Array<any>;
+      scope?: Array<any>;
+    }>;
+  }>;
+
+  /**
+   * Computes topic field values
+   * @param topicObj The topic object
+   * @param key The key to extract
+   * @returns The topic values for the given key
+   */
+  _computeTopicValue(topicObj: Object, key: string): Array<any>|undefined;
+
+  /**
+   * Resolves a custom domain property by ID, handling both # and amf://id# formats
+   * @param node The AMF node to search in
+   * @param propId The property ID to resolve (e.g., "#106" or "amf://id#106")
+   * @returns The resolved property object, or undefined if not found
+   */
+  _resolveCustomDomainProperty(node: DomainElement, propId: string): Object|undefined;
+
+  /**
+   * Finds a custom domain property by searching for a specific key
+   * @param node The AMF node to search in
+   * @param key The property key to find (e.g., agent key)
+   * @returns The found property object, or undefined if not found
+   */
+  _findCustomDomainPropertyByKey(node: DomainElement, key: string): Object|undefined;
+
+  /**
+   * Computes the node containing agent information from custom domain properties
+   * @param node The AMF node to search in
+   * @returns The agent node, or undefined if not found
+   */
+  _computeNodeAgent(node?: DomainElement): Object|undefined;
 }
