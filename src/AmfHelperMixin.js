@@ -483,8 +483,45 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Gets normalized root model targets for searching in compact models
+   * @param {DomainElement} excludeNode Optional node to exclude from search
+   * @returns {Array<DomainElement>} Array of target nodes to search
+   * @private
+   */
+  _getRootModelTargets(excludeNode) {
+    const rootModel = this.amf;
+    if (!rootModel || rootModel === excludeNode) {
+      return [];
+    }
+    return Array.isArray(rootModel) ? rootModel : [rootModel];
+  }
+
+  /**
+   * Searches for a property by multiple possible keys in target nodes
+   * @param {Array<DomainElement>} targets Array of nodes to search in
+   * @param {Array<string>} possibleKeys Array of keys to try
+   * @returns {DomainElement|undefined} The found property, or undefined
+   * @private
+   */
+  _findPropertyByKeys(targets, possibleKeys) {
+    for (let i = 0; i < targets.length; i++) {
+      const target = targets[i];
+      for (const key of possibleKeys) {
+        let prop = target[key];
+        if (prop) {
+          // If it's an array, get the first element
+          return Array.isArray(prop) ? prop[0] : prop;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  /**
    * Resolves a custom domain property from a node by its ID reference
-   * @param {DomainElement} node The node containing the property
+   * In compact models, custom domain properties are stored in the root AMF model,
+   * so this method searches both in the provided node and in the root model.
+   * @param {DomainElement} node The node containing the property reference
    * @param {string} propId The property ID to resolve
    * @returns {DomainElement|undefined} The resolved custom domain property
    * @private
@@ -500,57 +537,128 @@ export const AmfHelperMixin = (base) => class extends base {
       `amf://id${propId}`,            // e.g., "amf://id#10"
     ];
     
-    for (const key of possibleKeys) {
-      let customPropDef = node[key];
-      if (customPropDef) {
-        // If it's an array, get the first element
-        return Array.isArray(customPropDef) ? customPropDef[0] : customPropDef;
-      }
+    // First, try to find in the provided node (works for full models)
+    const nodeResult = this._findPropertyByKeys([node], possibleKeys);
+    if (nodeResult) {
+      return nodeResult;
     }
     
-    return undefined;
+    // In compact models, custom domain properties are stored in the root AMF model
+    // Try to resolve from the root model if available
+    const rootTargets = this._getRootModelTargets(node);
+    return this._findPropertyByKeys(rootTargets, possibleKeys);
   }
 
   /**
    * Finds a custom domain property that contains a specific key
+   * Recursively navigates through intermediate nodes that may have their own
+   * customDomainProperties pointing to other nodes, as explained by AMF developers.
    * @param {DomainElement} node The AMF node to search in
    * @param {string} searchKey The key to search for in custom properties
+   * @param {Set<string>} visitedIds Set of visited node IDs to prevent infinite loops
    * @returns {DomainElement|undefined} The custom domain property containing the key
    * @private
    */
-  _findCustomDomainPropertyByKey(node, searchKey) {
+  _findCustomDomainPropertyByKey(node, searchKey, visitedIds = new Set()) {
     if (!node || !searchKey) {
       return undefined;
     }
     
     const customPropsKey = this._getAmfKey(this.ns.aml.vocabularies.document.customDomainProperties);
-    const customProps = this._ensureArray(node[customPropsKey]);
     
-    if (customProps && customProps.length) {
-      // Try to find the custom domain property that contains the search key
-      for (let i = 0; i < customProps.length; i++) {
-        const propId = customProps[i]['@id'];
-        if (propId) {
-          const customPropDef = this._resolveCustomDomainProperty(node, propId);
-          if (customPropDef && customPropDef[searchKey]) {
-            return customPropDef;
+    // Helper function to recursively search custom properties in a given target node
+    const searchInTarget = (targetNode, visited = new Set()) => {
+      // Check if we've already visited this node to prevent infinite loops
+      const nodeId = targetNode && targetNode['@id'];
+      if (nodeId && visited.has(nodeId)) {
+        return undefined;
+      }
+      if (nodeId) {
+        visited.add(nodeId);
+      }
+      
+      // First, check if this node directly contains the search key
+      if (targetNode && targetNode[searchKey]) {
+        return targetNode;
+      }
+      
+      // Then, look for customDomainProperties in this node
+      const customProps = this._ensureArray(targetNode[customPropsKey]);
+      
+      if (customProps && customProps.length) {
+        // Try to find the custom domain property that contains the search key
+        for (let i = 0; i < customProps.length; i++) {
+          const propId = customProps[i]['@id'];
+          if (propId) {
+            // Resolve the property - this will search in both targetNode and root model
+            const customPropDef = this._resolveCustomDomainProperty(targetNode, propId);
+            if (customPropDef) {
+              // Check if this resolved node directly contains the search key
+              if (customPropDef[searchKey]) {
+                return customPropDef;
+              }
+              
+              // Recursively search in the resolved node (it might be an intermediate node
+              // with its own customDomainProperties pointing to other nodes)
+              const recursiveResult = searchInTarget(customPropDef, visited);
+              if (recursiveResult) {
+                return recursiveResult;
+              }
+            }
           }
         }
+      }
+      return undefined;
+    };
+    
+    // First, try to find in the provided node
+    const result = searchInTarget(node, visitedIds);
+    if (result) {
+      return result;
+    }
+    
+    // In compact models, customDomainProperties references might be in the root model
+    // Try to find them there as well
+    const rootTargets = this._getRootModelTargets(node);
+    for (let j = 0; j < rootTargets.length; j++) {
+      const target = rootTargets[j];
+      const rootResult = searchInTarget(target, visitedIds);
+      if (rootResult) {
+        return rootResult;
       }
     }
     
     // Fallback: Look for any key containing 'amf://id#' that has the search key
-    const keys = Object.keys(node);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (key.includes('amf://id#')) {
-        let obj = node[key];
-        if (Array.isArray(obj)) {
-          obj = obj[0];
+    // Helper function to search for amf://id# keys in a target
+    const searchAmfIdKeys = (targetNode) => {
+      const keys = Object.keys(targetNode);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (key.includes('amf://id#')) {
+          let obj = targetNode[key];
+          if (Array.isArray(obj)) {
+            obj = obj[0];
+          }
+          if (obj && typeof obj === 'object' && obj[searchKey]) {
+            return obj;
+          }
         }
-        if (obj && typeof obj === 'object' && obj[searchKey]) {
-          return obj;
-        }
+      }
+      return undefined;
+    };
+    
+    // First try in the provided node
+    const nodeFallback = searchAmfIdKeys(node);
+    if (nodeFallback) {
+      return nodeFallback;
+    }
+    
+    // In compact models, also search in the root AMF model for direct amf://id# keys
+    for (let j = 0; j < rootTargets.length; j++) {
+      const target = rootTargets[j];
+      const rootFallback = searchAmfIdKeys(target);
+      if (rootFallback) {
+        return rootFallback;
       }
     }
     

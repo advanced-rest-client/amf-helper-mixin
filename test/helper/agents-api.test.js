@@ -31,7 +31,8 @@ describe('agents-api', () => {
   const apiFile = 'agents-api';
 
   [
-    ['Regular model V1', false]
+    ['Regular model V1', false],
+    ['Compact model V1', true]
   ].forEach(([arg1, arg2]) => {
     const label = String(arg1);
     const compact = Boolean(arg2);
@@ -56,13 +57,19 @@ describe('agents-api', () => {
       });
 
       it('computes agent metadata with _computeAgents', async () => {
-        const agents = element._computeAgents(element._computeEncodes(model));
+        element.amf = model; // Required for compact models to resolve keys
+        const webApi = element._computeEncodes(model);
+        assert.isDefined(webApi, 'webApi should be defined');
+        const agents = element._computeAgents(webApi);
         assert.isArray(agents, 'returns an array');
         assert.isNotEmpty(agents, 'array is not empty');
       });
 
       it('computes topic metadata with _computeTopics', async () => {
-        const topics = element._computeTopics(element._computeEncodes(model));
+        element.amf = model; // Required for compact models to resolve keys
+        const webApi = element._computeEncodes(model);
+        assert.isDefined(webApi, 'webApi should be defined');
+        const topics = element._computeTopics(webApi);
         assert.isArray(topics, 'returns an array');
         assert.isNotEmpty(topics, 'array is not empty');
         const agent = topics[0];
@@ -83,7 +90,10 @@ describe('agents-api', () => {
       });
 
       it('computes topic field values with _computeTopicValue', async () => {
-        const topics = element._computeTopics(element._computeEncodes(model));
+        element.amf = model; // Required for compact models to resolve keys
+        const webApi = element._computeEncodes(model);
+        assert.isDefined(webApi, 'webApi should be defined');
+        const topics = element._computeTopics(webApi);
         const agent = topics[0];
         const topic = agent['topics'][0];
         // Check instructions
@@ -98,8 +108,13 @@ describe('agents-api', () => {
       });
 
       describe('Helper functions for custom domain properties', () => {
+        beforeEach(() => {
+          element.amf = model; // Required for compact models to resolve keys
+        });
+
         it('_resolveCustomDomainProperty resolves ID with # format', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
           const customProps = element._ensureArray(webApi[customPropsKey]);
           
@@ -114,6 +129,7 @@ describe('agents-api', () => {
 
         it('_resolveCustomDomainProperty handles both ID formats transparently', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
           const customProps = element._ensureArray(webApi[customPropsKey]);
           
@@ -133,6 +149,7 @@ describe('agents-api', () => {
 
         it('_resolveCustomDomainProperty returns undefined for invalid ID', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const resolved = element._resolveCustomDomainProperty(webApi, '#999999');
           
           assert.isUndefined(resolved, 'should return undefined for non-existent ID');
@@ -140,6 +157,7 @@ describe('agents-api', () => {
 
         it('_resolveCustomDomainProperty unwraps arrays', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
           const customProps = element._ensureArray(webApi[customPropsKey]);
           
@@ -155,6 +173,7 @@ describe('agents-api', () => {
 
         it('_findCustomDomainPropertyByKey finds property by agent key', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
           const agentNode = element._findCustomDomainPropertyByKey(webApi, agentKey);
           
@@ -165,6 +184,7 @@ describe('agents-api', () => {
 
         it('_findCustomDomainPropertyByKey uses fallback for direct keys', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
           
           // This should work even if customDomainProperties references fail
@@ -176,6 +196,7 @@ describe('agents-api', () => {
 
         it('_findCustomDomainPropertyByKey returns undefined for non-existent key', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const fakeKey = 'http://fake.domain/nonexistent#key';
           const result = element._findCustomDomainPropertyByKey(webApi, fakeKey);
           
@@ -184,6 +205,7 @@ describe('agents-api', () => {
 
         it('_computeNodeAgent uses _findCustomDomainPropertyByKey internally', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           const agentNode = element._computeNodeAgent(webApi);
           
           assert.isDefined(agentNode, 'should find agent node');
@@ -195,6 +217,7 @@ describe('agents-api', () => {
 
         it('handles compact format with multiple ID formats', () => {
           const webApi = element._computeEncodes(model);
+          assert.isDefined(webApi, 'webApi should be defined');
           
           // Test that both methods work together
           const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
@@ -202,6 +225,74 @@ describe('agents-api', () => {
           const agentNode2 = element._computeNodeAgent(webApi);
           
           assert.deepEqual(agentNode1, agentNode2, 'both methods should return same result');
+        });
+      });
+
+      describe('Operation-level agent detection', () => {
+        beforeEach(() => {
+          element.amf = model; // Required for compact models to resolve keys
+        });
+
+        it('finds agents in operation nodes', () => {
+          const operation = AmfLoader.lookupOperation(model, '/reservations', 'post');
+          assert.isDefined(operation, 'operation should exist');
+          
+          const agents = element._computeAgents(operation);
+          assert.isDefined(agents, 'should find agents in operation');
+          assert.isArray(agents, 'agents should be an array');
+        });
+
+        it('_computeNodeAgent works with operation nodes', () => {
+          const operation = AmfLoader.lookupOperation(model, '/reservations', 'post');
+          assert.isDefined(operation, 'operation should exist');
+          
+          const agentNode = element._computeNodeAgent(operation);
+          assert.isDefined(agentNode, 'should find agent node in operation');
+          assert.isObject(agentNode, 'should return an object');
+          
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          assert.isDefined(agentNode[agentKey], 'agent node should contain agent data');
+        });
+
+        it('_findCustomDomainPropertyByKey resolves references from root model in compact format', () => {
+          const operation = AmfLoader.lookupOperation(model, '/reservations', 'post');
+          assert.isDefined(operation, 'operation should exist');
+          
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          const agentNode = element._findCustomDomainPropertyByKey(operation, agentKey);
+          
+          // In compact models, the property might be resolved from root model
+          assert.isDefined(agentNode, 'should find agent property even when referenced from root');
+          assert.isObject(agentNode, 'should return an object');
+          assert.isDefined(agentNode[agentKey], 'should contain the agent key');
+        });
+
+        it('_resolveCustomDomainProperty searches in root model when not found in node', () => {
+          const operation = AmfLoader.lookupOperation(model, '/reservations', 'post');
+          assert.isDefined(operation, 'operation should exist');
+          
+          const customPropsKey = element._getAmfKey(element.ns.aml.vocabularies.document.customDomainProperties);
+          const customProps = element._ensureArray(operation[customPropsKey]);
+          
+          if (customProps && customProps.length > 0) {
+            const propId = customProps[0]['@id'];
+            // This should resolve from root model in compact format
+            const resolved = element._resolveCustomDomainProperty(operation, propId);
+            assert.isDefined(resolved, 'should resolve property from root model');
+            assert.isObject(resolved, 'should return an object');
+          }
+        });
+
+        it('handles recursive navigation through intermediate nodes', () => {
+          const operation = AmfLoader.lookupOperation(model, '/reservations', 'post');
+          assert.isDefined(operation, 'operation should exist');
+          
+          const agentKey = element._getAmfKey(element.ns.aml.vocabularies.data.agent);
+          // This should navigate through intermediate nodes if they exist
+          const agentNode = element._findCustomDomainPropertyByKey(operation, agentKey);
+          
+          assert.isDefined(agentNode, 'should navigate through intermediate nodes');
+          assert.isObject(agentNode, 'should return an object');
         });
       });
       

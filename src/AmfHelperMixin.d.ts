@@ -861,6 +861,21 @@ interface AmfHelperMixin {
   _computeTopicValue(topicObj: Object, key: string): Array<any>|undefined;
 
   /**
+   * Gets normalized root model targets for searching in compact models
+   * @param excludeNode Optional node to exclude from search
+   * @returns Array of target nodes to search
+   */
+  _getRootModelTargets(excludeNode?: DomainElement): DomainElement[];
+
+  /**
+   * Searches for a property by multiple possible keys in target nodes
+   * @param targets Array of nodes to search in
+   * @param possibleKeys Array of keys to try
+   * @returns The found property, or undefined
+   */
+  _findPropertyByKeys(targets: DomainElement[], possibleKeys: string[]): Object|undefined;
+
+  /**
    * Resolves a custom domain property by ID, handling both # and amf://id# formats
    * @param node The AMF node to search in
    * @param propId The property ID to resolve (e.g., "#106" or "amf://id#106")
@@ -870,6 +885,8 @@ interface AmfHelperMixin {
 
   /**
    * Finds a custom domain property by searching for a specific key
+   * Recursively navigates through intermediate nodes that may have their own
+   * customDomainProperties pointing to other nodes, as required for Agent Topic metadata.
    * @param node The AMF node to search in
    * @param key The property key to find (e.g., agent key)
    * @returns The found property object, or undefined if not found
