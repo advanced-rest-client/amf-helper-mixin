@@ -103,6 +103,7 @@ ns.aml.vocabularies.security.signature = `${secKey}signature`;
 ns.aml.vocabularies.security.tokenCredentialsUri = `${secKey}tokenCredentialsUri`;
 ns.aml.vocabularies.security.requestTokenUri = `${secKey}requestTokenUri`;
 ns.aml.vocabularies.security.refreshUri = `${secKey}refreshUri`;
+ns.aml.vocabularies.security.deviceAuthorizationUri = `${secKey}deviceAuthorizationUri`;
 ns.aml.vocabularies.security.securityRequirement = `${secKey}SecurityRequirement`;
 ns.aml.vocabularies.security.openIdConnectUrl = `${secKey}openIdConnectUrl`;
 ns.aml.vocabularies.security.bearerFormat = `${secKey}bearerFormat`;
