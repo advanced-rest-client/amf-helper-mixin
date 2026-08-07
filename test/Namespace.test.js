@@ -9,3 +9,12 @@ describe('Namespace security vocabulary', () => {
     );
   });
 });
+
+describe('Namespace apiContract vocabulary', () => {
+  it('defines operationKind (OAS 3.2 operation source container)', () => {
+    assert.equal(
+      ns.aml.vocabularies.apiContract.operationKind,
+      'http://a.ml/vocabularies/apiContract#operationKind'
+    );
+  });
+});

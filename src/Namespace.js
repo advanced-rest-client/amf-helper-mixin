@@ -182,6 +182,7 @@ ns.aml.vocabularies.apiContract.explode = `${contractKey}explode`;
 ns.aml.vocabularies.apiContract.allowReserved = `${contractKey}allowReserved`;
 ns.aml.vocabularies.apiContract.tag = `${contractKey}tag`;
 ns.aml.vocabularies.apiContract.tags = `${contractKey}tags`;
+ns.aml.vocabularies.apiContract.operationKind = `${contractKey}operationKind`;
 ns.aml.vocabularies.shapes = {};
 ns.aml.vocabularies.shapes.key = `${ns.aml.vocabularies.key}shapes#`;
 const shapesKey = ns.aml.vocabularies.shapes.key;

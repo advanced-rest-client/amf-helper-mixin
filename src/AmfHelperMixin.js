@@ -1878,6 +1878,19 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Reads the OAS 3.2 operation source-container kind.
+   * @param {any} operation Operation AMF model
+   * @return {string} `standard` | `query` | `additionalOperation`; `standard` when absent.
+   */
+  _computeOperationKind(operation) {
+    if (!operation) {
+      return 'standard';
+    }
+    const value = this._getValue(operation, this.ns.aml.vocabularies.apiContract.operationKind);
+    return typeof value === 'string' && value ? value : 'standard';
+  }
+
+  /**
    * Computes list of operations in an endpoint
    * @param {WebApi} webApi The WebApi AMF model
    * @param {string} id Endpoint ID
