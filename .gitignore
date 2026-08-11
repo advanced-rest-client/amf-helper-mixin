@@ -62,6 +62,10 @@ coverage
 !apis/apis.json
 !apis/grpc-api.json
 !apis/grpc-api-compact.json
+!apis/async30.json
+!apis/async30-compact.json
+!apis/async31.json
+!apis/async31-compact.json
 
 .idea/
 .codegenie/
