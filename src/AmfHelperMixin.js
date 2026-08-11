@@ -1776,6 +1776,63 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Operation "method" for display/grouping. AsyncAPI 2.x ops carry
+   * apiContract#method (publish/subscribe); 3.0/3.1 flattened ops carry
+   * apiContract#action (send/receive) instead. Returns method ?? action.
+   *
+   * @param {Operation} operation AMF `supportedOperation` model
+   * @returns {string|undefined}
+   */
+  _computeOperationMethod(operation) {
+    if (!operation) {
+      return undefined;
+    }
+    const method = this._getValue(operation, this.ns.aml.vocabularies.apiContract.method);
+    if (method) {
+      return method;
+    }
+    return this._getValue(operation, this.ns.aml.vocabularies.apiContract.action);
+  }
+
+  /**
+   * Messages carried by an AsyncAPI 3.0/3.1 operation, as a Message[] — the
+   * array shape the message-body render pipeline already consumes (like
+   * _computeReturns / _computeAllExpects). Reads apiContract#operationMessages,
+   * falling back to the endpoint's apiContract#channelMessages.
+   *
+   * @param {Operation} operation AMF `supportedOperation` model
+   * @param {EndPoint} [endpoint] Owning endpoint (for the channelMessages fallback)
+   * @returns {Array<Object>|undefined}
+   */
+  _computeOperationMessages(operation, endpoint) {
+    const opMsgs = this._computePropertyArray(operation, this.ns.aml.vocabularies.apiContract.operationMessages);
+    if (opMsgs && opMsgs.length) {
+      return opMsgs;
+    }
+    if (endpoint) {
+      return this._computePropertyArray(endpoint, this.ns.aml.vocabularies.apiContract.channelMessages);
+    }
+    return undefined;
+  }
+
+  /**
+   * Maps an async action to the existing method-color token so 3.0 badges
+   * reuse the publish/subscribe colors. send≈publish, receive≈subscribe.
+   *
+   * @param {string} method Operation method/action
+   * @returns {string|undefined}
+   */
+  _operationColorMethod(method) {
+    if (method === 'send') {
+      return 'publish';
+    }
+    if (method === 'receive') {
+      return 'subscribe';
+    }
+    return method;
+  }
+
+  /**
    * Finds an example value (whether it's default value or from an
    * example) to put it into snippet's values.
    *
