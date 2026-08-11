@@ -66,4 +66,68 @@ describe('AsyncAPI 3.0 shared accessors', () => {
   it('_computeOperationMethod returns undefined for null op', () => {
     assert.equal(helper._computeOperationMethod(undefined), undefined);
   });
+
+  describe('_computeOperationMessages edge cases', () => {
+    it('falls back to the endpoint channelMessages when operationMessages is absent', () => {
+      const { apiContract } = helper.ns.aml.vocabularies;
+      const operationWithoutMessages = {
+        '@id': 'test://op-no-operation-messages',
+        '@type': [apiContract.Operation],
+      };
+      const endpointWithChannelMessages = {
+        '@id': 'test://endpoint-with-channel-messages',
+        '@type': [apiContract.EndPoint],
+        [apiContract.channelMessages]: [{ '@id': 'test://message-from-channel' }],
+      };
+      const msgs = helper._computeOperationMessages(operationWithoutMessages, endpointWithChannelMessages);
+      assert.isArray(msgs);
+      assert.lengthOf(msgs, 1);
+      assert.equal(msgs[0]['@id'], 'test://message-from-channel');
+    });
+
+    it('returns undefined when neither operationMessages nor endpoint channelMessages are present', () => {
+      const { apiContract } = helper.ns.aml.vocabularies;
+      const operationWithoutMessages = {
+        '@id': 'test://op-no-messages-anywhere',
+        '@type': [apiContract.Operation],
+      };
+      assert.equal(helper._computeOperationMessages(operationWithoutMessages), undefined);
+
+      const endpointWithoutChannelMessages = {
+        '@id': 'test://endpoint-without-channel-messages',
+        '@type': [apiContract.EndPoint],
+      };
+      assert.equal(
+        helper._computeOperationMessages(operationWithoutMessages, endpointWithoutChannelMessages),
+        undefined
+      );
+    });
+  });
+});
+
+describe('AsyncAPI 2.x _computeOperationMethod branch', () => {
+  let helper2;
+  before(async () => {
+    helper2 = await fixture(html`<test-helper-async3></test-helper-async3>`);
+    helper2.amf = await loadModel('async-api.json');
+  });
+
+  it('returns the apiContract#method value for a 2.x publish/subscribe op', () => {
+    const graph = helper2.amf;
+    const nodes = [];
+    const walk = (n) => {
+      if (!n || typeof n !== 'object') return;
+      if (Array.isArray(n)) { n.forEach(walk); return; }
+      nodes.push(n);
+      Object.values(n).forEach(walk);
+    };
+    walk(graph);
+    const operation = nodes.find((n) =>
+      (n['@type'] || []).some((t) => String(t).includes('apiContract#Operation')) &&
+      helper2._getValue(n, helper2.ns.aml.vocabularies.apiContract.method));
+    assert.ok(operation, 'fixture must contain an operation with apiContract#method');
+    const method = helper2._getValue(operation, helper2.ns.aml.vocabularies.apiContract.method);
+    assert.include(['publish', 'subscribe'], method, 'sanity-check the fixture value');
+    assert.equal(helper2._computeOperationMethod(operation), method);
+  });
 });
