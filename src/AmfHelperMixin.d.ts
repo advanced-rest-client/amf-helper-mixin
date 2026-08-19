@@ -498,6 +498,14 @@ interface AmfHelperMixin {
   _computeEndpoints(webApi: WebApi): EndPoint[]|undefined;
 
   /**
+   * Computes list of top-level webhooks (OAS 3.1/3.2) from a WebApi model.
+   * Mirrors `_computeEndpoints` but reads the `apiContract#webhooks` predicate.
+   *
+   * @returns Always returns an array of webhook endpoints.
+   */
+  _computeWebhooks(webApi: WebApi): EndPoint[]|undefined;
+
+  /**
    * Computes model for an endpoint documentation.
    *
    * @param webApi Current value of `webApi` property

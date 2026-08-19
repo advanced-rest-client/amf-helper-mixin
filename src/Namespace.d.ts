@@ -126,6 +126,7 @@ interface ApiContract {
   url: string;
   scheme: string;
   endpoint: string;
+  webhooks: string;
   queryString: string;
   accepts: string;
   guiSummary: string;
