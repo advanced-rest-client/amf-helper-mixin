@@ -1823,6 +1823,24 @@ export const AmfHelperMixin = (base) => class extends base {
   }
 
   /**
+   * Computes list of top-level webhooks from a WebApi model.
+   * OAS 3.1/3.2 top-level webhooks compile to `apiContract#EndPoint` nodes that
+   * are byte-identical to regular endpoints; the only distinction is that the
+   * WebAPI root references them via the `apiContract#webhooks` predicate instead
+   * of `apiContract#endpoint`. Mirrors `_computeEndpoints`.
+   * @param {WebApi} webApi
+   * @returns {EndPoint[]|undefined} An array of webhook endpoints.
+   */
+  _computeWebhooks(webApi) {
+    if (!webApi) {
+      return [];
+    }
+    const webhooksKey = this.ns.aml.vocabularies.apiContract.webhooks;
+    const key = this._getAmfKey(webhooksKey);
+    return this._ensureArray(webApi[key]);
+  }
+
+  /**
    * Computes model for an endpoint documentation.
    *
    * @param {WebApi} webApi Current value of `webApi` property
@@ -1831,10 +1849,17 @@ export const AmfHelperMixin = (base) => class extends base {
    */
   _computeEndpointModel(webApi, id) {
     const endpoints = this._computeEndpoints(webApi);
-    if (!endpoints) {
+    const fromEndpoints = endpoints && endpoints.find((item) => item['@id'] === id);
+    if (fromEndpoints) {
+      return fromEndpoints;
+    }
+    // Fall back to top-level webhooks (OAS 3.1/3.2). @id lookups are unique so
+    // this additive search is collision-safe and never shadows a real endpoint.
+    const webhooks = this._computeWebhooks(webApi);
+    if (!webhooks) {
       return undefined;
     }
-    return endpoints.find((item) => item['@id'] === id);
+    return webhooks.find((item) => item['@id'] === id);
   }
 
   /**
@@ -1915,23 +1940,28 @@ export const AmfHelperMixin = (base) => class extends base {
     if (!webApi || !methodId) {
       return undefined;
     }
-    const endpoints = this._computeEndpoints(webApi);
-    if (!endpoints) {
-      return undefined;
-    }
     const opKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
-    for (let i = 0, len = endpoints.length; i < len; i++) {
-      const endpoint = endpoints[i];
-      let methods = endpoint[opKey];
-      if (!methods) {
+    // Search regular endpoints first, then fall back to top-level webhooks
+    // (OAS 3.1/3.2). @id lookups are unique so the fallback is collision-safe.
+    const collections = [this._computeEndpoints(webApi), this._computeWebhooks(webApi)];
+    for (let c = 0; c < collections.length; c++) {
+      const endpoints = collections[c];
+      if (!endpoints) {
         continue;
       }
-      if (!(methods instanceof Array)) {
-        methods = [methods];
-      }
-      for (let j = 0, jLen = methods.length; j < jLen; j++) {
-        if (methods[j]['@id'] === methodId) {
-          return endpoint;
+      for (let i = 0, len = endpoints.length; i < len; i++) {
+        const endpoint = endpoints[i];
+        let methods = endpoint[opKey];
+        if (!methods) {
+          continue;
+        }
+        if (!(methods instanceof Array)) {
+          methods = [methods];
+        }
+        for (let j = 0, jLen = methods.length; j < jLen; j++) {
+          if (methods[j]['@id'] === methodId) {
+            return endpoint;
+          }
         }
       }
     }
