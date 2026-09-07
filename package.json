@@ -31,7 +31,7 @@
   "devDependencies": {
     "@api-components/api-model-generator": "^0.2.14",
     "@open-wc/eslint-config": "^4.3.0",
-    "@open-wc/testing": "^2.5.33",
+    "@open-wc/testing": "^3.1.7",
     "@web/dev-server": "^0.1.25",
     "@web/test-runner": "^0.13.18",
     "@web/test-runner-playwright": "^0.8.8",
